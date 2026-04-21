@@ -2126,7 +2126,12 @@ footer small {
     @media (max-width: 768px) {
       .gal-lightbox.open {
         align-items: flex-end;
+      }
+      .gal-lightbox.open.lb-photo {
         padding: 0 0 30vh 0;
+      }
+      .gal-lightbox.open.lb-flyer {
+        padding: 0 0 80vh 0;
       }
       .gal-lightbox img {
         transform: translateY(0);
@@ -2331,7 +2336,7 @@ footer small {
         frag += '</div>';
         frag += '<div class="gal-det-body' + (hasFlyer ? '' : ' gal-det-body--full') + '">';
         if (hasFlyer) {
-          frag += '<div class="gal-det-flyer"><img src="' + d.fl + '" alt="Flyer" onclick="openLB(this.src)" loading="lazy"></div>';
+          frag += '<div class="gal-det-flyer"><img src="' + d.fl + '" alt="Flyer" onclick="openLB(this.src,\'flyer\')" loading="lazy"></div>';
         }
         frag += '<div class="gal-det-info">';
         if (d.trasescena) {
@@ -2360,7 +2365,7 @@ footer small {
         if (d.ph && d.ph.length > 0) {
           frag += '<div class="gal-det-photos' + (d.bonus ? ' gal-det-photos--bonus' : '') + '">';
           for (var i = 0; i < d.ph.length; i++) {
-            frag += '<img src="' + d.ph[i] + '" alt="Foto ' + (i+1) + '" onclick="openLB(this.src)" loading="lazy">';
+            frag += '<img src="' + d.ph[i] + '" alt="Foto ' + (i+1) + '" onclick="openLB(this.src,\'photo\')" loading="lazy">';
           }
           frag += '</div>';
         } else if (d.pending) {
@@ -2398,12 +2403,15 @@ footer small {
       document.querySelectorAll('.gal-card').forEach(function(c) { c.classList.remove('active'); });
       closeLB();
     }
-    function openLB(src) {
+    function openLB(src, type) {
+      var lb = document.getElementById('galLightbox');
       document.getElementById('galLBImg').src = src;
-      document.getElementById('galLightbox').classList.add('open');
+      lb.classList.remove('lb-flyer', 'lb-photo');
+      lb.classList.add('open', type === 'flyer' ? 'lb-flyer' : 'lb-photo');
     }
     function closeLB() {
-      document.getElementById('galLightbox').classList.remove('open');
+      var lb = document.getElementById('galLightbox');
+      lb.classList.remove('open', 'lb-flyer', 'lb-photo');
     }
     document.addEventListener('DOMContentLoaded', buildGalPanels);
     document.addEventListener('keydown', function(e) {
