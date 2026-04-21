@@ -844,8 +844,26 @@ footer small {
    RESPONSIVE
    ════════════════════════════════════════ */
 @media (max-width: 768px) {
-  nav ul { gap: 0; }
-  nav ul li a { font-size: 0.6rem; padding: 0.3rem 0.4rem; letter-spacing: 0.8px; }
+  /* ── Nav: scroll horizontal en lugar de cortarse ── */
+  nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+  nav ul {
+    gap: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 0.6rem 0.8rem;
+    width: max-content;
+    min-width: 100%;
+  }
+  nav ul li a { font-size: 0.58rem; padding: 0.35rem 0.5rem; letter-spacing: 0.7px; }
+
+  /* ── Mariposas decorativas: ocultar en móvil para no solapar texto ── */
+  .section-photo-accent { display: none !important; }
+
   .section { padding: 5rem 1.2rem 3rem; }
   .section::before, .section::after { display: none; }
   .hero-content h1 { font-size: 2.5rem; }
