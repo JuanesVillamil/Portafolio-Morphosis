@@ -2123,6 +2123,16 @@ footer small {
       animation: lbScaleIn 0.28s cubic-bezier(0.22,1,0.36,1);
       cursor: default;
     }
+    @media (max-width: 768px) {
+      .gal-lightbox img {
+        transform: translateY(0);
+        max-width: 92vw;
+        max-height: 75vh;
+      }
+      .gal-lightbox.open {
+        padding: 0;
+      }
+    }
     @keyframes lbScaleIn {
       from { transform: scale(0.88); opacity: 0; }
       to   { transform: scale(1);    opacity: 1; }
