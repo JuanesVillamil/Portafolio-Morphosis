@@ -2124,13 +2124,14 @@ footer small {
       cursor: default;
     }
     @media (max-width: 768px) {
+      .gal-lightbox.open {
+        align-items: flex-end;
+        padding: 0 0 5vh 0;
+      }
       .gal-lightbox img {
         transform: translateY(0);
         max-width: 92vw;
-        max-height: 75vh;
-      }
-      .gal-lightbox.open {
-        padding: 0;
+        max-height: 70vh;
       }
     }
     @keyframes lbScaleIn {
