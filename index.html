@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>María Alejandra Morales · Mórphosis · Artista Escénica</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Cinzel:wght@400;500;700;900&family=Italiana&family=Cormorant+Infant:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* Real Morpho menelaus palette — electric cyan with warm brown border */
+  --morpho-deep: #006d8f;       /* deep teal-blue (body/shadow areas) */
+  --morpho-blue: #00a8cc;       /* mid iridescent blue */
+  --morpho-bright: #00d4f0;     /* electric cyan (main wing color) */
+  --morpho-iridescent: #4de3ff; /* brightest highlight */
+  --morpho-shimmer: #b8f0ff;    /* lightest shimmer / white-blue */
+  --wing-brown: #3d2010;        /* warm dark-brown border */
+  --wing-amber: #7a4520;        /* medium brown for border gradient */<br>
+
+  /* Book/parchment palette */
+  --parchment: #f4ead5;
+  --parchment-dark: #e8dcc0;
+  --parchment-aged: #d9c9a3;
+  --ink-deep: #1a1208;
+  --ink-warm: #2d2418;
+  --ink-soft: #4a3e2a;
+  --gold-leaf: #b8924a;
+  --gold-soft: #d4ae6c;
+  --burgundy: #5c1a1b;
+  --sepia: #8b6f47;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  background-color: #f6f2f8;  /* soft pearl — base of Sulkowskyi holographic tones */
+  color: var(--ink-deep);
+  overflow-x: hidden;
+  line-height: 1.7;
+  /* Iridescent pearl effect — echoes the Morpho Sulkowskyi wings */
+  background-image:
+    radial-gradient(ellipse at 0% 0%, rgba(180,160,220,0.10) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 0%, rgba(100,180,220,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(240,180,200,0.09) 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 100%, rgba(200,215,180,0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(245,240,255,0.50) 0%, transparent 60%),
+    radial-gradient(at 25% 25%, rgba(184,146,74,0.03) 0px, transparent 50%),
+    repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(139,111,71,0.012) 100px, rgba(139,111,71,0.012) 101px);
+}
+
+/* ════════════════════════════════════════
+   PAPER TEXTURE OVERLAY
+   ════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.28;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.42 0 0 0 0 0.55 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.30'/%3E%3C/svg%3E");
+}
+
+/* Iridescent shimmer layer — slow-drifting hue wash like Sulkowskyi wings */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+  background: 
+    conic-gradient(from 0deg at 30% 40%, 
+      rgba(180,160,220,1) 0deg, 
+      rgba(100,180,220,1) 90deg,
+      rgba(240,180,200,1) 180deg,
+      rgba(200,215,180,1) 270deg,
+      rgba(180,160,220,1) 360deg);
+  animation: iridShift 25s linear infinite;
+  border-radius: 50%;
+  filter: blur(80px);
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+}
+@keyframes iridShift {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ════════════════════════════════════════
+   FLOATING MORPHO BUTTERFLIES
+   ════════════════════════════════════════ */
+.morpho-float {
+  position: fixed;
+  width: 70px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  filter: drop-shadow(0 6px 12px rgba(10,61,98,0.35));
+}
+.morpho-float svg { width: 100%; height: 100%; }
+.morpho-float .wing {
+  transform-origin: center;
+  animation: wingFlap 0.4s ease-in-out infinite alternate;
+}
+.morpho-float .wing-l { transform-origin: 50% 50%; }
+.morpho-float .wing-r { transform-origin: 50% 50%; }
+
+@keyframes wingFlap {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0.55); }
+}
+
+/* ════════════════════════════════════════
+   LOADER
+   ════════════════════════════════════════ */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, var(--ink-deep) 0%, var(--morpho-deep) 100%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+#loader .loader-morpho {
+  width: 120px;
+  height: 90px;
+  animation: loaderFlight 2.5s ease-in-out infinite;
+}
+@keyframes loaderFlight {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-25px) rotate(3deg); }
+}
+#loader .loader-morpho .wing { animation: wingFlap 0.5s ease-in-out infinite alternate; }
+#loader p {
+  color: var(--morpho-shimmer);
+  font-family: 'Italiana', serif;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ════════════════════════════════════════
+   NAVIGATION (top bar — book chapters)
+   ════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  background: linear-gradient(180deg, rgba(244,234,213,0.97) 0%, rgba(244,234,213,0.92) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(184,146,74,0.3);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+nav.nav-hidden { transform: translateY(-100%); }
+nav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  list-style: none;
+  padding: 0.7rem 1rem;
+  gap: 0.1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+nav ul li a {
+  color: var(--ink-warm);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.9px;
+  padding: 0.4rem 0.45rem;
+  transition: all 0.3s ease;
+  position: relative;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--morpho-bright);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+nav ul li a:hover::after,
+nav ul li a.active::after { width: 70%; }
+nav ul li a:hover, nav ul li a.active {
+  color: var(--morpho-deep);
+}
+
+/* ════════════════════════════════════════
+   HERO — BOOK COVER
+   ════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 2rem 3rem;
+  background:
+    radial-gradient(ellipse at center, rgba(244,234,213,0.4) 0%, transparent 70%),
+    linear-gradient(135deg, #1a1410 0%, #003d4f 55%, #005f6e 100%);
+}
+
+/* Subtle morpho wing pattern overlay on hero */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(72,184,232,0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(34,147,214,0.12) 0%, transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(163,223,253,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+#hero::after {
+  /* iridescent shimmer */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(163,223,253,0.05) 50%, transparent 70%);
+  animation: shimmer 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); opacity: 0; }
+  50% { transform: translateX(100%); opacity: 1; }
+}
+
+.hero-content {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+}
+
+.hero-morpho {
+  width: 320px;
+  height: auto;
+  margin: 0 auto 2.5rem;
+  display: block;
+  /* PNG already has transparent background — no blend mode needed */
+  filter:
+    drop-shadow(0 0 30px rgba(0,212,240,0.55))
+    drop-shadow(0 0 80px rgba(0,180,220,0.25));
+  animation: heroFloat 6s ease-in-out infinite;
+  user-select: none;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg) scale(1); }
+  50% { transform: translateY(-18px) rotate(1.5deg) scale(1.02); }
+}
+
+.hero-content .book-label {
+  font-family: 'Italiana', serif;
+  color: var(--morpho-shimmer);
+  font-size: 0.9rem;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.hero-content h1 {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 400;
+  color: #f4ead5;
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 30px rgba(10,61,98,0.6);
+}
+
+.hero-content .morphosis {
+  font-family: 'Cormorant Infant', serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  color: var(--morpho-shimmer);
+  margin-bottom: 0.3rem;
+  font-weight: 400;
+}
+
+.hero-content .role {
+  font-family: 'Cinzel', serif;
+  color: var(--gold-soft);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+.hero-divider {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--morpho-shimmer), transparent);
+  margin: 2rem auto;
+}
+
+.hero-content .quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--parchment);
+  opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+.hero-content .enter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  color: var(--morpho-shimmer);
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--morpho-bright);
+  text-decoration: none;
+  transition: all 0.4s ease;
+  position: relative;
+}
+.hero-content .enter-btn:hover {
+  background: rgba(72,184,232,0.1);
+  color: var(--parchment);
+  letter-spacing: 5px;
+  border-color: var(--morpho-shimmer);
+  box-shadow: 0 0 30px rgba(72,184,232,0.3);
+}
+.hero-content .enter-btn::before { content: '◇'; opacity: 0.7; }
+.hero-content .enter-btn::after { content: '◇'; opacity: 0.7; }
+
+/* ════════════════════════════════════════
+   SECTIONS — book pages
+   ════════════════════════════════════════ */
+.section {
+  min-height: 100vh;
+  padding: 7rem 5rem 5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.section-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Decorative side ornaments — like book margins */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 5rem;
+  bottom: 3rem;
+  left: 5%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(184,146,74,0.25) 20%, rgba(184,146,74,0.25) 80%, transparent);
+  pointer-events: none;
+}
+.section::after {
+  content: '';
+  position: absolute;
+  top: 5rem;
+  bottom: 3rem;
+  right: 5%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(184,146,74,0.25) 20%, rgba(184,146,74,0.25) 80%, transparent);
+  pointer-events: none;
+}
+
+.chapter-marker {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.chapter-marker .chapter-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: var(--gold-leaf);
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  font-family: 'Italiana', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--ink-deep);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.section .section-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--sepia);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.flourish {
+  text-align: center;
+  margin: 1.5rem auto 3rem;
+  font-family: 'Italiana', serif;
+  color: var(--gold-leaf);
+  font-size: 1.5rem;
+  letter-spacing: 12px;
+  opacity: 0.7;
+}
+.flourish::before { content: '◈ ◈ ◈'; }
+
+.section-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.18rem;
+  line-height: 2;
+  color: var(--ink-warm);
+  text-align: justify;
+  hyphens: auto;
+}
+.section-text p {
+  margin-bottom: 1.4rem;
+  text-indent: 0;
+}
+.section-text p:first-of-type::first-letter {
+  font-family: 'Italiana', serif;
+  font-size: 4.5rem;
+  float: left;
+  line-height: 0.85;
+  margin: 0.3rem 0.6rem 0 0;
+  color: var(--burgundy);
+  font-weight: 400;
+}
+
+/* Artist statement specific styling — verse layout */
+.statement-verses {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 2.1;
+  color: var(--ink-warm);
+  text-align: center;
+  max-width: 700px;
+  margin: 2rem auto;
+  font-weight: 400;
+}
+.statement-verses .verse {
+  margin-bottom: 1.2rem;
+}
+.statement-verses .verse strong {
+  color: var(--morpho-deep);
+  font-weight: 600;
+  font-style: italic;
+}
+.statement-verses .signature {
+  font-family: 'Italiana', serif;
+  font-size: 1.5rem;
+  color: var(--burgundy);
+  margin-top: 2.5rem;
+  letter-spacing: 2px;
+}
+
+/* ════════════════════════════════════════
+   TABLE OF CONTENTS — book index
+   ════════════════════════════════════════ */
+.toc-section {
+  background: linear-gradient(180deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+  padding: 6rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+.toc-section h2 {
+  font-family: 'Italiana', serif;
+  font-size: 2.8rem;
+  color: var(--ink-deep);
+  text-align: center;
+  margin-bottom: 0.3rem;
+  font-weight: 400;
+}
+.toc-section .toc-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--sepia);
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.toc-card {
+  background: var(--parchment);
+  border: 1px solid rgba(184,146,74,0.35);
+  padding: 1.8rem 1.5rem;
+  text-decoration: none;
+  color: var(--ink-warm);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.toc-card .card-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--gold-leaf);
+  letter-spacing: 4px;
+  margin-bottom: 0.7rem;
+}
+.toc-card .card-title {
+  font-family: 'Italiana', serif;
+  font-size: 1.35rem;
+  color: var(--ink-deep);
+  margin-bottom: 0.4rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.toc-card .card-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--sepia);
+  line-height: 1.5;
+}
+.toc-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 70%, rgba(72,184,232,0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.toc-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--morpho-bright);
+  box-shadow: 0 14px 35px rgba(10,61,98,0.12);
+}
+.toc-card:hover::after { opacity: 1; }
+
+/* ════════════════════════════════════════
+   EVALUATIONS / PEER CARDS — clickable photos
+   ════════════════════════════════════════ */
+.evaluators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 3rem auto;
+}
+.evaluator-card {
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.evaluator-card:hover { transform: translateY(-6px); }
+.evaluator-photo {
+  width: 180px;
+  height: 240px;
+  margin: 0 auto 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(184,146,74,0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), inset 0 0 0 6px var(--parchment);
+  position: relative;
+  background: var(--parchment-dark);
+}
+.evaluator-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease, filter 0.4s ease;
+  filter: sepia(15%) contrast(1.02);
+}
+.evaluator-card:hover .evaluator-photo img {
+  transform: scale(1.05);
+  filter: sepia(0%) contrast(1.05);
+}
+.evaluator-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 8px solid var(--parchment);
+  pointer-events: none;
+}
+.evaluator-name {
+  font-family: 'Italiana', serif;
+  font-size: 1.3rem;
+  color: var(--ink-deep);
+  margin-bottom: 0.2rem;
+}
+.evaluator-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--sepia);
+}
+.evaluator-empty {
+  background: var(--parchment-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Italiana', serif;
+  color: var(--sepia);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+  font-style: italic;
+}
+
+/* ════════════════════════════════════════
+   EVALUATION DETAIL (hidden by default, shown via JS)
+   ════════════════════════════════════════ */
+.eval-detail {
+  display: none;
+  margin-top: 3rem;
+  padding: 3rem 2.5rem;
+  background: var(--parchment);
+  border: 1px solid rgba(184,146,74,0.3);
+  position: relative;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+}
+.eval-detail.active {
+  display: block;
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.eval-detail .eval-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(184,146,74,0.25);
+}
+.eval-detail .eval-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: var(--gold-leaf);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.eval-detail .eval-author {
+  font-family: 'Italiana', serif;
+  font-size: 1.8rem;
+  color: var(--ink-deep);
+}
+.eval-detail .eval-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  line-height: 1.95;
+  color: var(--ink-warm);
+  text-align: justify;
+  hyphens: auto;
+}
+.eval-detail .eval-body p { margin-bottom: 1.2rem; }
+.eval-detail .eval-body p em { color: var(--burgundy); }
+.eval-detail .close-eval {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--sepia);
+  cursor: pointer;
+  font-family: 'Italiana', serif;
+  transition: color 0.3s ease;
+}
+.eval-detail .close-eval:hover { color: var(--burgundy); }
+
+/* ════════════════════════════════════════
+   MEDIA SECTIONS — book / reel / gallery placeholders
+   ════════════════════════════════════════ */
+.media-placeholder {
+  background: var(--parchment-dark);
+  border: 1px dashed rgba(184,146,74,0.5);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--sepia);
+  font-size: 1.05rem;
+}
+.media-placeholder small {
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--gold-leaf);
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.gallery-item {
+  aspect-ratio: 3/4;
+  background: var(--parchment-dark);
+  border: 1px solid rgba(184,146,74,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Italiana', serif;
+  color: var(--sepia);
+  position: relative;
+  transition: all 0.4s ease;
+  font-size: 0.9rem;
+}
+.gallery-item:hover {
+  transform: scale(1.02);
+  border-color: var(--morpho-bright);
+}
+
+/* ════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════ */
+footer {
+  background: linear-gradient(180deg, var(--ink-deep) 0%, var(--morpho-deep) 100%);
+  color: var(--parchment);
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+footer .footer-morpho {
+  width: 80px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  opacity: 0.85;
+}
+footer h3 {
+  font-family: 'Italiana', serif;
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 2px;
+  color: var(--morpho-shimmer);
+}
+footer .footer-role {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: #f4ead5;
+  opacity: 0.9;
+}
+footer .footer-line {
+  width: 100px;
+  height: 1px;
+  background: var(--morpho-bright);
+  margin: 1.8rem auto;
+  opacity: 0.5;
+}
+footer small {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 0.75;
+  display: block;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════
+   BACK TO TOP
+   ════════════════════════════════════════ */
+#backToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--morpho-deep);
+  color: var(--morpho-shimmer);
+  border: 1px solid var(--morpho-bright);
+  font-family: 'Italiana', serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(10,61,98,0.4);
+}
+#backToTop.visible { opacity: 0.9; transform: translateY(0); }
+#backToTop:hover { background: var(--morpho-blue); opacity: 1; }
+
+/* ════════════════════════════════════════
+   REVEAL ANIMATIONS
+   ════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  nav ul { gap: 0; }
+  nav ul li a { font-size: 0.6rem; padding: 0.3rem 0.4rem; letter-spacing: 0.8px; }
+  .section { padding: 5rem 1.2rem 3rem; }
+  .section::before, .section::after { display: none; }
+  .hero-content h1 { font-size: 2.5rem; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .evaluator-photo { width: 150px; height: 200px; }
+  .section-text { font-size: 1.05rem; }
+  .statement-verses { font-size: 1.1rem; }
+}
+
+/* ════════════════════════════════════════
+   REAL PHOTO ACCENTS
+   ════════════════════════════════════════ */
+.section-photo-accent {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.section-photo-accent.visible { opacity: 1; }
+.section-photo-accent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply; /* makes white bg transparent on parchment */
+  filter: saturate(1.1) contrast(1.05);
+}
+.section-photo-accent.right {
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 160px;
+  height: 220px;
+}
+.section-photo-accent.left {
+  left: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  height: 200px;
+}
+.section-photo-accent.center-bottom {
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 130px;
+  opacity: 0.12 !important;
+}
+/* For dark-background image (morpho-007) use lighten instead */
+.section-photo-accent.on-dark img { mix-blend-mode: lighten; }
+
+/* The collection frame image */
+.morpho-collection {
+  display: block;
+  max-width: 320px;
+  margin: 2.5rem auto;
+  border: 1px solid rgba(184,146,74,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  filter: saturate(1.05);
+}
+
+/* Prologue / synopsis */
+.prologue-section {
+  min-height: auto;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(180deg, var(--parchment-dark) 0%, var(--parchment) 50%, var(--parchment-dark) 100%);
+}
+.prologue-body {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  border: 1px solid rgba(184,146,74,0.3);
+  background: rgba(255,255,255,0.3);
+  text-align: center;
+}
+.prologue-body p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.18rem;
+  line-height: 2;
+  color: var(--ink-warm);
+}
+.prologue-example {
+  display: block;
+  font-family: 'Cormorant Infant', serif;
+  font-style: italic;
+  color: var(--morpho-deep);
+  font-size: 1.2rem;
+  padding: 1rem 0;
+  border-top: 1px dashed rgba(184,146,74,0.3);
+  border-bottom: 1px dashed rgba(184,146,74,0.3);
+  margin: 0.8rem 0;
+}
+.prologue-placeholder small {
+  color: var(--gold-leaf);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-style: normal;
+}
+
+/* Dual-title heading (poetic + original subtitle) */
+.section h2 .h2-original {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  color: var(--gold-leaf);
+  text-transform: uppercase;
+  margin-top: 0.8rem;
+  font-weight: 400;
+}
+
+/* Print-style chapter break */
+.chapter-break {
+  text-align: center;
+  margin: 3rem 0 1rem;
+  color: var(--gold-leaf);
+  letter-spacing: 1.5rem;
+  opacity: 0.5;
+  font-size: 1.2rem;
+}
+
+/* ════════════════════════════════════════
+   PAGE-TURN TRANSITION
+   ════════════════════════════════════════ */
+#page-turn-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  perspective: 2000px;
+  perspective-origin: center center;
+  display: none;
+}
+#page-turn-overlay.active { display: block; }
+
+.page-turn-leaf {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(244,234,213,0.0) 20%,
+    rgba(244,234,213,0.55) 45%,
+    rgba(232,220,192,0.90) 65%,
+    var(--parchment-dark) 82%,
+    var(--parchment-aged) 100%
+  );
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  animation: pageTurn 2.2s cubic-bezier(0.28, 0, 0.18, 1) forwards;
+  box-shadow:
+    -14px 0 40px rgba(0,0,0,0.20),
+    inset -6px 0 24px rgba(139,111,71,0.18),
+    inset 4px 0 16px rgba(255,255,255,0.25);
+}
+@keyframes pageTurn {
+  0%   { transform: rotateY(0deg);     opacity: 1;   }
+  8%   { transform: rotateY(-12deg);   opacity: 1;   }
+  40%  { transform: rotateY(-88deg);   opacity: 1;   }
+  52%  { transform: rotateY(-92deg);   opacity: 0.9; }
+  78%  { transform: rotateY(-155deg);  opacity: 0.5; }
+  100% { transform: rotateY(-180deg);  opacity: 0;   }
+}
+
+/* ════════════════════════════════════════
+   CURIOUS FACTS — Morpho data cards
+   ════════════════════════════════════════ */
+.morpho-fact {
+  margin: 3.5rem auto;
+  max-width: 680px;
+  padding: 1.8rem 2.5rem 1.8rem 2rem;
+  border-left: 3px solid var(--morpho-bright);
+  background: linear-gradient(135deg,
+    rgba(0,168,204,0.04) 0%,
+    rgba(180,160,220,0.06) 50%,
+    rgba(0,168,204,0.03) 100%);
+  position: relative;
+  border-radius: 0 4px 4px 0;
+}
+.morpho-fact::before {
+  content: '🦋';
+  position: absolute;
+  left: -1px;
+  top: -1.1rem;
+  font-size: 1.3rem;
+  filter: grayscale(0.2);
+}
+.morpho-fact .fact-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  color: var(--morpho-deep);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+.morpho-fact .fact-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: var(--ink-warm);
+  font-style: italic;
+}
+.morpho-fact .fact-species {
+  margin-top: 0.6rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  color: var(--sepia);
+  letter-spacing: 2px;
+  opacity: 0.75;
+}
+
+/* ════════════════════════════════════════
+   PROFESSOR INITIALS AVATAR
+   ════════════════════════════════════════ */
+.prof-avatar {
+  width: 180px;
+  height: 240px;
+  margin: 0 auto 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(184,146,74,0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), inset 0 0 0 6px var(--parchment);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: transform 0.6s ease, filter 0.4s ease;
+}
+.prof-avatar-bg-1 {
+  background: linear-gradient(135deg, #1a1410 0%, #003d4f 55%, #005f6e 100%);
+}
+.prof-avatar-bg-2 {
+  background: linear-gradient(135deg, #1a1208 0%, #2d1a08 55%, #0a2030 100%);
+}
+.prof-avatar .prof-initial {
+  font-family: 'Italiana', serif;
+  font-size: 4.5rem;
+  color: var(--morpho-shimmer);
+  font-weight: 400;
+  opacity: 0.9;
+  text-shadow: 0 0 20px rgba(0,212,240,0.5);
+}
+.prof-avatar .prof-initial-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: var(--gold-soft);
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-top: -0.3rem;
+}
+.prof-avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 8px solid var(--parchment);
+  pointer-events: none;
+}
+.prof-avatar .prof-morpho-deco {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  width: 38px;
+  height: 28px;
+  opacity: 0.35;
+}
+.evaluator-card:hover .prof-avatar {
+  transform: scale(1.03);
+  filter: brightness(1.08);
+}
+
+/* Photo-based evaluator card */
+.evaluator-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.6s ease, filter 0.4s ease;
+  filter: sepia(10%) contrast(1.02);
+}
+.evaluator-card:hover .evaluator-photo img {
+  transform: scale(1.05);
+  filter: sepia(0%) contrast(1.05);
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SVG DEFS — Photorealistic Morpho Butterfly ══════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Real Morpho menelaus: electric cyan core, deeper at veins -->
+    <radialGradient id="morphoIridescence" cx="45%" cy="40%" r="70%">
+      <stop offset="0%"   stop-color="#00e5ff"/>  <!-- brightest electric cyan -->
+      <stop offset="20%"  stop-color="#00d0ee"/>
+      <stop offset="45%"  stop-color="#00b8d4"/>  <!-- main cyan -->
+      <stop offset="72%"  stop-color="#0090b8"/>  <!-- deeper near border -->
+      <stop offset="100%" stop-color="#005f82"/>  <!-- shadow at wing root -->
+    </radialGradient>
+    <!-- Iridescent shimmer — the characteristic Morpho "flash" -->
+    <linearGradient id="morphoShimmer" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#b8f0ff" stop-opacity="0.5"/>
+      <stop offset="50%"  stop-color="#ffffff"  stop-opacity="0.35"/>
+      <stop offset="70%"  stop-color="#80e4ff"  stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffffff"  stop-opacity="0"/>
+    </linearGradient>
+    <!-- Warm dark-brown border (not black — warm brown like real Morpho) -->
+    <linearGradient id="morphoBorder" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#2c1508"/>
+      <stop offset="40%"  stop-color="#3d2010"/>
+      <stop offset="100%" stop-color="#271205"/>
+    </linearGradient>
+    <!-- Body: warm dark brown with slight amber sheen -->
+    <linearGradient id="morphoBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#3d2010"/>
+      <stop offset="40%"  stop-color="#5a3018"/>
+      <stop offset="100%" stop-color="#2a1508"/>
+    </linearGradient>
+
+    <!-- Single wing (Morpho menelaus, body-side at x=200) ═════════════
+         Based on real specimen photos: broad upper wing rounded at apex,
+         smaller rounder lower wing with slightly scalloped edge. -->
+    <symbol id="morpho-wing" viewBox="0 0 200 195" overflow="visible">
+
+      <!-- ── UPPER (fore) WING ── -->
+      <!-- Dark warm-brown outer base -->
+      <path d="M198 82
+               C 182 55, 155 28, 120 14
+               C 92 4, 60 4, 36 16
+               C 16 26, 5 44, 5 62
+               C 5 80, 16 93, 38 98
+               C 70 104, 125 100, 175 92
+               Z"
+            fill="url(#morphoBorder)"/>
+      <!-- Electric cyan inner iridescent zone -->
+      <path d="M196 82
+               C 178 58, 152 35, 118 22
+               C 92 12, 64 13, 44 26
+               C 26 37, 18 54, 20 70
+               C 22 84, 34 93, 56 97
+               C 88 102, 135 99, 175 91
+               Z"
+            fill="url(#morphoIridescence)"/>
+      <!-- Bright shimmer overlay (the "flash") -->
+      <path d="M190 80
+               C 172 60, 148 40, 118 28
+               C 95 20, 72 22, 54 34
+               C 38 44, 32 60, 36 74
+               C 40 84, 54 91, 76 95
+               C 108 100, 148 97, 175 90 Z"
+            fill="url(#morphoShimmer)" opacity="0.65"/>
+
+      <!-- ── LOWER (hind) WING ── -->
+      <!-- Dark brown base, rounded with subtle scallops -->
+      <path d="M196 88
+               C 178 108, 162 128, 142 148
+               C 122 168, 96 180, 72 178
+               C 52 175, 40 162, 40 148
+               C 40 136, 46 126, 56 120
+               C 46 128, 40 140, 48 150
+               C 56 160, 66 155, 74 148
+               C 64 158, 60 170, 72 172
+               C 84 170, 95 160, 108 150
+               C 126 136, 148 118, 168 102
+               C 182 92, 192 88, 196 88 Z"
+            fill="url(#morphoBorder)"/>
+      <!-- Cyan inner lower wing -->
+      <path d="M193 87
+               C 174 106, 158 126, 140 143
+               C 122 160, 98 170, 77 168
+               C 60 166, 50 156, 52 144
+               C 54 132, 62 122, 74 116
+               C 100 108, 140 98, 176 90 Z"
+            fill="url(#morphoIridescence)"/>
+      <path d="M188 88
+               C 170 106, 155 122, 138 138
+               C 122 152, 102 162, 84 162
+               C 70 160, 62 152, 64 142
+               C 66 134, 76 126, 90 122
+               C 116 114, 152 102, 178 91 Z"
+            fill="url(#morphoShimmer)" opacity="0.55"/>
+
+      <!-- ── WHITE SPOTS (characteristic Morpho dots along dark border) ── -->
+      <!-- Upper wing apical band — row of white chevrons/dots -->
+      <ellipse cx="22" cy="42" rx="2.5" ry="1.8" fill="white" opacity="0.9" transform="rotate(-30,22,42)"/>
+      <ellipse cx="32" cy="28" rx="2.2" ry="1.6" fill="white" opacity="0.85" transform="rotate(-45,32,28)"/>
+      <ellipse cx="46" cy="17" rx="2.0" ry="1.5" fill="white" opacity="0.82" transform="rotate(-55,46,17)"/>
+      <ellipse cx="63" cy="10" rx="1.8" ry="1.3" fill="white" opacity="0.78"/>
+      <ellipse cx="80" cy="7"  rx="1.6" ry="1.2" fill="white" opacity="0.72"/>
+      <!-- Lower wing marginal dots -->
+      <circle cx="66" cy="162" r="2.0" fill="white" opacity="0.75"/>
+      <circle cx="82" cy="168" r="1.8" fill="white" opacity="0.7"/>
+      <circle cx="99" cy="170" r="1.6" fill="white" opacity="0.65"/>
+      <circle cx="116" cy="163" r="1.4" fill="white" opacity="0.6"/>
+      <circle cx="131" cy="153" r="1.3" fill="white" opacity="0.55"/>
+
+      <!-- ── WING VEINS — subtle darker lines through cyan ── -->
+      <!-- Upper wing veins fan out from body -->
+      <g stroke="#005577" stroke-width="0.8" fill="none" opacity="0.45" stroke-linecap="round">
+        <path d="M197 79 C 155 58 110 35 65 20"/>
+        <path d="M197 81 C 152 65 105 50 55 42"/>
+        <path d="M197 83 C 150 72 100 65 42 65"/>
+        <path d="M197 85 C 148 78 95 78 32 82"/>
+        <path d="M197 87 C 148 87 95 90 40 95"/>
+      </g>
+      <!-- Lower wing veins -->
+      <g stroke="#005577" stroke-width="0.7" fill="none" opacity="0.4" stroke-linecap="round">
+        <path d="M196 90 C 168 110 145 135 120 155"/>
+        <path d="M196 92 C 172 116 155 138 138 152"/>
+        <path d="M196 94 C 176 120 162 140 152 148"/>
+        <path d="M196 96 C 182 118 172 132 165 140"/>
+      </g>
+
+      <!-- ── SCALE TEXTURE — tiny overlapping highlights ── -->
+      <g opacity="0.18" fill="#b8f0ff">
+        <ellipse cx="90" cy="55"  rx="18" ry="5" transform="rotate(-10,90,55)"/>
+        <ellipse cx="70" cy="70"  rx="14" ry="4" transform="rotate(-8,70,70)"/>
+        <ellipse cx="115" cy="48" rx="12" ry="3" transform="rotate(-15,115,48)"/>
+        <ellipse cx="130" cy="70" rx="10" ry="3" transform="rotate(-12,130,70)"/>
+        <ellipse cx="105" cy="125" rx="16" ry="4" transform="rotate(-20,105,125)"/>
+        <ellipse cx="85" cy="138" rx="12" ry="3" transform="rotate(-22,85,138)"/>
+      </g>
+    </symbol>
+
+    <!-- Full butterfly assembled — top view, wings spread -->
+    <symbol id="morpho" viewBox="0 0 400 280" overflow="visible">
+      <!-- LEFT wing on screen: body on right of wing, wing extends left -->
+      <g class="wing wing-l" style="transform-origin: 200px 140px;">
+        <g transform="translate(0,30)">
+          <use href="#morpho-wing" x="0" y="0" width="200" height="200"/>
+        </g>
+      </g>
+      <!-- RIGHT wing on screen: mirror of above about x=200 -->
+      <g class="wing wing-r" style="transform-origin: 200px 140px;">
+        <g transform="translate(400,30) scale(-1,1)">
+          <use href="#morpho-wing" x="0" y="0" width="200" height="200"/>
+        </g>
+      </g>
+      <!-- Body: thorax + abdomen -->
+      <ellipse cx="200" cy="155" rx="7" ry="55" fill="url(#morphoBody)"/>
+      <!-- segments -->
+      <g stroke="#0a0807" stroke-width="0.5" opacity="0.8">
+        <line x1="194" y1="115" x2="206" y2="115"/>
+        <line x1="194" y1="130" x2="206" y2="130"/>
+        <line x1="194" y1="145" x2="206" y2="145"/>
+        <line x1="194" y1="160" x2="206" y2="160"/>
+        <line x1="194" y1="175" x2="206" y2="175"/>
+        <line x1="194" y1="190" x2="206" y2="190"/>
+      </g>
+      <!-- head -->
+      <ellipse cx="200" cy="105" rx="8" ry="9" fill="#1a0f08"/>
+      <!-- eyes -->
+      <circle cx="196" cy="103" r="2" fill="#05070a"/>
+      <circle cx="204" cy="103" r="2" fill="#05070a"/>
+      <circle cx="196" cy="102.5" r="0.6" fill="#b8f0ff" opacity="0.6"/>
+      <circle cx="204" cy="102.5" r="0.6" fill="#b8f0ff" opacity="0.6"/>
+      <!-- antennae: curved, clubbed at tip -->
+      <path d="M197 100 Q 180 78 172 52" stroke="#0a0807" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M203 100 Q 220 78 228 52" stroke="#0a0807" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="171" cy="50" rx="2" ry="2.8" fill="#0a0807"/>
+      <ellipse cx="229" cy="50" rx="2" ry="2.8" fill="#0a0807"/>
+    </symbol>
+
+    <!-- ══ Morpho Sulkowskyi — holographic/iridescent pearl butterfly ══ -->
+    <radialGradient id="sulkIrid" cx="50%" cy="45%" r="70%">
+      <stop offset="0%"   stop-color="#f8f4ff" stop-opacity="1"/>
+      <stop offset="18%"  stop-color="#d8d0f5" stop-opacity="1"/>  <!-- soft lavender -->
+      <stop offset="38%"  stop-color="#b8d8f0" stop-opacity="1"/>  <!-- icy blue -->
+      <stop offset="58%"  stop-color="#e8c8e8" stop-opacity="1"/>  <!-- pinkish -->
+      <stop offset="78%"  stop-color="#c8b890" stop-opacity="1"/>  <!-- golden-tan -->
+      <stop offset="100%" stop-color="#9090b0" stop-opacity="1"/>  <!-- muted purple-grey -->
+    </radialGradient>
+    <linearGradient id="sulkShimmer" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.0"/>
+      <stop offset="25%"  stop-color="#e0f0ff" stop-opacity="0.7"/>
+      <stop offset="50%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="75%"  stop-color="#ffd0f0" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <linearGradient id="sulkBorder" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#2a1e0e"/>
+      <stop offset="50%"  stop-color="#453020"/>
+      <stop offset="100%" stop-color="#241808"/>
+    </linearGradient>
+    <linearGradient id="sulkBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#352015"/>
+      <stop offset="50%"  stop-color="#503828"/>
+      <stop offset="100%" stop-color="#251408"/>
+    </linearGradient>
+
+    <!-- Sulkowskyi wing — elongated, more rounded than menelaus -->
+    <symbol id="sulk-wing" viewBox="0 0 200 200" overflow="visible">
+      <!-- Upper wing — broader, more rounded apex -->
+      <path d="M198 78
+               C 180 50, 150 22, 115 10
+               C 88 2, 58 4, 36 18
+               C 18 30, 8 50, 10 70
+               C 12 88, 26 100, 52 104
+               C 85 110, 138 105, 178 94 Z"
+            fill="url(#sulkBorder)"/>
+      <path d="M196 78
+               C 176 54, 148 28, 114 18
+               C 88 10, 62 13, 44 28
+               C 28 40, 20 58, 24 76
+               C 28 90, 44 100, 68 106
+               C 100 112, 146 107, 178 95 Z"
+            fill="url(#sulkIrid)"/>
+      <path d="M190 76
+               C 170 56, 144 34, 114 26
+               C 90 20, 68 24, 52 38
+               C 38 50, 34 66, 40 80
+               C 46 90, 62 98, 84 103
+               C 114 110, 150 106, 175 96 Z"
+            fill="url(#sulkShimmer)" opacity="0.7"/>
+
+      <!-- Lower wing — rounded, slightly elongated -->
+      <path d="M196 86
+               C 176 108, 158 132, 136 154
+               C 116 174, 88 188, 62 185
+               C 42 182, 30 168, 32 152
+               C 34 140, 42 128, 56 122
+               C 44 130, 38 142, 46 152
+               C 54 162, 66 158, 76 150
+               C 62 162, 58 174, 70 178
+               C 82 176, 94 164, 110 152
+               C 130 138, 154 118, 176 100 Z"
+            fill="url(#sulkBorder)"/>
+      <path d="M192 85
+               C 172 106, 155 128, 134 148
+               C 116 164, 92 174, 70 172
+               C 54 170, 44 158, 46 146
+               C 48 134, 58 124, 72 118
+               C 100 110, 142 100, 178 90 Z"
+            fill="url(#sulkIrid)"/>
+      <path d="M188 86
+               C 168 106, 152 126, 132 144
+               C 114 158, 92 168, 74 166
+               C 60 164, 52 154, 54 144
+               C 56 136, 68 128, 84 124
+               C 112 116, 150 104, 178 92 Z"
+            fill="url(#sulkShimmer)" opacity="0.65"/>
+
+      <!-- Eyespots on lower wing (characteristic of Sulkowskyi underside) -->
+      <circle cx="100" cy="152" r="7.5" fill="#e8ddc8" opacity="0.7"/>
+      <circle cx="100" cy="152" r="5" fill="#9090b0" opacity="0.6"/>
+      <circle cx="100" cy="152" r="2.5" fill="#c8d8e8" opacity="0.8"/>
+      <circle cx="72" cy="164" r="6" fill="#e8ddc8" opacity="0.65"/>
+      <circle cx="72" cy="164" r="4" fill="#9090b0" opacity="0.55"/>
+      <circle cx="72" cy="164" r="2" fill="#c8d8e8" opacity="0.75"/>
+
+      <!-- Subtle wing veins -->
+      <g stroke="#8888a0" stroke-width="0.6" fill="none" opacity="0.3" stroke-linecap="round">
+        <path d="M197 76 C 155 56 108 38 62 24"/>
+        <path d="M197 78 C 152 66 104 52 52 46"/>
+        <path d="M197 80 C 150 74 100 68 40 70"/>
+        <path d="M197 82 C 148 80 96 82 32 85"/>
+        <path d="M197 84 C 148 88 96 92 38 98"/>
+      </g>
+      <g stroke="#8888a0" stroke-width="0.5" fill="none" opacity="0.25" stroke-linecap="round">
+        <path d="M194 88 C 166 112 142 138 118 158"/>
+        <path d="M194 90 C 170 116 150 140 132 156"/>
+        <path d="M194 92 C 174 120 158 142 148 152"/>
+      </g>
+    </symbol>
+
+    <!-- Full Sulkowskyi butterfly — spread wings, top view -->
+    <symbol id="sulkowskyi" viewBox="0 0 400 280" overflow="visible">
+      <g class="wing wing-l" style="transform-origin: 200px 140px;">
+        <g transform="translate(0,28)">
+          <use href="#sulk-wing" x="0" y="0" width="200" height="200"/>
+        </g>
+      </g>
+      <g class="wing wing-r" style="transform-origin: 200px 140px;">
+        <g transform="translate(400,28) scale(-1,1)">
+          <use href="#sulk-wing" x="0" y="0" width="200" height="200"/>
+        </g>
+      </g>
+      <!-- Body -->
+      <ellipse cx="200" cy="152" rx="6" ry="52" fill="url(#sulkBody)"/>
+      <g stroke="#0a0807" stroke-width="0.4" opacity="0.6">
+        <line x1="195" y1="115" x2="205" y2="115"/>
+        <line x1="195" y1="128" x2="205" y2="128"/>
+        <line x1="195" y1="141" x2="205" y2="141"/>
+        <line x1="195" y1="154" x2="205" y2="154"/>
+        <line x1="195" y1="167" x2="205" y2="167"/>
+        <line x1="195" y1="180" x2="205" y2="180"/>
+      </g>
+      <ellipse cx="200" cy="103" rx="7" ry="8" fill="#1c1008"/>
+      <circle cx="196" cy="101" r="1.8" fill="#05070a"/>
+      <circle cx="204" cy="101" r="1.8" fill="#05070a"/>
+      <circle cx="196" cy="100.5" r="0.5" fill="#e8f0ff" opacity="0.7"/>
+      <circle cx="204" cy="100.5" r="0.5" fill="#e8f0ff" opacity="0.7"/>
+      <path d="M197 99 Q 180 76 172 50" stroke="#0a0807" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M203 99 Q 220 76 228 50" stroke="#0a0807" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="171" cy="48" rx="2" ry="2.6" fill="#0a0807"/>
+      <ellipse cx="229" cy="48" rx="2" ry="2.6" fill="#0a0807"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ══════════════ LOADER ══════════════ -->
+<div id="loader">
+  <svg class="loader-morpho" viewBox="0 0 400 280"><use href="#morpho"/></svg>
+  <p>Mórphosis</p>
+</div>
+
+<!-- ══════════════ NAVIGATION ══════════════ -->
+<div id="page-turn-overlay"><div class="page-turn-leaf"></div></div>
+
+<nav id="mainNav">
+  <ul>
+    <li><a href="#hero" class="active">Inicio</a></li>
+    <li><a href="#statement">Artist Statement</a></li>
+    <li><a href="#autoevaluacion">Metamorfosis</a></li>
+    <li><a href="#escrito-1">Escrito Investigativo I</a></li>
+    <li><a href="#escrito-2">Escrito Investigativo II</a></li>
+    <li><a href="#profesores">Eval. Profesores</a></li>
+    <li><a href="#pares">Eval. Pares</a></li>
+    <li><a href="#book">Book</a></li>
+    <li><a href="#reel">Reel</a></li>
+    <li><a href="#galeria">Ecosistemas</a></li>
+    <li><a href="#agradecimientos">Agradecimientos</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO / BOOK COVER ══════════════ -->
+<section id="hero">
+  <div class="hero-content">
+    <!-- Morpho menelaus — transparent background PNG, real specimen -->
+    <img class="hero-morpho" src="img/morpho-aurora.png" alt="Mariposa Morpho Aurora" draggable="false">
+    <h1>María Alejandra<br>Morales Cárdenas</h1>
+    <p class="morphosis">— Mórphosis —</p>
+    <div class="hero-divider"></div>
+    <p class="role">Artista Escénica</p>
+    <p class="quote" id="openingQuote"><!-- espacio reservado para el poema que enviarás --></p>
+    <a href="#prologue" class="enter-btn">Abrir el libro</a>
+  </div>
+</section>
+
+<!-- ══════════════ PROLOGUE / SINOPSIS ══════════════ -->
+<section id="prologue" class="section prologue-section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Prólogo</span></div>
+    <h2>Mórphosis</h2>
+    <p class="section-subtitle">Una carta al lector</p>
+    <div class="flourish"></div>
+
+    <div class="prologue-body">
+      <p class="prologue-letter">
+        Querido lector: Te presento “Mórphosis”.
+      </p>
+      <p class="prologue-letter">
+        En este libro podrás encontrar la investigación de una mariposa Morpho llamada María Alejandra Morales Cárdenas, que nació hace cuatro años.
+      </p>
+      <p class="prologue-letter">
+        Te invito a que te inmersas en este universo, a que recorras con atención cada capítulo, para que todo cobre sentido.
+      </p>
+      <p class="prologue-letter">
+        Te dedico cada palabra, cada frase, cada texto, cada poema, cada foto, cada video y cada mínimo detalle puesto con mucho amor en estas páginas.
+      </p>
+      <p class="prologue-letter">
+        Te regalo mi metamorfosis, los años de vida que llevo y los que me faltan.
+      </p>
+      <p class="prologue-letter">
+        Te otorgo el privilegio de conocer con profundidad a esta mariposa.
+      </p>
+      <p class="prologue-letter">
+        Te agradezco por el interés en este libro; prometo no decepcionarte…
+      </p>
+    </div>
+
+    <div class="flourish"></div>
+    <p style="text-align:center; margin-top:2rem;">
+      <a href="#contents" class="enter-btn" style="border-color:var(--gold-leaf); color:var(--burgundy);">Continuar al índice</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════ TABLE OF CONTENTS ══════════════ -->
+<section id="contents" class="toc-section">
+  <h2>Índice</h2>
+  <p class="toc-sub">Un libro sobre la mariposa Morpho</p>
+  <div class="toc-grid">
+    <a href="#statement" class="toc-card reveal">
+      <div class="card-num">Capítulo I</div>
+      <div class="card-title">Artist Statement</div>
+      <div class="card-desc">La declaración del vuelo</div>
+    </a>
+    <a href="#autoevaluacion" class="toc-card reveal">
+      <div class="card-num">Capítulo II · Autoevaluación</div>
+      <div class="card-title">Metamorfosis</div>
+      <div class="card-desc">Mirar hacia adentro</div>
+    </a>
+    <a href="#escrito-1" class="toc-card reveal">
+      <div class="card-num">Capítulo III · Escritos Investigativos</div>
+      <div class="card-title">La Investigación</div>
+      <div class="card-desc">Investigación &mdash; primera parte</div>
+    </a>
+    <a href="#profesores" class="toc-card reveal">
+      <div class="card-num">Capítulo IV · Evaluación de Profesores</div>
+      <div class="card-title">Voces del Vuelo</div>
+      <div class="card-desc">Voces que guían</div>
+    </a>
+    <a href="#pares" class="toc-card reveal">
+      <div class="card-num">Capítulo V · Evaluación de Pares</div>
+      <div class="card-title">Compañeras de Vuelo</div>
+      <div class="card-desc">Compañeras de vuelo</div>
+    </a>
+    <a href="#book" class="toc-card reveal">
+      <div class="card-num">Capítulo VI · Book</div>
+      <div class="card-title">Hábitat</div>
+      <div class="card-desc">El cuerpo en imagen</div>
+    </a>
+    <a href="#reel" class="toc-card reveal">
+      <div class="card-num">Capítulo VII · Reel</div>
+      <div class="card-title">Biodiversidad</div>
+      <div class="card-desc">El cuerpo en movimiento</div>
+    </a>
+    <a href="#galeria" class="toc-card reveal">
+      <div class="card-num">Capítulo VIII · Galería</div>
+      <div class="card-title">Ecosistemas</div>
+      <div class="card-desc">Memorias del proceso</div>
+    </a>
+    <a href="#agradecimientos" class="toc-card reveal">
+      <div class="card-num">Capítulo IX</div>
+      <div class="card-title">Agradecimientos</div>
+      <div class="card-desc">Las alas que me sostuvieron</div>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════ ARTIST STATEMENT ══════════════ -->
+<section id="statement" class="section">
+  <!-- decorative Morpho on the right margin — transparent PNG -->
+  <div class="section-photo-accent right reveal">
+    <img src="img/morpho-aurora.png" alt="Morpho Aurora" style="mix-blend-mode:normal; object-fit:contain;">
+  </div>
+  <!-- ink illustration on the left -->
+  <div class="section-photo-accent left reveal">
+    <img src="img/morpho-002.jpg" alt="Metamorfosis - ilustración">
+  </div>
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo I</span></div>
+    <h2>Artist Statement</h2>
+    <p class="section-subtitle">La declaración del vuelo</p>
+    <div class="flourish"></div>
+
+    <div class="statement-verses">
+      <div class="verse">Soy <strong>Mórphosis</strong>, mariposa Morpho y metamorfosis;</div>
+      <div class="verse">Soy mi propia investigación,</div>
+      <div class="verse">Investigo lo efímero, las memorias que me acompañan, la transformación que habita mi ser.</div>
+      <div class="verse">Soy la oruga que se arrastra para alcanzar sus sueños; desde un suelo fértil y cambiante.</div>
+      <div class="verse">Soy <strong>bailarina lírica</strong>; fiel perfeccionista de mi técnica, delicadamente pulcra en cada mínimo detalle, espontánea y entregada a mi propio estilo de danza.</div>
+      <div class="verse">Soy la <strong>crisálida</strong> que se encierra en sí misma cuando necesita refugio, hecha de una capa tan fuerte pero tan fina que toca su máximo esplendor de vulnerabilidad.</div>
+      <div class="verse">Soy <strong>artista de circo</strong>; pierdo el miedo con la acrobacia y me reto con la manipulación de objetos.</div>
+      <div class="verse">Soy el sueño de una niña que se dedicó al arte desde los 4 años.</div>
+      <div class="verse">Soy la mariposa con las alas más iridiscentes que podrás encontrar.</div>
+      <div class="verse">Soy <strong>aerealista</strong>; mi vida cobra sentido estando a metros del suelo y en compañía de mi lira.</div>
+      <div class="verse">Soy <strong>poeta</strong>, plasmo en palabras lo que a veces en movimiento no alcanza.</div>
+      <div class="verse">Soy promesas cumplidas y oraciones respondidas de Dios.</div>
+      <div class="verse">Soy compromiso, perseverancia y amor.</div>
+
+      <div class="signature">— María Alejandra Morales Cárdenas —<br><em style="font-size:1rem; font-family:'Cormorant Garamond',serif">artista escénica</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ AUTOEVALUACIÓN ══════════════ -->
+<section id="autoevaluacion" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo II</span></div>
+    <h2>Metamorfosis<span class="h2-original">· Autoevaluación ·</span></h2>
+    <p class="section-subtitle">Mirar hacia adentro</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Aquí irá el texto de tu autoevaluación.
+      <small>· Pendiente de envío ·</small>
+    </div>
+    <!-- Chrysalis stages illustration -->
+    <img src="img/morpho-008.jpg" alt="Etapas de la crisálida" class="morpho-collection">
+  </div>
+</section>
+
+<!-- ══════════════ ESCRITO INVESTIGATIVO I ══════════════ -->
+<section id="escrito-1" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo III</span></div>
+    <h2>Escrito Investigativo I</h2>
+    <p class="section-subtitle">Primera parte de la investigación</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Aquí irá tu primer escrito investigativo.
+      <small>· Pendiente de envío ·</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ESCRITO INVESTIGATIVO II ══════════════ -->
+<section id="escrito-2" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo IV</span></div>
+    <h2>Escrito Investigativo II</h2>
+    <p class="section-subtitle">Segunda parte de la investigación</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Aquí irá tu segundo escrito investigativo.
+      <small>· Pendiente de envío ·</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ EVALUACIÓN DE PROFESORES ══════════════ -->
+<section id="profesores" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo IV</span></div>
+    <h2>Evaluación de Profesores</h2>
+    <p class="section-subtitle">Voces que han guiado el vuelo &middot; Haz click en cada profesor para leer su evaluación</p>
+    <div class="flourish"></div>
+
+    <div class="evaluators-grid">
+      <!-- Jonathan Hernández -->
+      <div class="evaluator-card" data-eval="prof-jonathan">
+        <div class="evaluator-photo">
+          <img src="img/prof-jonathan.jpg" alt="Jonathan Hernández González">
+        </div>
+        <div class="evaluator-name">Jonathan Hernández</div>
+        <div class="evaluator-role">Maestro de Circo · Universidad Javeriana</div>
+      </div>
+      <div class="evaluator-card" data-eval="prof-humberto">
+        <div class="evaluator-photo">
+          <img src="img/prof-humberto.jpg" alt="Humberto Canessa Ulloa">
+        </div>
+        <div class="evaluator-name">Humberto Canessa</div>
+        <div class="evaluator-role">Ballet &amp; Danza Contemporánea · Universidad Javeriana</div>
+      </div>
+    </div>
+
+    <!-- Jonathan Hernández evaluation -->
+    <div class="eval-detail" id="eval-prof-jonathan">
+      <button class="close-eval" aria-label="Cerrar">✕</button>
+      <div class="eval-header">
+        <div class="eval-title">Evaluación de Profesor</div>
+        <div class="eval-author">Jonathan Hernández González</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Maestro Cátedra · Universidad Javeriana</div>
+      </div>
+      <div class="eval-body">
+        <p>Es un honor para mí escribir esta carta de evaluación y reconocimiento para una gran mujer a quien conocí el primer día de mi llegada a la universidad, siendo ella quien me recibió y me dio una bienvenida calurosa cuando yo como maestro nuevo me encontraba muy perdido. Es difícil describir con palabras lo que ha significado para mí acompañar el camino de María Alejandra porque su historia no es solo la de una estudiante de circo, sino la de un alma valiente que decidió volar.</p>
+        <p>Recuerdo su primer encuentro con la lira, en ese momento fue evidente la conexión que ella encontró, podría describir la magia y el brillo que reflejaron sus ojos como un alma que encuentra aquello que estuvo buscando toda su vida y ese sentimiento fue creciendo con cada entrenamiento, cada intento, cada caída y cada logro los cuales han construido los cimientos para la gran artista que es hoy. Ella no solo es una artista de gran nivel técnico, es una persona sensible, generosa y auténtica, con un corazón muy bello que siempre está a disposición ofreciendo su apoyo y conocimiento para el servicio de los demás.</p>
+        <p>Si tuviera que describir su proceso, lo haría a través de la metáfora de una mariposa. Inició como una aprendiz curiosa, en constante transformación, enfrentando retos con paciencia y fortaleza, pero no todo ha sido fácil, también han existido momentos difíciles tanto personales como profesionales; momentos de duda, de esfuerzo profundo, de llanto, de reflexión pero sobre todo, de reconstruirse desde adentro para así poco a poco ir reconociendo su fuerza, su belleza y su capacidad de volar hasta hoy que a punto de graduarse despliega sus alas con libertad y belleza, elevándose con gracia en cada movimiento, recordándonos que el verdadero arte nace de la perseverancia y del coraje de reinventarse.</p>
+        <p>Tengo muy presente el día que me dijo que elegiría el circo como su camino de vida y como profesión, ese día y aunque no lo mostré, de mis ojos salieron lágrimas de orgullo y de felicidad; sé que no fue una decisión fácil y también sé que no es una decisión a la ligera, sino el resultado de escuchar su corazón y tener el coraje de seguirlo. En cada movimiento suyo hay verdad, hay historia, hay alma, y desde ese día ya para mí se convirtió una compañera artista de circo luchando por el mismo sueño que yo llevo en mi vida y el cual me ha dado tanto. Deseo y espero el día que estemos juntos compartiendo la escena.</p>
+        <p>Si algo puedo decir con certeza, es que su vuelo apenas comienza pero, no es cualquier vuelo, esta mariposa tiene fuerza y determinación y aunque hayan vientos fuertes y tenga miedo ella dirá en su mente <em>"si tienes miedo hazlo con miedo, pero hazlo"</em> y seguirá volando cada vez más alto.</p>
+        <p>Hoy aquí más que hacer una evaluación quiero decirte gracias, gracias por tu amistad, gracias por tu generosidad por creer en mí, por permitirme guiarte y ser parte de tu proceso. Gracias por retarme a crear un ensamble de circo, porque si no hubiera sido por ti no habría aceptado y, aunque no creas yo tenía miedo, miedo de fallar, de no cumplir con las expectativas puestas en mí, pero el apoyo que recibí de ti, me permitió seguir fuerte y no enfrentarme a ese reto solo.</p>
+        <p>María Ale donde quiera que vayas, llevas contigo la magia de circo que te recibió y te acogió no solo para darte alegrías, te recibió para darte retos y ponerte en momentos difíciles para que demuestres esa dulzura y esa fuerza que solo tú tienes y estoy seguro que tocarás e inspirarás muchas vidas a través del circo. Cuando estés lejos recuerda que aquí siempre estaré para escucharte y animarte, ya no como un profesor ahora como un amigo y compañero de circo.</p>
+        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;">Con admiración y cariño<br><strong>Jonathan Hernández González</strong><br><span style="font-size:0.75rem; opacity:0.8">Maestro Cátedra · Universidad Javeriana</span></p>
+      </div>
+    </div>
+
+    <!-- Humberto Canessa evaluation -->
+    <div class="eval-detail" id="eval-prof-humberto">
+      <button class="close-eval" aria-label="Cerrar">✕</button>
+      <div class="eval-header">
+        <div class="eval-title">Evaluación de Profesor</div>
+        <div class="eval-author">Humberto Canessa Ulloa</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Ballet &amp; Danza Contemporánea · Universidad Javeriana</div>
+      </div>
+      <div class="eval-body">
+        <p>Cuando fui invitado a ser parte de esta Carrera de Escénicas en la Universidad Javeriana de Bogotá en 2018, tuve la oportunidad de encontrarme con una gran diversidad de estudiantes, propia de un programa multinivel y de múltiples énfasis que se distingue por una propuesta académica única dentro del horizonte de la enseñanza de estas disciplinas en Colombia y la región. Intuí entonces que, entre ellos, aparecerían algunas y algunos jóvenes con una visión más integral de lo escénico, cercana a esa necesidad profunda de no solo crear, sino también creer en el acto creativo como una experiencia totalizadora que trascienda ser únicamente ejecutantes para la escena y proyectarse como verdaderos investigadores-creadores.</p>
+        <p>En este contexto, María Alejandra Morales —Maleja— emerge con claridad como una de esas artistas. A lo largo de su proceso formativo ha sabido construir una proyección profesional coherente, definiendo con rigor sus intereses, necesidades expresivas y búsquedas creativas. Su camino no se ha limitado a la adquisición de habilidades técnicas, sino que ha estado atravesado por la construcción de una filosofía de trabajo sólida y sensible. Su proceso da cuenta de una artista en transformación permanente —<em>Mórphosis</em>— como ella misma lo nombra de manera muy poética y sensible: una mezcla de mariposa Morpho y Metamorfosis, comprometida con la excelencia, pero también con una búsqueda honesta, rigurosa y profundamente humana dentro de las artes escénicas.</p>
+        <p>He tenido el gusto de acompañar su proceso formativo a lo largo de varios momentos clave de su carrera. Recién llegando en el primer semestre en la clase de Elementos de la Puesta en Escena I, ella se destacó desde el inicio por su seriedad y compromiso con cada tarea asignada. A pesar de encontrarse en una etapa inicial de formación, mostró una notable capacidad de observación y análisis, así como una disposición constante para el trabajo riguroso.</p>
+        <p>Durante la Técnica básica de Ballet y Danza Moderna que ofrecí en su cuarto semestre, su crecimiento fue evidente. María Alejandra consolidó una técnica limpia y precisa, acompañada de una evidente sensibilidad artística en expansión. Su carácter perfeccionista se tradujo en un trabajo detallado y exigente consigo misma, siempre buscando ir más allá de lo esperado, atendiendo cada retroalimentación con respeto por su proceso. En el Laboratorio de composición coreográfica, comenzó a revelar una voz propia, con intuiciones creativas claras y una capacidad interesante para estructurar material de movimiento con dramaturgias ligadas a sus intereses creativos y una estética personal sólida.</p>
+        <p>En el Ensamble de Danza Contemporánea <em>"Otra cosa es otra cosa"</em>, una pieza inspirada en la obra de María Teresa Hincapié, demostró una mayor madurez escénica. Su presencia en escena se volvió más contundente, y su capacidad de trabajo en equipo fue especialmente valiosa para el desarrollo colectivo. Maleja es una intérprete confiable, comprometida con los procesos grupales, respetuosa de sus compañeros y consciente de la importancia del engranaje colectivo en la creación escénica.</p>
+        <p>Finalmente, en el Ensamble intensivo de Danza y Circo <em>"La Madriguera"</em>, ella alcanzó un nivel de integración muy sólido entre técnica, expresividad y riesgo. Su trabajo como bailarina y artista aérea en la lira evidencia una disciplina rigurosa y una gran conciencia corporal. En este punto, su identidad artística —que ella misma nombra metafóricamente <em>Mórphosis</em>— se manifiesta con fuerza: es una intérprete en constante transformación como una mariposa, frágil, pero a la vez poderosamente bella y entregada.</p>
+        <p>Maleja es una artista perseverante, disciplinada y enormemente comprometida con su oficio. Su exigencia personal, bien encauzada, es una de sus mayores fortalezas. De cara a su futuro como profesional de las artes escénicas, como bailarina y como aerealista, considero que posee todas las herramientas necesarias para desarrollar una trayectoria sólida y significativa. La invito a seguir confiando en su voz propia y a abrazar lo que la hace única.</p>
+        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;"><strong>Humberto Canessa Ulloa</strong><br><span style="font-size:0.75rem; opacity:0.8">Ballet &amp; Danza Contemporánea · Universidad Javeriana</span></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ EVALUACIÓN DE PARES ══════════════ -->
+<section id="pares" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo V</span></div>
+    <h2>Evaluación de Pares</h2>
+    <p class="section-subtitle">Compañeras de vuelo &middot; Haz click en cada compañera para leer su evaluación</p>
+    <div class="flourish"></div>
+
+    <div class="evaluators-grid">
+      <div class="evaluator-card" data-eval="dana">
+        <div class="evaluator-photo">
+          <img src="img/dana-santos.jpg" alt="Dana Santos">
+        </div>
+        <div class="evaluator-name">Dana Santos</div>
+        <div class="evaluator-role">Compañera</div>
+      </div>
+      <div class="evaluator-card" data-eval="par-2">
+        <div class="evaluator-photo evaluator-empty">Foto pendiente</div>
+        <div class="evaluator-name">Compañera II</div>
+        <div class="evaluator-role">Pendiente de envío</div>
+      </div>
+      <div class="evaluator-card" data-eval="par-3">
+        <div class="evaluator-photo evaluator-empty">Foto pendiente</div>
+        <div class="evaluator-name">Compañera III</div>
+        <div class="evaluator-role">Pendiente de envío</div>
+      </div>
+    </div>
+
+    <!-- Dana Santos's evaluation -->
+    <div class="eval-detail" id="eval-dana">
+      <button class="close-eval" aria-label="Cerrar">✕</button>
+      <div class="eval-header">
+        <div class="eval-title">Evaluación de Pares</div>
+        <div class="eval-author">Escrita por Dana Santos</div>
+      </div>
+      <div class="eval-body">
+        <p>Desde los primeros momentos que estoy en la universidad conozco a Aleja, desde aquella audición que me permitiría conocerla mejor tiempo después y desde esas primeras clases que compartimos. Aunque al inicio no éramos tan cercanas, siempre hubo algo en ella que admiré y que sentí que nos haría con el tiempo más unidas: una forma muy sincera de estar, de entregarse a lo que hacía y de buscar con el corazón. Desde ese momento la veía como una artista en formación muy comprometida, con una pasión tranquila pero constante por encontrar su lugar.</p>
+
+        <p>Como una mariposa, su proceso no comenzó en el vuelo, sino en esas primeras etapas más silenciosas e inciertas. Haber estado ahí, tanto en lo claro como en la duda, me permitió ver la profundidad de su transformación y entender que cada paso, por pequeño que pareciera, hacía parte de algo mucho más grande. Durante el ciclo básico, que compartimos durante dos semestres, empezamos a acercarnos más. Coincidimos en clases de danza, actuación y somática, espacios donde poco a poco fuimos compartiendo más, encontrándonos desde el hacer, desde el cuerpo, desde lo que cada una estaba atravesando. Fueron clases donde la veía siempre aferrada a su deseo de crecer como artista, con una entrega muy honesta y constante. La danza, especialmente, fue un lugar que nos conectó mucho, y ahí siempre había algo en ella que yo siempre resalté: ese brillo tan particular cuando se esforzaba por llevar todo a su máxima expresión. Era una entrega que no pasaba desapercibida.</p>
+
+        <p>En su inicio en la carrera, la siento como ese primer estado, ese "huevo" cargado de posibilidades, pero también de expectativa y preparación. Ahí también empezó nuestra cercanía. Compartimos procesos muy importantes, como nuestro primer ensamble, <em>La Condena</em>, donde no solo coincidimos escénicamente, sino que empezamos a acompañarnos de verdad. Recuerdo cómo su manera de estar se hacía evidente: comprometida, constante, atenta a lo que sucedía alrededor, encaminada aún por la danza y por la creación con esta. Su rendimiento no solo era sólido, sino profundamente entregado; no se trataba solo de cumplir, sino de sostener el ensamble, de cuidar lo que estábamos construyendo entre todos. Había en ella una disposición muy honesta hacia la creación, una forma de estar que sumaba, que acompañaba, que hacía que el proceso se sintiera más firme. Compartir ese primer ensamble hizo que empezáramos a acompañarnos como verdaderas artistas, desde adentro del proceso. Fui testigo de cómo iba comprendiendo lo que implica habitar un ensamble: estar presente desde el vínculo, desde la confianza y desde ese compromiso silencioso que sostiene lo colectivo. Y al mismo tiempo, ese espacio nos permitió construir una forma de trabajar juntas, de escucharnos y de sostenernos, entendiendo que la escena también se teje en relación. Nos permitió estrechar nuestra amistad.</p>
+
+        <p>En la técnica de Ballet y Moderno también pude estar muy cerca de una parte importante de su proceso. Las dos llegábamos con una base en Ballet, y eso hacía que compartiéramos un mismo punto de partida, era un lenguaje que ya conocíamos. Pero cuando apareció el moderno para ambas fue algo nuevo, otra forma de moverse, de soltar y de romper con lo que el Ballet ya había marcado. Y ahí fue muy claro verla. Lo que podía sentirse como un choque, en ella se volvió un reto que asumió con mucha fluidez. Se fue adaptando muy rápido, dejando que su cuerpo aprendiera desde otro lugar, más disponible y menos rígido. Hubo en ella una capacidad muy bonita de escuchar su cuerpo, de dejar que ese nuevo lenguaje entrara sin resistencia. Además, el hecho de estar siempre ubicadas juntas en ese salón de clase hizo que ese proceso se volviera aún más especial para mí. Compartir ese espacio a su lado lo hizo más cercano, más llevadero, incluso más divertido. Son de esos momentos que terminan marcando el proceso sin que uno se dé cuenta en el instante.</p>
+
+        <p>Considero que la danza, durante esta etapa de Aleja, era como la hoja de la que la oruga se sostiene: constante, segura y necesaria. Pero también como pasa en toda metamorfosis, llegó un punto en el que ese mismo lugar empezó a generar dudas o incomodidades. Y ahí apareció algo muy valioso en el proceso de Aleja: un tránsito donde el Circo llegó a su vida, no como algo ajeno, sino como un espacio donde su cuerpo empezó a sentirse más libre y mucho más vivo. Un espacio donde ella empezó a verse aún más radiante que nunca.</p>
+
+        <p>Y es justamente en ese proceso donde empieza a verse una Aleja que empieza a aprender a volar poco a poco. Como si, dentro de esa crisálida, algo nuevo comenzara a formarse. En técnica básica de Circo fue muy evidente: la sentí más fuerte, más presente y conectada con lo que hacía. Las acrobacias y los malabares no fueron solo una exploración de clase; había un interés real y una entrega completamente distinta. También fue muy potente y valioso verla reconectar con habilidades que ya habitaban en su cuerpo desde la gimnasia, conociendo su historia previa a la universidad, pero ahora desde un lugar más consciente y decidido. Aunque no compartí con ella el laboratorio de Aéreos, en la técnica de Circo era claro que ese trabajo y los aéreos la estaban completando profundamente. Todo empezaba a alinearse en ella y se le notaba en su forma de estar. Desde mi percepción, nunca se sintió pasajero. Había una convicción creciendo en ella, algo que la sostenía y la impulsaba.</p>
+
+        <p>En las clases más teóricas también fue muy especial compartir con ella. En puestas en escena, en Cuerpo y nuevos medios, en Teatro Musical y en Circo siempre estuvimos cerca, acompañándonos en todo el proceso de aprendizaje. Había algo muy bonito en cómo nos apoyábamos: en las dudas, en los momentos donde algo no salía, pero también en lo que íbamos entendiendo y podíamos compartir la una con la otra. Pero más allá de lo académico, esos espacios también se volvieron muy nuestros. Siempre encontrábamos la forma de compartir algo más: conversaciones largas, risas, comida, pequeños momentos que hacían que las clases fueran mucho más que una obligación. Eran espacios donde aprendíamos, pero también donde construíamos recuerdos que se quedan. Y creo que eso también hizo que nuestro proceso fuera distinto, más cercano, más humano y más lleno de vida. Definitivamente una amistad sincera como artistas.</p>
+
+        <p>Al mismo tiempo, su proceso no se ha quedado solo en su vuelo personal, y eso es algo que admiro mucho de ella. He podido verla habitar otros lugares dentro de la escena, como la producción y la asistencia de dirección, y ahí aparece otra forma muy bonita de ser artista. No es solo la Aleja que vuela, sino también la que sostiene, la que cuida, la que está pendiente de todo y de todos. Su proceso como productora también ha sido algo que admiro profundamente. En <em>Mientras Caemos</em>, donde yo fui ejecutante, pude verla desde otro lugar, uno que no siempre es visible pero que sostiene todo lo demás. Fue una productora increíble: muy organizada, atenta a cada detalle, siempre dispuesta a ayudar y con una actitud que hacía que el proceso se sintiera más ligero, incluso en los momentos de mayor exigencia y dificultad para mi. Sabía escuchar, resolver, anticiparse, y sobre todo, estar. Y siento que fue precisamente esa forma de asumir la labor, con tanta entrega y responsabilidad, lo que hizo que naturalmente pasara a ser asistente de dirección. No fue casualidad, fue consecuencia de la manera en la que sostuvo ese proceso. Y además, fue excelente en este rol.</p>
+
+        <p>Al mismo tiempo, tuvimos la oportunidad de invertir los roles. Yo fui productora en uno de sus ensambles como ejecutante, <em>346</em>, y ahí pude verla en su lugar de ejecutante, especialmente en los aéreos. Fue muy fuerte verla en escena, porque había una claridad y una presencia que no se pueden fingir. En la Lira ella siempre se sintió y se vio completamente en su elemento: segura, precisa y conectada. Había algo muy orgánico en su movimiento, una forma de habitar el aire que hacía que todo se viera fluido aun cuando detrás hay una exigencia enorme. Para mí fue muy significativo acompañar ese proceso desde otro lugar, verla sostener ese vuelo que tanto ha construido, y reconocer cómo ahí, en ese espacio, brilla con una fuerza muy propia. Fue uno de esos momentos donde se hace evidente que encontró algo que realmente le pertenece.</p>
+
+        <p>No ha sido una mariposa solitaria, y creo que ahí también está una de sus mayores fortalezas: en la manera en la que se deja acompañar, en cómo construye con otros, en su apertura y su capacidad de escucha. Nuestra cercanía, desde el inicio, se fue volviendo un lugar de apoyo mutuo muy especial. Siempre hubo un sostenernos, un estar la una para la otra, que se sentía tierno, pero al mismo tiempo muy comprometido con lo que estábamos construyendo como artistas. Crecimos juntas, aprendimos juntas, y de alguna forma nos fuimos acompañando en cada etapa de esta metamorfosis.</p>
+
+        <p>Ahora, en este punto final de la carrera, siento que Aleja está en pleno vuelo. No como algo terminado, sino como una mariposa que apenas empieza a recorrer el mundo con las alas que tanto tiempo le tomó construir. Y hay algo que admiro profundamente: que haya encontrado durante este proceso eso que realmente la apasiona, eso que la llena de vida. Porque no todos tenemos la fortuna de descubrirlo con tanta claridad. Sé que ese camino en el circo, en lo aéreo, y en la Lira que tanto la hace ver liberada, la va a llevar lejos, que le va a permitir viajar, seguir aprendiendo, expandirse y cumplir muchos de los sueños que ha construido desde hace años y todos aquellos que sigue anhelando.</p>
+      </div>
+    </div>
+
+    <!-- Placeholder for other peer evaluations -->
+    <div class="eval-detail" id="eval-par-2">
+      <button class="close-eval" aria-label="Cerrar">✕</button>
+      <div class="eval-header">
+        <div class="eval-title">Evaluación de Pares</div>
+        <div class="eval-author">Compañera II</div>
+      </div>
+      <div class="eval-body"><p><em>Evaluación pendiente de envío.</em></p></div>
+    </div>
+    <div class="eval-detail" id="eval-par-3">
+      <button class="close-eval" aria-label="Cerrar">✕</button>
+      <div class="eval-header">
+        <div class="eval-title">Evaluación de Pares</div>
+        <div class="eval-author">Compañera III</div>
+      </div>
+      <div class="eval-body"><p><em>Evaluación pendiente de envío.</em></p></div>
+    </div>
+</section>
+
+<!-- ══════════════ BOOK ══════════════ -->
+<section id="book" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo VI</span></div>
+    <h2>Hábitat<span class="h2-original">· Book ·</span></h2>
+    <p class="section-subtitle">El cuerpo en imagen</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Aquí irá tu book fotográfico.
+      <small>· Envíame las fotos para integrarlas ·</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ REEL ══════════════ -->
+<section id="reel" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo VII</span></div>
+    <h2>Biodiversidad<span class="h2-original">· Reel ·</span></h2>
+    <p class="section-subtitle">El cuerpo en movimiento</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Aquí irá tu reel en video (puede ser embed de YouTube/Vimeo o archivo mp4).
+      <small>· Envíame el enlace o archivo ·</small>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ GALERÍA ══════════════ -->
+<section id="galeria" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo VIII</span></div>
+    <h2>Ecosistemas<span class="h2-original">· Galería ·</span></h2>
+    <p class="section-subtitle">Registro de mis ensambles en la Carrera de Artes Escénicas</p>
+    <div class="flourish"></div>
+
+    <style>
+    .gal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin: 2rem auto;
+      max-width: 1100px;
+      align-items: start;
+    }
+    @media(max-width:900px){ .gal-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:500px){ .gal-grid { grid-template-columns: 1fr; } }
+    .gal-card {
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.13);
+      transition: transform 0.25s, box-shadow 0.25s;
+      background: rgba(244,234,213,0.95);
+      position: relative;
+      border: 1px solid rgba(184,146,74,0.25);
+    }
+    .gal-card:hover { transform: translateY(-5px); box-shadow: 0 10px 32px rgba(0,0,0,0.22); }
+    .gal-img-box { aspect-ratio: 4/5; overflow: hidden; position: relative; }
+    .gal-img-box img { width: 100%; height: 118%; object-fit: cover; object-position: top center; display: block; }
+    .gal-card-info { padding: 0.75rem 0.9rem; background: rgba(244,234,213,0.95); }
+    .gal-card-info h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--morpho-deep); margin: 0 0 0.25rem; letter-spacing: 0.03em;
+    }
+    .gal-card-info p {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 0.8rem; color: var(--sepia); margin: 0; font-style: italic;
+    }
+    .gal-bonus-badge {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: linear-gradient(135deg,#b8924a,#d4af6a);
+      color: #fff; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 20px; font-family: "Cinzel", serif;
+    }
+    .gal-trasescena-badge {
+      position: absolute; top: 0.6rem; left: 0.6rem;
+      background: linear-gradient(135deg,#2d3a6b,#4a5fa0);
+      color: #fff; font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 20px; font-family: "Cinzel", serif;
+    }
+    .gal-nophoto-card img { /* no opacity filter */ }
+    /* ── OVERLAY: sólo backdrop, no scrollea ── */
+        /* ════════════════════════════════════════
+       GAL-DETAIL — expand panel (inline, no modal)
+       ════════════════════════════════════════ */
+    .gal-detail {
+      display: none;
+      margin: 0.5rem 0 2rem;
+      background: var(--parchment);
+      border: 1px solid rgba(184,146,74,0.30);
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .gal-detail.active {
+      display: block;
+      animation: galFadeIn 0.42s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes galFadeIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .gal-det-header {
+      background: var(--morpho-deep);
+      color: #f4ead5;
+      padding: 1.4rem 3rem 1.2rem 2rem;
+      border-radius: 10px 10px 0 0;
+    }
+    .gal-det-header h2 {
+      font-family: 'Italiana', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      margin: 0 0 0.25rem;
+      letter-spacing: 0.04em;
+    }
+    .gal-det-dir-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 1.3vw, 1rem);
+      opacity: 0.82;
+      font-style: italic;
+    }
+    .gal-det-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      padding: 1.8rem 2rem;
+      align-items: center;
+    }
+    .gal-det-body--full {
+      grid-template-columns: 1fr;
+    }
+    .gal-det-flyer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gal-det-flyer img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      border: 1px solid rgba(184,146,74,0.2);
+      cursor: zoom-in;
+      transition: transform 0.22s;
+    }
+    .gal-det-flyer img:hover { transform: scale(1.015); }
+    .gal-det-info { min-width: 0; }
+    .gal-det-meta {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--sepia);
+      border-left: 3px solid rgba(184,146,74,0.4);
+      padding-left: 0.8rem;
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .gal-det-meta strong { color: var(--ink-deep); font-weight: 600; }
+    .gal-det-synopsis {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--ink-warm);
+      padding: 1rem 1.2rem;
+      background: rgba(184,146,74,0.07);
+      border-radius: 6px;
+      border-left: 3px solid rgba(184,146,74,0.35);
+      margin-bottom: 1.2rem;
+    }
+    .gal-det-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+    .gal-det-photos img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .gal-det-photos img:hover { transform: scale(1.03); }
+    .gal-det-photos--bonus img { aspect-ratio: 4/3; }
+    .gal-det-pending {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--sepia);
+      opacity: 0.7;
+      font-size: 0.95rem;
+      margin-top: 0.8rem;
+    }
+    .gal-det-close {
+      position: absolute;
+      top: 1rem; right: 1.2rem;
+      background: none; border: none;
+      color: rgba(244,234,213,0.7);
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .gal-det-close:hover { color: #f4ead5; }
+    .gal-card.active {
+      outline: 2px solid rgba(184,146,74,0.6);
+      outline-offset: 2px;
+    }
+    @media(max-width:700px){
+      .gal-det-body { grid-template-columns: 1fr; gap: 1.2rem; padding: 1.2rem; }
+    }
+
+    /* ── Trailer / Canva buttons ── */
+    .gal-trailer-btn, .gal-canva-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.2rem;
+      border-radius: 4px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.22s, transform 0.18s, box-shadow 0.22s;
+      cursor: pointer;
+      margin-bottom: 0.2rem;
+    }
+    .gal-trailer-btn {
+      background: var(--morpho-deep);
+      color: #f4ead5;
+      box-shadow: 0 3px 12px rgba(30,20,80,0.25);
+    }
+    .gal-trailer-btn:hover {
+      background: #2a1a6e;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(30,20,80,0.35);
+    }
+    .gal-canva-btn {
+      background: var(--gold-leaf);
+      color: #1a0e3a;
+      box-shadow: 0 3px 12px rgba(184,146,74,0.25);
+    }
+    .gal-canva-btn:hover {
+      background: #c9a84c;
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(184,146,74,0.35);
+    }
+
+    /* ── Lightbox (images only) ── */
+    .gal-lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 10000;
+      background: rgba(8,6,18,0.92);
+      backdrop-filter: blur(6px);
+      cursor: zoom-out;
+    }
+    .gal-lightbox.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5vh 5vw;
+      animation: lbFadeIn 0.28s ease;
+    }
+    @keyframes lbFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .gal-lightbox img {
+      max-width: 85vw;
+      max-height: 80vh;
+      object-fit: contain;
+      transform: translateY(65vh);
+      border-radius: 6px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+      animation: lbScaleIn 0.28s cubic-bezier(0.22,1,0.36,1);
+      cursor: default;
+    }
+    @keyframes lbScaleIn {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .gal-lightbox-close {
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.3rem;
+      width: 2.4rem; height: 2.4rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .gal-lightbox-close:hover { background: rgba(255,255,255,0.25); }
+    </style>
+
+    <div class="gal-grid">
+
+      <div class="gal-card" onclick="openGal('condena')">
+        <div class="gal-img-box"><img src="img/gallery/condena-flyer.jpg" alt="La Condena"></div>
+        <div class="gal-card-info">
+          <h3>La Condena</h3>
+          <p>Dir. Isaac Barbosa y Juliana Atuesta</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('intento')">
+        <div class="gal-img-box"><img src="img/gallery/intento-flyer.jpg" alt="Intento Optimista de un_ lunátic_"></div>
+        <div class="gal-card-info">
+          <h3>Intento Optimista de un_ lunátic_</h3>
+          <p>Dir. Arnulfo Pardo y Laura Castiblanco</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('mientras')">
+        <span class="gal-trasescena-badge">Trasescena</span>
+        <div class="gal-img-box"><img src="img/gallery/mientras-flyer.jpg" alt="Mientras Caemos"></div>
+        <div class="gal-card-info">
+          <h3>Mientras Caemos</h3>
+          <p>Dir. Diana Salamank y M. A. Morales</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('otracosa')">
+        <div class="gal-img-box"><img src="img/gallery/otracosa-flyer.jpg" alt="Otra cosa es otra cosa"></div>
+        <div class="gal-card-info">
+          <h3>Otra cosa es otra cosa</h3>
+          <p>Dir. Humberto Canessa</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('t346')">
+        <div class="gal-img-box"><img src="img/gallery/346-flyer.jpg" alt="346"></div>
+        <div class="gal-card-info">
+          <h3>346</h3>
+          <p>Dir. Jonathan Hernández</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('ecdisis')">
+        <div class="gal-img-box"><img src="img/gallery/ecdisis-flyer.jpg" alt="Ecdisis"></div>
+        <div class="gal-card-info">
+          <h3>Ecdisis</h3>
+          <p>Dir. Jorge Bernal</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('madriguera')">
+        <div class="gal-img-box"><img src="img/gallery/madriguera-flyer.jpg" alt="La Madriguera"></div>
+        <div class="gal-card-info">
+          <h3>La Madriguera</h3>
+          <p>Dir. Humberto Canessa y Leonardo Girón</p>
+        </div>
+      </div>
+
+      <div class="gal-card" onclick="openGal('tormenta')" style="background:linear-gradient(160deg,#1a2060,#2d3a8c);">
+        <span class="gal-bonus-badge">Bonus</span>
+        <div style="width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.8rem;padding:1.5rem;">
+          <div style="font-size:3rem;">&#10052;</div>
+          <p style="font-family:Cormorant Garamond,serif;font-size:1.15rem;font-weight:700;color:#f4ead5;text-align:center;margin:0;letter-spacing:0.05em;">Tormenta de Nieve</p>
+          <p style="font-family:Cormorant Garamond,serif;font-size:0.85rem;color:rgba(244,234,213,0.75);text-align:center;margin:0;font-style:italic;">La Tempestad</p>
+        </div>
+        <div class="gal-card-info" style="background:rgba(26,32,96,0.92);">
+          <h3 style="color:#d4af6a;">Creación Colaborativa</h3>
+          <p style="color:rgba(244,234,213,0.75);">Artes Visuales &middot; Música &middot; Escénicas</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="gal-details-container"></div>
+
+    <div id="galLightbox" class="gal-lightbox" onclick="closeLB()">
+      <img id="galLBImg" src="" alt="" onclick="event.stopPropagation()">
+      <button class="gal-lightbox-close" onclick="closeLB()">&#x2715;</button>
+    </div>
+
+    <script>
+    var GD = {
+      condena: {
+        t: "La Condena",
+        s: "XIX Temporada de Ensambles",
+        d: "Isaac Barbosa y Juliana Atuesta",
+        url: "https://www.instagram.com/reel/CzMapz9Jfe3/?igsh=cDR4Mml5a3Fmc3Fo",
+        fl: "img/gallery/condena-flyer.jpg",
+        syn: "La Condena plantea una apertura performatética a un reportaje escrito por Santiago Wills, sobre la invaluable labor social y ambiental de Jani Rita Silva en la zona de reserva campesina del bajo Putumayo. Desde el valor expresivo de la performancia, nos permitimos dialogar con el documento, tanto su textualidad como con sus posibilidades interpretativas; dialogamos también desde nuestras existencias, nuestros discursos propios y nuestras aproximaciones al territorio. Convocamos la comprensión desde la potencia de la palabra, pero también del movimiento y de la presencia de nuestras diversas corporalidades. El documento nos permite ver a Jani, y Jani nos permite ser el reflejo que proyecta preguntas y posibilidades de conectarnos con nuestro contexto, de incidir, de denunciar, de cuestionar y de agenciar posibilidades poéticas discursivas que toman lugar como espacio de creación.",
+        ph: ["img/gallery/condena-p1.jpg","img/gallery/condena-p2.jpg","img/gallery/condena-p3.jpg"]
+      },
+      intento: {
+        t: "Intento Optimista de un_ lunátic_",
+        s: "XX Temporada de Ensambles",
+        d: "Arnulfo Pardo y Laura Castiblanco",
+        url: "https://www.instagram.com/reel/C6_KlndOqCp/?igsh=NzBqaXQ2YnNlZmVw",
+        fl: "img/gallery/intento-flyer.jpg",
+        syn: "Y así se repitieron a través de los años los mismos poemas.<br>El sol, la lluvia, un arcoíris. Refracción. n1&middot;sinθ1=n2&middot;sinθ2<br>Pasaron tantas cosas... 5.175 pesos por una hora de trabajo. 45 minutos esperando el bus.<br>Pero él nunca avanza, sino que el sendero pasa por debajo de él.<br>... y apenas vio el destello porque la casa en la que creció ya no existe.<br>Un funeral. Nosotros y ellxs solo para un día ocupado.<br>Se quemaba la punta de los dedos. Cabeza en llamas.<br>¿Y quién sabe quién es quién? Silencio.<br>Nunca pudo decir otra cosa y se quedó girando...<br>... y al final es solo redondo y redondo y redondo...",
+        ph: ["img/gallery/intento-p1.jpg","img/gallery/intento-p2.jpg","img/gallery/intento-p3.jpg"]
+      },
+      mientras: {
+        t: "Mientras Caemos",
+        s: "XXI Temporada Intersemestral",
+        d: "Diana Salamank y María Alejandra Morales",
+        url: "https://www.instagram.com/reel/DCFJpLiJscp/?igsh=aXJnNG0wZTFkeXBz",
+        canva: "https://www.canva.com/design/DAGU7DYvLG8/jcxWl8L6e84ktIJ0fxTv3Q/edit",
+        fl: "img/gallery/mientras-flyer.jpg",
+        trasescena: true,
+        syn: "Es un cúmulo de crónicas basadas en exhibir, excavar, exponer las más profundas capas, los más profundos abismos internos del comportamiento del ser humano. Situaciones que capaz a cualquiera de nosotros nos puede suceder, podemos generar situaciones que en momentos nos confronta con esa voz interna, íntima, solo nuestra, que no quisieréamos que nadie más escuchara. Esta propuesta escénica está basada en el universo literario del escritor bogotano Mario Mendoza, quien con sus palabras ha calado hondamente en este proceso creativo.",
+        ph: []
+      },
+      otracosa: {
+        t: "Otra cosa es otra cosa",
+        s: "XXII Temporada de Ensambles",
+        d: "Humberto Canessa",
+        url: "https://www.instagram.com/reel/DKIEWTJA0-G/?igsh=a3luNnY3amM2bHA4",
+        fl: "img/gallery/otracosa-flyer.jpg",
+        syn: "Soy una mujer...<br>Soy una mujer semilla de cambio.<br>Soy una mujer compuesta de células de deseos, convertidos en un cuerpo soñador.<br>Soy una mujer oprimida en un mundo capitalista sin corazón repleto de dinero.<br>Soy una mujer desfaldada, desmedida, destaconada, despeinada.<br>Soy una mujer que construye su propio cuerpo.<br>Soy una mujer frutal, ácida, verdulera.",
+        ph: []
+      },
+      t346: {
+        t: "346",
+        s: "XXIII Temporada de Ensambles",
+        d: "Jonathan Hernández",
+        url: "https://www.instagram.com/reel/DQ4HmYWDZut/?igsh=OWNqenU5YnNzZHIz",
+        fl: "img/gallery/346-flyer.jpg",
+        syn: "346 es un viaje de emociones y de anécdotas. Es el latido de un corazón cargado, que pulsa a través de la memoria y las experiencias que buscan reunirse y ser compartidas. 346 es un suspiro que se eleva, con la esperanza del encuentro.",
+        ph: ["img/gallery/346-p1.jpg","img/gallery/346-p2.jpg","img/gallery/346-p3.jpg"]
+      },
+      ecdisis: {
+        t: "Ecdisis",
+        s: "XXIII Temporada de Ensambles",
+        d: "Jorge Bernal",
+        url: "https://www.instagram.com/reel/DRKWqXDgGhg/?igsh=ZjFlemZrcTZlbWNw",
+        fl: "img/gallery/ecdisis-flyer.jpg",
+        syn: "Retoma como referente el proceso natural y vital en el que muchos animales, especialmente invertebrados como los artrópodos y reptiles, se desprenden de su capa externa antigua para poder crecer.<br><br>Es un acto repetitivo, un ciclo, una transformación...<br><br>Un desprendimiento que deja atrás lo viejo para abrir espacio a lo nuevo, una serpenteante memoria de lo que fue...<br><br>Columna vertebral que viene de la tierra. Mujer lunar, astuta y sanadora. Oscura, silenciosa y prudente.",
+        ph: ["img/gallery/ecdisis-p1.jpg","img/gallery/ecdisis-p2.jpg","img/gallery/ecdisis-p3.jpg"]
+      },
+      madriguera: {
+        t: "La Madriguera",
+        s: "Ensamble Intensivo &middot; 2026-01",
+        d: "Humberto Canessa y Leonardo Girón",
+        url: null,
+        fl: "img/gallery/madriguera-flyer.jpg",
+        syn: "“La Madriguera”, un centro de reciclaje olvidado de la ciudad donde se acumula la basura... y también los sueños. Vive Juani Pi, una niña valiente que, entre montañas de desechos, descubrirá un universo de juego, imaginación y magia.<br><br>Rodeada de personajes tan extraños como entrañables que, a través del circo, el movimiento y la fantasía, le revelarán algo fundamental: que los niños tienen derechos... derecho a jugar, a tener una familia, a un hogar, a ser cuidados y a soñar.<br><br>Un universo donde lo que parecía desechado vuelve a brillar y donde todos recordamos que tenemos derecho a la felicidad.",
+        ph: [],
+        pending: true
+      },
+      tormenta: {
+        t: "Tormenta de Nieve",
+        s: "La Tempestad &middot; Creación Colaborativa",
+        d: "Creación colectiva &middot; Artes Visuales, Música y Artes Escénicas",
+        url: "https://www.instagram.com/reel/DH4T46DhId3/?igsh=MW5xaGJhYnJ5eWtocg==",
+        bonus: true,
+        syn: null,
+        ph: ["img/gallery/tormenta-p1.jpg","img/gallery/tormenta-p2.jpg","img/gallery/tormenta-p3.jpg"]
+      }
+    };
+
+    /* ── Build all detail panels from GD on page load ── */
+    function buildGalPanels() {
+      var container = document.getElementById('gal-details-container');
+      if (!container) return;
+      var frag = '';
+      for (var id in GD) {
+        var d = GD[id];
+        var hasFlyer = !!d.fl;
+        frag += '<div class="gal-detail" id="gal-det-' + id + '">';
+        frag += '<div class="gal-det-header">';
+        frag += '<button class="gal-det-close" onclick="closeGal()">&times;</button>';
+        frag += '<h2>' + d.t + '</h2>';
+        frag += '<div class="gal-det-dir-line">' + d.s + ' &nbsp;&middot;&nbsp; ' + d.d + '</div>';
+        frag += '</div>';
+        frag += '<div class="gal-det-body' + (hasFlyer ? '' : ' gal-det-body--full') + '">';
+        if (hasFlyer) {
+          frag += '<div class="gal-det-flyer"><img src="' + d.fl + '" alt="Flyer" onclick="openLB(this.src)" loading="lazy"></div>';
+        }
+        frag += '<div class="gal-det-info">';
+        if (d.trasescena) {
+          frag += '<div style="margin-bottom:0.8rem"><span class="gal-trasescena-label">Ensamble Trasescena</span><br>';
+          frag += '<span class="gal-asist-label">Rol: Asistente de Direcci\u00f3n y Producci\u00f3n</span></div>';
+        }
+        if (d.bonus) {
+          frag += '<div style="margin-bottom:0.8rem"><span class="gal-bonus-badge" style="position:static;display:inline-block;">Creaci\u00f3n Bonus</span></div>';
+        }
+        if (d.url) {
+          frag += '<a href="' + d.url + '" target="_blank" rel="noopener" class="gal-trailer-btn">';
+          frag += '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
+          frag += ' Ver Tr\u00e1iler</a> ';
+        }
+        if (d.canva) {
+          frag += '<a href="' + d.canva + '" target="_blank" rel="noopener" class="gal-canva-btn">';
+          frag += '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>';
+          frag += ' Ver en Canva</a>';
+        }
+        if (d.url || d.canva) frag += '<br><br>';
+        frag += '<div class="gal-det-meta">';
+        frag += '<strong>Temporada:</strong> ' + d.s + '<br>';
+        frag += '<strong>Direcci\u00f3n:</strong> ' + d.d;
+        frag += '</div>';
+        if (d.syn) frag += '<div class="gal-det-synopsis">' + d.syn + '</div>';
+        if (d.ph && d.ph.length > 0) {
+          frag += '<div class="gal-det-photos' + (d.bonus ? ' gal-det-photos--bonus' : '') + '">';
+          for (var i = 0; i < d.ph.length; i++) {
+            frag += '<img src="' + d.ph[i] + '" alt="Foto ' + (i+1) + '" onclick="openLB(this.src)" loading="lazy">';
+          }
+          frag += '</div>';
+        } else if (d.pending) {
+          frag += '<p class="gal-det-pending">&#128247; Fotos pendientes de edici\u00f3n</p>';
+        } else if (d.trasescena) {
+          frag += '<p class="gal-det-pending">Participaci\u00f3n como asistente de direcci\u00f3n</p>';
+        } else if (!d.bonus) {
+          frag += '<p class="gal-det-pending">&#128247; Fotos pendientes</p>';
+        }
+        frag += '</div>'; // gal-det-info
+        frag += '</div>'; // gal-det-body
+        frag += '</div>'; // gal-detail
+      }
+      container.innerHTML = frag;
+    }
+
+    function openGal(id) {
+      var det = document.getElementById('gal-det-' + id);
+      if (!det) return;
+      var isOpen = det.classList.contains('active');
+      document.querySelectorAll('.gal-detail').forEach(function(d) { d.classList.remove('active'); });
+      document.querySelectorAll('.gal-card').forEach(function(c) { c.classList.remove('active'); });
+      if (!isOpen) {
+        det.classList.add('active');
+        var card = document.querySelector('[onclick="openGal(\'' + id + '\')"]');
+        if (card) card.classList.add('active');
+        setTimeout(function() {
+          det.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 60);
+      }
+    }
+
+    function closeGal() {
+      document.querySelectorAll('.gal-detail').forEach(function(d) { d.classList.remove('active'); });
+      document.querySelectorAll('.gal-card').forEach(function(c) { c.classList.remove('active'); });
+      closeLB();
+    }
+    function openLB(src) {
+      document.getElementById('galLBImg').src = src;
+      document.getElementById('galLightbox').classList.add('open');
+    }
+    function closeLB() {
+      document.getElementById('galLightbox').classList.remove('open');
+    }
+    document.addEventListener('DOMContentLoaded', buildGalPanels);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeGal(); closeLB(); }
+    });
+    </script>
+
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<!-- ══════════════ AGRADECIMIENTOS ══════════════ -->
+<section id="agradecimientos" class="section">
+  <div class="section-inner reveal">
+    <div class="chapter-marker"><span class="chapter-num">Capítulo IX</span></div>
+    <h2>Agradecimientos</h2>
+    <p class="section-subtitle">Las alas que me sostuvieron</p>
+    <div class="flourish"></div>
+
+    <div class="media-placeholder">
+      Agradecimientos.
+      <small>· Pendiente ·</small>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="footer-morpho" viewBox="0 0 400 280"><use href="#morpho"/></svg>
+  <h3>Mórphosis</h3>
+  <p class="footer-role">María Alejandra Morales Cárdenas</p>
+  <div class="footer-line"></div>
+  <small>"Soy la mariposa con las alas más iridiscentes que podrás encontrar."</small>
+</footer>
+
+<button id="backToTop" title="Volver al inicio">↑</button>
+
+<script>
+// ══════ Loader ══════
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1400);
+});
+
+// ══════ Page-Turn transition ══════
+const pageTurnOverlay = document.getElementById('page-turn-overlay');
+
+function triggerPageTurn(targetHref) {
+  const ANIM_MS = 2200; // debe coincidir con la duración CSS
+
+  // 1. Scroll instantáneo al destino ANTES de mostrar el overlay
+  if (targetHref) {
+    const target = document.querySelector(targetHref);
+    if (target) {
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+  }
+
+  // 2. Mostrar overlay (cubre el salto brusco) y reiniciar animación
+  pageTurnOverlay.classList.add('active');
+  const leaf = pageTurnOverlay.querySelector('.page-turn-leaf');
+  const newLeaf = leaf.cloneNode(true);
+  leaf.parentNode.replaceChild(newLeaf, leaf);
+
+  // 3. Quitar overlay al terminar — revela la sección destino
+  setTimeout(() => {
+    pageTurnOverlay.classList.remove('active');
+  }, ANIM_MS);
+}
+
+// Intercept nav and TOC anchor clicks for page-turn effect
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('nav a, .toc-card, .enter-btn');
+  if (!link) return;
+  const href = link.getAttribute('href');
+  if (!href || !href.startsWith('#')) return;
+  e.preventDefault();
+  triggerPageTurn(href, 700);
+});
+
+// ══════ Scroll reveal ══════
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ══════ Active nav ══════
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a');
+let lastScroll = 0;
+const nav = document.getElementById('mainNav');
+const backBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  const st = window.scrollY;
+  let current = '';
+  sections.forEach(s => { if (st >= s.offsetTop - 200) current = s.getAttribute('id'); });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+
+  // back-to-top
+  if (st > 600) backBtn.classList.add('visible'); else backBtn.classList.remove('visible');
+
+  // hide nav on scroll down
+  if (st > lastScroll && st > 400) nav.classList.add('nav-hidden');
+  else nav.classList.remove('nav-hidden');
+  lastScroll = st;
+});
+
+backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ══════ Evaluator click → show evaluation ══════
+document.querySelectorAll('.evaluator-card').forEach(card => {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => {
+    const id = card.getAttribute('data-eval');
+    // close all
+    document.querySelectorAll('.eval-detail').forEach(d => d.classList.remove('active'));
+    const target = document.getElementById('eval-' + id);
+    if (target) {
+      target.classList.add('active');
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  });
+  // Hover effect for prof cards (inline div style)
+  const photoDivs = card.querySelectorAll('.evaluator-photo[style]');
+  photoDivs.forEach(div => {
+    card.addEventListener('mouseenter', () => { div.style.transform = 'scale(1.03)'; div.style.transition = 'transform 0.4s ease'; });
+    card.addEventListener('mouseleave', () => { div.style.transform = 'scale(1)'; });
+  });
+});
+document.querySelectorAll('.close-eval').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.closest('.eval-detail').classList.remove('active');
+  });
+});
+
+// ══════ Floating Morpho butterflies — only the clean transparent PNG ══════
+// Real butterfly photos — both subspecies
+const morphoPhotos = [
+  'img/morpho-aurora.png',    // Morpho Aurora — electric blue
+  'img/morpho-sulkowskyi.png', // Morpho Sulkowskyi — holographic pearl
+];
+
+function spawnMorpho() {
+  const m = document.createElement('div');
+  m.className = 'morpho-float';
+
+  // Pick randomly between Aurora and Sulkowskyi
+  const photoIdx = Math.floor(Math.random() * morphoPhotos.length);
+  const src = morphoPhotos[photoIdx];
+  const isAurora = src.includes('aurora');
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'width:100%;height:100%;object-fit:contain;';
+  img.style.mixBlendMode = 'normal';
+  m.appendChild(img);
+  // Different glow per species
+  if (isAurora) {
+    m.style.filter = 'drop-shadow(0 4px 16px rgba(0,200,240,0.55))';
+  } else {
+    m.style.filter = 'drop-shadow(0 4px 16px rgba(180,160,220,0.5))';
+  }
+
+  const side = Math.floor(Math.random() * 4);
+  let startX, startY, endX, endY;
+  const w = window.innerWidth, h = window.innerHeight;
+  if (side === 0)      { startX = -120; startY = Math.random()*h; endX = w+120; endY = Math.random()*h; }
+  else if (side === 1) { startX = w+120; startY = Math.random()*h; endX = -120; endY = Math.random()*h; }
+  else if (side === 2) { startX = Math.random()*w; startY = -120; endX = Math.random()*w; endY = h+120; }
+  else                 { startX = Math.random()*w; startY = h+120; endX = Math.random()*w; endY = -120; }
+
+  m.style.left = startX + 'px';
+  m.style.top = startY + 'px';
+  const size = 55 + Math.random() * 65; // slightly larger — real photos read better bigger
+  m.style.width = size + 'px';
+  m.style.height = size + 'px';
+
+  document.body.appendChild(m);
+
+  const duration = 14000 + Math.random() * 12000;
+  const startTime = performance.now();
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = elapsed / duration;
+    if (t >= 1) { m.remove(); return; }
+
+    let opacity;
+    if (t < 0.12) opacity = (t / 0.12) * 0.6;
+    else if (t > 0.88) opacity = ((1-t) / 0.12) * 0.6;
+    else opacity = 0.6;
+
+    const x = startX + (endX - startX) * t;
+    const y = startY + (endY - startY) * t + Math.sin(t * Math.PI * 5) * 45;
+    const rot = Math.sin(t * Math.PI * 7) * 18;
+    const scaleFlap = 1 - 0.2 * Math.abs(Math.sin(t * Math.PI * 25)); // wing-flap illusion
+
+    m.style.transform = `translate(${x - startX}px, ${y - startY}px) rotate(${rot}deg) scaleX(${scaleFlap})`;
+    // filter already set at spawn time per species
+    m.style.opacity = opacity;
+
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+}
+
+// initial burst + periodic
+setTimeout(() => { for (let i = 0; i < 4; i++) setTimeout(spawnMorpho, i * 1200); }, 2000);
+setInterval(spawnMorpho, 7000);
+</script>
+</body>
+</html>
