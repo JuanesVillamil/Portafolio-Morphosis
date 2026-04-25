@@ -461,6 +461,19 @@ nav ul li a:hover, nav ul li a.active {
 }
 
 /* Artist statement specific styling — verse layout */
+#statement {
+  background-image:
+    linear-gradient(rgba(246,242,248,0.70), rgba(246,242,248,0.70)),
+    url("img/statement-cover.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+@media(max-width:768px){
+  #statement {
+    background-image: none;
+  }
+}
 .statement-verses {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.25rem;
@@ -838,6 +851,65 @@ footer small {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ════════ POLAROID PHOTOS ════════ */
+.polaroid-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0 0.5rem;
+}
+.polaroid {
+  background: #fff;
+  padding: 0.7rem 0.7rem 2.2rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08);
+  border-radius: 2px;
+  transform: rotate(var(--tilt, -1.5deg));
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  max-width: 220px;
+  flex: 0 0 auto;
+}
+.polaroid:nth-child(2) { --tilt: 1.2deg; }
+.polaroid:nth-child(3) { --tilt: -0.8deg; }
+.polaroid:hover { transform: rotate(0deg) scale(1.04); box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+.polaroid img {
+  width: 200px;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.polaroid-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: var(--sepia);
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+/* Artist Statement cover */
+.statement-photo-wrap {
+  text-align: center;
+  margin: 0 auto 2.5rem;
+}
+.statement-cover-img {
+  max-width: min(420px, 90%);
+  border-radius: 4px;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.14);
+  border: 1px solid rgba(184,146,74,0.25);
+}
+.statement-photo-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--sepia);
+  font-size: 0.95rem;
+  margin-top: 0.7rem;
+}
+@media(max-width:768px){
+  .polaroid { max-width: 160px; }
+  .polaroid img { width: 148px; height: 120px; }
 }
 
 /* ════════════════════════════════════════
@@ -1510,7 +1582,7 @@ footer small {
     <p class="morphosis">— Mórphosis —</p>
     <div class="hero-divider"></div>
     <p class="role">Artista Escénica</p>
-    <p class="quote" id="openingQuote"><!-- espacio reservado para el poema que enviarás --></p>
+    <p class="quote" id="openingQuote">Una belleza efímera, una vulnerabilidad que siempre me acompaña.<br>Me refugio en la fugacidad del tiempo, y en la fragilidad de lo que parece eterno.</p>
     <a href="#prologue" class="enter-btn">Abrir el libro</a>
   </div>
 </section>
@@ -1562,7 +1634,7 @@ footer small {
     <a href="#statement" class="toc-card reveal">
       <div class="card-num">Capítulo I</div>
       <div class="card-title">Artist Statement</div>
-      <div class="card-desc">La declaración del vuelo</div>
+      <div class="card-desc">La declaración del ser</div>
     </a>
     <a href="#autoevaluacion" class="toc-card reveal">
       <div class="card-num">Capítulo II · Autoevaluación</div>
@@ -1602,7 +1674,7 @@ footer small {
     <a href="#agradecimientos" class="toc-card reveal">
       <div class="card-num">Capítulo IX</div>
       <div class="card-title">Agradecimientos</div>
-      <div class="card-desc">Las alas que me sostuvieron</div>
+      <div class="card-desc">Los que me sostuvieron</div>
     </a>
   </div>
 </section>
@@ -1613,32 +1685,27 @@ footer small {
   <div class="section-photo-accent right reveal">
     <img src="img/morpho-aurora.png" alt="Morpho Aurora" style="mix-blend-mode:normal; object-fit:contain;">
   </div>
-  <!-- ink illustration on the left -->
-  <div class="section-photo-accent left reveal">
-    <img src="img/morpho-002.jpg" alt="Metamorfosis - ilustración">
-  </div>
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo I</span></div>
     <h2>Artist Statement</h2>
-    <p class="section-subtitle">La declaración del vuelo</p>
+    <p class="section-subtitle">La declaración del ser</p>
     <div class="flourish"></div>
 
     <div class="statement-verses">
       <div class="verse">Soy <strong>Mórphosis</strong>, mariposa Morpho y metamorfosis;</div>
       <div class="verse">Soy mi propia investigación,</div>
       <div class="verse">Investigo lo efímero, las memorias que me acompañan, la transformación que habita mi ser.</div>
-      <div class="verse">Soy la oruga que se arrastra para alcanzar sus sueños; desde un suelo fértil y cambiante.</div>
+      <div class="verse">Soy la <u>oruga</u> que se arrastra para alcanzar sus sueños; desde un suelo fértil y cambiante.</div>
       <div class="verse">Soy <strong>bailarina lírica</strong>; fiel perfeccionista de mi técnica, delicadamente pulcra en cada mínimo detalle, espontánea y entregada a mi propio estilo de danza.</div>
       <div class="verse">Soy la <strong>crisálida</strong> que se encierra en sí misma cuando necesita refugio, hecha de una capa tan fuerte pero tan fina que toca su máximo esplendor de vulnerabilidad.</div>
       <div class="verse">Soy <strong>artista de circo</strong>; pierdo el miedo con la acrobacia y me reto con la manipulación de objetos.</div>
-      <div class="verse">Soy el sueño de una niña que se dedicó al arte desde los 4 años.</div>
-      <div class="verse">Soy la mariposa con las alas más iridiscentes que podrás encontrar.</div>
+      <div class="verse">Soy la <u>mariposa</u> con las alas más iridiscentes que podrás encontrar.</div>
       <div class="verse">Soy <strong>aerealista</strong>; mi vida cobra sentido estando a metros del suelo y en compañía de mi lira.</div>
       <div class="verse">Soy <strong>poeta</strong>, plasmo en palabras lo que a veces en movimiento no alcanza.</div>
       <div class="verse">Soy promesas cumplidas y oraciones respondidas de Dios.</div>
       <div class="verse">Soy compromiso, perseverancia y amor.</div>
 
-      <div class="signature">— María Alejandra Morales Cárdenas —<br><em style="font-size:1rem; font-family:'Cormorant Garamond',serif">artista escénica</em></div>
+      <div class="signature">Soy María Alejandra Morales Cárdenas, y soy Artista Escénica.</div>
     </div>
   </div>
 </section>
@@ -1648,15 +1715,13 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo II</span></div>
     <h2>Metamorfosis<span class="h2-original">· Autoevaluación ·</span></h2>
-    <p class="section-subtitle">Mirar hacia adentro</p>
+    <p class="section-subtitle">La autopercepción</p>
     <div class="flourish"></div>
 
     <div class="media-placeholder">
       Autoevaluación.
       <small>· Pendiente ·</small>
     </div>
-    <!-- Chrysalis stages illustration -->
-    <img src="img/morpho-008.jpg" alt="Etapas de la crisálida" class="morpho-collection">
   </div>
 </section>
 
@@ -1695,7 +1760,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo IV</span></div>
     <h2>Evaluación de Profesores</h2>
-    <p class="section-subtitle">Voces que han guiado el vuelo &middot; Haz click en cada profesor para leer su evaluación</p>
+    <p class="section-subtitle">Cuerpos que han guiado</p>
     <div class="flourish"></div>
 
     <div class="evaluators-grid">
@@ -1705,14 +1770,14 @@ footer small {
           <img src="img/prof-jonathan.jpg" alt="Jonathan Hernández González">
         </div>
         <div class="evaluator-name">Jonathan Hernández</div>
-        <div class="evaluator-role">Maestro de Circo · Universidad Javeriana</div>
+        <div class="evaluator-role">Maestro de Circo</div>
       </div>
       <div class="evaluator-card" data-eval="prof-humberto">
         <div class="evaluator-photo">
           <img src="img/prof-humberto.jpg" alt="Humberto Canessa Ulloa">
         </div>
         <div class="evaluator-name">Humberto Canessa</div>
-        <div class="evaluator-role">Ballet &amp; Danza Contemporánea · Universidad Javeriana</div>
+        <div class="evaluator-role">Danza Contemporánea</div>
       </div>
     </div>
 
@@ -1722,7 +1787,7 @@ footer small {
       <div class="eval-header">
         <div class="eval-title">Evaluación de Profesor</div>
         <div class="eval-author">Jonathan Hernández González</div>
-        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Maestro Cátedra · Universidad Javeriana</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Maestro Cátedra</div>
       </div>
       <div class="eval-body">
         <p>Es un honor para mí escribir esta carta de evaluación y reconocimiento para una gran mujer a quien conocí el primer día de mi llegada a la universidad, siendo ella quien me recibió y me dio una bienvenida calurosa cuando yo como maestro nuevo me encontraba muy perdido. Es difícil describir con palabras lo que ha significado para mí acompañar el camino de María Alejandra porque su historia no es solo la de una estudiante de circo, sino la de un alma valiente que decidió volar.</p>
@@ -1732,7 +1797,7 @@ footer small {
         <p>Si algo puedo decir con certeza, es que su vuelo apenas comienza pero, no es cualquier vuelo, esta mariposa tiene fuerza y determinación y aunque hayan vientos fuertes y tenga miedo ella dirá en su mente <em>"si tienes miedo hazlo con miedo, pero hazlo"</em> y seguirá volando cada vez más alto.</p>
         <p>Hoy aquí más que hacer una evaluación quiero decirte gracias, gracias por tu amistad, gracias por tu generosidad por creer en mí, por permitirme guiarte y ser parte de tu proceso. Gracias por retarme a crear un ensamble de circo, porque si no hubiera sido por ti no habría aceptado y, aunque no creas yo tenía miedo, miedo de fallar, de no cumplir con las expectativas puestas en mí, pero el apoyo que recibí de ti, me permitió seguir fuerte y no enfrentarme a ese reto solo.</p>
         <p>María Ale donde quiera que vayas, llevas contigo la magia de circo que te recibió y te acogió no solo para darte alegrías, te recibió para darte retos y ponerte en momentos difíciles para que demuestres esa dulzura y esa fuerza que solo tú tienes y estoy seguro que tocarás e inspirarás muchas vidas a través del circo. Cuando estés lejos recuerda que aquí siempre estaré para escucharte y animarte, ya no como un profesor ahora como un amigo y compañero de circo.</p>
-        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;">Con admiración y cariño<br><strong>Jonathan Hernández González</strong><br><span style="font-size:0.75rem; opacity:0.8">Maestro Cátedra · Universidad Javeriana</span></p>
+        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;">Con admiración y cariño<br><strong>Jonathan Hernández González</strong><br><span style="font-size:0.75rem; opacity:0.8">Maestro Cátedra</span></p>
       </div>
     </div>
 
@@ -1742,7 +1807,7 @@ footer small {
       <div class="eval-header">
         <div class="eval-title">Evaluación de Profesor</div>
         <div class="eval-author">Humberto Canessa Ulloa</div>
-        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Ballet &amp; Danza Contemporánea · Universidad Javeriana</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Danza Contemporánea</div>
       </div>
       <div class="eval-body">
         <p>Cuando fui invitado a ser parte de esta Carrera de Escénicas en la Universidad Javeriana de Bogotá en 2018, tuve la oportunidad de encontrarme con una gran diversidad de estudiantes, propia de un programa multinivel y de múltiples énfasis que se distingue por una propuesta académica única dentro del horizonte de la enseñanza de estas disciplinas en Colombia y la región. Intuí entonces que, entre ellos, aparecerían algunas y algunos jóvenes con una visión más integral de lo escénico, cercana a esa necesidad profunda de no solo crear, sino también creer en el acto creativo como una experiencia totalizadora que trascienda ser únicamente ejecutantes para la escena y proyectarse como verdaderos investigadores-creadores.</p>
@@ -1752,7 +1817,7 @@ footer small {
         <p>En el Ensamble de Danza Contemporánea <em>"Otra cosa es otra cosa"</em>, una pieza inspirada en la obra de María Teresa Hincapié, demostró una mayor madurez escénica. Su presencia en escena se volvió más contundente, y su capacidad de trabajo en equipo fue especialmente valiosa para el desarrollo colectivo. Maleja es una intérprete confiable, comprometida con los procesos grupales, respetuosa de sus compañeros y consciente de la importancia del engranaje colectivo en la creación escénica.</p>
         <p>Finalmente, en el Ensamble intensivo de Danza y Circo <em>"La Madriguera"</em>, ella alcanzó un nivel de integración muy sólido entre técnica, expresividad y riesgo. Su trabajo como bailarina y artista aérea en la lira evidencia una disciplina rigurosa y una gran conciencia corporal. En este punto, su identidad artística —que ella misma nombra metafóricamente <em>Mórphosis</em>— se manifiesta con fuerza: es una intérprete en constante transformación como una mariposa, frágil, pero a la vez poderosamente bella y entregada.</p>
         <p>Maleja es una artista perseverante, disciplinada y enormemente comprometida con su oficio. Su exigencia personal, bien encauzada, es una de sus mayores fortalezas. De cara a su futuro como profesional de las artes escénicas, como bailarina y como aerealista, considero que posee todas las herramientas necesarias para desarrollar una trayectoria sólida y significativa. La invito a seguir confiando en su voz propia y a abrazar lo que la hace única.</p>
-        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;"><strong>Humberto Canessa Ulloa</strong><br><span style="font-size:0.75rem; opacity:0.8">Ballet &amp; Danza Contemporánea · Universidad Javeriana</span></p>
+        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;"><strong>Humberto Canessa Ulloa</strong><br><span style="font-size:0.75rem; opacity:0.8">Danza Contemporánea</span></p>
       </div>
     </div>
 
@@ -1764,7 +1829,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo V</span></div>
     <h2>Evaluación de Pares</h2>
-    <p class="section-subtitle">Compañeras de vuelo &middot; Haz click en cada compañera para leer su evaluación</p>
+    <p class="section-subtitle">Cuerpos que ha acompañado</p>
     <div class="flourish"></div>
 
     <div class="evaluators-grid">
@@ -1776,14 +1841,9 @@ footer small {
         <div class="evaluator-role">Compañera</div>
       </div>
       <div class="evaluator-card" data-eval="par-2">
-        <div class="evaluator-photo evaluator-empty">Foto pendiente</div>
-        <div class="evaluator-name">Compañera II</div>
-        <div class="evaluator-role">Pendiente</div>
-      </div>
-      <div class="evaluator-card" data-eval="par-3">
-        <div class="evaluator-photo evaluator-empty">Foto pendiente</div>
-        <div class="evaluator-name">Compañera III</div>
-        <div class="evaluator-role">Pendiente</div>
+        <div class="evaluator-photo evaluator-empty"></div>
+        <div class="evaluator-name">Sofía Rivas</div>
+        <div class="evaluator-role">Compañera</div>
       </div>
     </div>
 
@@ -1816,7 +1876,22 @@ footer small {
         <p>No ha sido una mariposa solitaria, y creo que ahí también está una de sus mayores fortalezas: en la manera en la que se deja acompañar, en cómo construye con otros, en su apertura y su capacidad de escucha. Nuestra cercanía, desde el inicio, se fue volviendo un lugar de apoyo mutuo muy especial. Siempre hubo un sostenernos, un estar la una para la otra, que se sentía tierno, pero al mismo tiempo muy comprometido con lo que estábamos construyendo como artistas. Crecimos juntas, aprendimos juntas, y de alguna forma nos fuimos acompañando en cada etapa de esta metamorfosis.</p>
 
         <p>Ahora, en este punto final de la carrera, siento que Aleja está en pleno vuelo. No como algo terminado, sino como una mariposa que apenas empieza a recorrer el mundo con las alas que tanto tiempo le tomó construir. Y hay algo que admiro profundamente: que haya encontrado durante este proceso eso que realmente la apasiona, eso que la llena de vida. Porque no todos tenemos la fortuna de descubrirlo con tanta claridad. Sé que ese camino en el circo, en lo aéreo, y en la Lira que tanto la hace ver liberada, la va a llevar lejos, que le va a permitir viajar, seguir aprendiendo, expandirse y cumplir muchos de los sueños que ha construido desde hace años y todos aquellos que sigue anhelando.</p>
+  
+      <div class="polaroid-strip">
+        <div class="polaroid" onclick="openLB('img/eval-dana-1.jpg')">
+          <img src="img/eval-dana-1.jpg" alt="Dana Santos 1" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
+        <div class="polaroid" onclick="openLB('img/eval-dana-2.jpg')">
+          <img src="img/eval-dana-2.jpg" alt="Dana Santos 2" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
+        <div class="polaroid" onclick="openLB('img/eval-dana-3.jpg')">
+          <img src="img/eval-dana-3.jpg" alt="Dana Santos 3" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
       </div>
+    </div>
     </div>
 
     <!-- Placeholder for other peer evaluations -->
@@ -1824,17 +1899,24 @@ footer small {
       <button class="close-eval" aria-label="Cerrar">✕</button>
       <div class="eval-header">
         <div class="eval-title">Evaluación de Pares</div>
-        <div class="eval-author">Compañera II</div>
+        <div class="eval-author">Escrita por Sofía Rivas</div>
       </div>
-      <div class="eval-body"><p><em>Pendiente.</em></p></div>
-    </div>
-    <div class="eval-detail" id="eval-par-3">
-      <button class="close-eval" aria-label="Cerrar">✕</button>
-      <div class="eval-header">
-        <div class="eval-title">Evaluación de Pares</div>
-        <div class="eval-author">Compañera III</div>
+      <div class="eval-body"><p>La observación de mariposas enseña sobre la paciencia y la transformación personal. Se dice, que encontrarse con una, simboliza un nuevo inicio o cambios en la vida de la persona que la logra ver. El camino de esta mariposa ha sido extenso, su proceso de metamorfosis ha sido evidente y encontrarme con ella ha sido una de las mayores suertes que la vida me ha podido brindar. Pienso en el tiempo detenido dentro del capullo, en esa transformación que ocurre sin testigos, en la paciencia que exige convertirse en algo distinto sin tener la certeza de cómo será ese nuevo cuerpo. En ti habita esa sabiduría: la de saber esperar, la de sostenerte en lo que todavía no se nombra, en lo que todavía no se muestra.</p><p>Desde primer semestre, he sido testigo de cómo te despliegas poco a poco, como si cada espacio —el salón, la escena, los ensayos, los pasillos, incluso los silencios— fuera una pequeña grieta por donde asoma una nueva versión de ti. No es un cambio abrupto, no es una transformación que irrumpe, es más bien un proceso delicado, pero profundamente constante. Como las alas que se secan al sol antes del primer vuelo, lo tuyo también tiene algo de preparación íntima, de cuidado, de tiempo perfectamente habitado. Y es ahí donde encuentro una de tus mayores fuerzas: en la capacidad de sostener el proceso, de confiar en lo que aún no termina de tomar forma. En un mundo que empuja a mostrarse rápido, a definirse, a ser algo concreto todo el tiempo, tú eliges el tránsito, eliges la transformación continua. Entiendes que hay belleza hasta en el más mínimo detalle.</p><p>Tu presencia, profundamente intencional, intensa, fogosa, sabes llenar el espacio solo con tu llegada y así llegaste a mi vida, así llegaste a mi proceso a enseñarme sobre el detalle, el cariño, la escucha dentro de lo cotidiano. Como las mariposas, no irrumpes: llegas. Y cuando llegas, algo cambia. No de manera estruendosa, sino sutil, como una corriente de aire que apenas se percibe pero que modifica la dirección de todo. Hay una sensibilidad en tu manera de estar, de moverte, de mirar, de escuchar, que transforma lo cotidiano en algo más atento, más vivo, más presente.</p><p>Admiro profundamente cómo habitas el arte. No desde la necesidad de demostrar, sino desde un lugar honesto, casi íntimo, como si cada gesto fuera una extensión natural de lo que eres. Tu forma de vestir, de hablar, de escribir, de pensar, todo está atravesado por una misma coherencia sensible. Haces del detalle un territorio importante, y en ese gesto, recuerdas que el arte también vive en lo pequeño, en lo que muchas veces pasa desapercibido. También he visto tus momentos de quietud, de duda, de recogimiento. Y lejos de pensar que ahí te detienes, siento que es justo en esos lugares donde más profundamente te transformas. Como la mariposa que aún no rompe el capullo, hay algo en ti que trabaja en silencio, que reorganiza, que reconstruye. Hay una fuerza invisible en tu manera de habitar esos espacios más frágiles, una valentía que no siempre se nombra, pero se siente. Pienso también en el vuelo, en ese instante en el que finalmente las alas se abren. Pero incluso ahí, en esa aparente libertad, hay una conciencia del aire, del entorno, de los otros. Las mariposas no vuelan de cualquier manera: hay una inteligencia en su trayecto, una forma de leer el mundo mientras se desplazan. Así te percibo también a ti: atenta, sensible, en diálogo constante con lo que te rodea, permitiendo que el entorno también te transforme.</p><p>Gracias por compartir este proceso, por permitir que quienes te rodeamos podamos acompañarte, aunque sea un poco, en cada una de tus metamorfosis. Gracias por la suavidad que no es debilidad, sino elección; por la escucha que abre espacio; por la manera en que haces sentir a otros que también están en proceso, que también pueden cambiar, que también pueden encontrar su forma. Gracias por tu forma de estar sin imponerte, por tu manera de cuidar, por tu capacidad de sostener sin necesidad de tener todas las respuestas. Hay algo profundamente humano en ti, algo que recuerda que el arte no está separado de la vida, sino que nace de ella, de sus dudas, de sus búsquedas, de sus pequeños y grandes movimientos.</p><p>Ahora, que es momento de emprender vuelo, te deseo cielos amplios. Te deseo vuelos libres, también lugares donde puedas plegar las alas y descansar sin prisa. Te deseo caminos que no siempre estén claros, porque sé que en lo incierto también encuentras sentido. Te deseo que nunca pierdas esa confianza en tu propio ritmo, en esa forma tan tuya de metamorfosearte.</p><p>Y si alguna vez el viento cambia, si alguna vez sientes que no sabes hacia dónde ir, recuerda que incluso las mariposas migran sin tener todo resuelto, guiadas por algo que no siempre se ve, pero que profundamente se siente.</p><p><em>Con inmensa admiración y cariño,<br>Sofia Rivas Ramírez (Rami)</em></p>
+      <div class="polaroid-strip">
+        <div class="polaroid" onclick="openLB('img/eval-sofia-1.jpg')">
+          <img src="img/eval-sofia-1.jpg" alt="Sofía Rivas 1" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
+        <div class="polaroid" onclick="openLB('img/eval-sofia-2.jpg')">
+          <img src="img/eval-sofia-2.jpg" alt="Sofía Rivas 2" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
+        <div class="polaroid" onclick="openLB('img/eval-sofia-3.jpg')">
+          <img src="img/eval-sofia-3.jpg" alt="Sofía Rivas 3" loading="lazy">
+          <div class="polaroid-caption"></div>
+        </div>
       </div>
-      <div class="eval-body"><p><em>Pendiente.</em></p></div>
+    </p></div>
     </div>
 </section>
 
@@ -1948,8 +2030,8 @@ footer small {
       to   { opacity: 1; transform: translateY(0); }
     }
     .gal-det-header {
-      background: var(--morpho-deep);
-      color: #f4ead5;
+      background: #8b3a5a;
+      color: #fdf0f4;
       padding: 1.4rem 3rem 1.2rem 2rem;
       border-radius: 10px 10px 0 0;
     }
@@ -2219,16 +2301,12 @@ footer small {
         </div>
       </div>
 
-      <div class="gal-card" onclick="openGal('tormenta')" style="background:linear-gradient(160deg,#1a2060,#2d3a8c);">
+      <div class="gal-card" onclick="openGal('tormenta')">
         <span class="gal-bonus-badge">Bonus</span>
-        <div style="width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.8rem;padding:1.5rem;">
-          <div style="font-size:3rem;">&#10052;</div>
-          <p style="font-family:Cormorant Garamond,serif;font-size:1.15rem;font-weight:700;color:#f4ead5;text-align:center;margin:0;letter-spacing:0.05em;">Tormenta de Nieve</p>
-          <p style="font-family:Cormorant Garamond,serif;font-size:0.85rem;color:rgba(244,234,213,0.75);text-align:center;margin:0;font-style:italic;">La Tempestad</p>
-        </div>
-        <div class="gal-card-info" style="background:rgba(26,32,96,0.92);">
-          <h3 style="color:#d4af6a;">Creación Colaborativa</h3>
-          <p style="color:rgba(244,234,213,0.75);">Artes Visuales &middot; Música &middot; Escénicas</p>
+        <div class="gal-img-box"><img src="img/gallery/tormenta-flyer.jpg" alt="Tormenta de Nieve"></div>
+        <div class="gal-card-info">
+          <h3>Tormenta de Nieve</h3>
+          <p>Creación Colaborativa</p>
         </div>
       </div>
 
@@ -2263,7 +2341,7 @@ footer small {
       },
       mientras: {
         t: "Mientras Caemos",
-        s: "XXI Temporada Intersemestral",
+        s: "XXI Temporada de Ensambles",
         d: "Diana Salamank y María Alejandra Morales",
         url: "https://www.instagram.com/reel/DCFJpLiJscp/?igsh=aXJnNG0wZTFkeXBz",
         canva: "https://www.canva.com/design/DAGU7DYvLG8/jcxWl8L6e84ktIJ0fxTv3Q/edit",
@@ -2279,7 +2357,7 @@ footer small {
         url: "https://www.instagram.com/reel/DKIEWTJA0-G/?igsh=a3luNnY3amM2bHA4",
         fl: "img/gallery/otracosa-flyer.jpg",
         syn: "Soy una mujer...<br>Soy una mujer semilla de cambio.<br>Soy una mujer compuesta de células de deseos, convertidos en un cuerpo soñador.<br>Soy una mujer oprimida en un mundo capitalista sin corazón repleto de dinero.<br>Soy una mujer desfaldada, desmedida, destaconada, despeinada.<br>Soy una mujer que construye su propio cuerpo.<br>Soy una mujer frutal, ácida, verdulera.",
-        ph: []
+        ph: ["img/gallery/otracosa-p1.jpg","img/gallery/otracosa-p2.jpg","img/gallery/otracosa-p3.jpg"]
       },
       t346: {
         t: "346",
@@ -2296,7 +2374,7 @@ footer small {
         d: "Jorge Bernal",
         url: "https://www.instagram.com/reel/DRKWqXDgGhg/?igsh=ZjFlemZrcTZlbWNw",
         fl: "img/gallery/ecdisis-flyer.jpg",
-        syn: "Retoma como referente el proceso natural y vital en el que muchos animales, especialmente invertebrados como los artrópodos y reptiles, se desprenden de su capa externa antigua para poder crecer.<br><br>Es un acto repetitivo, un ciclo, una transformación...<br><br>Un desprendimiento que deja atrás lo viejo para abrir espacio a lo nuevo, una serpenteante memoria de lo que fue...<br><br>Columna vertebral que viene de la tierra. Mujer lunar, astuta y sanadora. Oscura, silenciosa y prudente.",
+        syn: "Retoma como referente el proceso natural y vital en el que muchos animales, especialmente invertebrados como los artr\u00f3podos y reptiles, se desprenden de su capa externa antigua para poder crecer.<br><br>Es un acto repetitivo, un ciclo, una transformaci\u00f3n\u2026<br><br>Un dessprendimiento que deja atr\u00e1sss lo viejo para abrir esspacio a lo nuevo, una ssserpenteante memoria de lo que fue\u2026<br><br>Una piel que ssse desssliza, ssssssuelta, sssssssilenciosa, sssssssssin retorno, sssssssin miedo, sssssssshhhhhhhh\u2026<br><br>Shhhh \u2026 celosa\u2026 shhhhh \u2026 cambiante \u2026 shhhhhhhh\u2026<br><br>Columna vertebral que viene de la tierra.<br>Mujer lunar, astuta y sanadora.<br>Oscura, silenciosa y prudente.<br><br>Shhhh \u2026 celosa\u2026 shhhhh \u2026 cambiante \u2026 shhhhhhhh\u2026",
         ph: ["img/gallery/ecdisis-p1.jpg","img/gallery/ecdisis-p2.jpg","img/gallery/ecdisis-p3.jpg"]
       },
       madriguera: {
@@ -2311,9 +2389,10 @@ footer small {
       },
       tormenta: {
         t: "Tormenta de Nieve",
+        fl: "img/gallery/tormenta-flyer.jpg",
         s: "La Tempestad &middot; Creación Colaborativa",
-        d: "Creación colectiva &middot; Artes Visuales, Música y Artes Escénicas",
-        url: "https://www.instagram.com/reel/DH4T46DhId3/?igsh=MW5xaGJhYnJ5eWtocg==",
+        d: "Creación colectiva &middot; Artes Visuales, Música y Artes Escénicas &ndash; Arnulfo Pardo",
+        url: null,
         bonus: true,
         syn: null,
         ph: ["img/gallery/tormenta-p1.jpg","img/gallery/tormenta-p2.jpg","img/gallery/tormenta-p3.jpg"]
@@ -2354,7 +2433,7 @@ footer small {
         if (d.canva) {
           frag += '<a href="' + d.canva + '" target="_blank" rel="noopener" class="gal-canva-btn">';
           frag += '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>';
-          frag += ' Ver en Canva</a>';
+          frag += ' Ver Dossier</a>';
         }
         if (d.url || d.canva) frag += '<br><br>';
         frag += '<div class="gal-det-meta">';
@@ -2428,7 +2507,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo IX</span></div>
     <h2>Agradecimientos</h2>
-    <p class="section-subtitle">Las alas que me sostuvieron</p>
+    <p class="section-subtitle">Los que me sostuvieron</p>
     <div class="flourish"></div>
 
     <div class="media-placeholder">
@@ -2443,7 +2522,6 @@ footer small {
   <h3>Mórphosis</h3>
   <p class="footer-role">María Alejandra Morales Cárdenas</p>
   <div class="footer-line"></div>
-  <small>"Soy la mariposa con las alas más iridiscentes que podrás encontrar."</small>
 </footer>
 
 <button id="backToTop" title="Volver al inicio">↑</button>
