@@ -1253,6 +1253,46 @@ footer small {
   font-size: 1.05rem;
   line-height: 1;
 }
+#prev-pg-btn {
+  position: fixed;
+  left: 1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem 0.6rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.4);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s, opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+}
+#prev-pg-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#prev-pg-btn:hover {
+  background: rgba(255,255,255,0.26);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.55);
+  transform: translateY(calc(-50% - 2px));
+}
+#prev-pg-btn .ppb-arrow {
+  font-size: 1.05rem;
+  line-height: 1;
+}
 </style>
 </head>
 <body>
@@ -1575,6 +1615,7 @@ footer small {
 
 <!-- ══════════════ NAVIGATION ══════════════ -->
 <div id="page-turn-overlay"><div class="page-turn-leaf"></div></div>
+<button id="prev-pg-btn" aria-label="Sección anterior"><span class="ppb-arrow">‹</span><span id="prev-pg-label">Anterior</span></button>
 <button id="next-pg-btn" aria-label="Siguiente sección"><span id="next-pg-label">Siguiente</span><span class="npb-arrow">›</span></button>
 
 <nav id="mainNav">
@@ -2758,26 +2799,56 @@ setInterval(spawnMorpho, 7000);
     'galeria':       'Agradecimientos'
   };
 
-  var btn   = document.getElementById('next-pg-btn');
-  var label = document.getElementById('next-pg-label');
+  var nextBtn   = document.getElementById('next-pg-btn');
+  var nextLabel = document.getElementById('next-pg-label');
+  var prevBtn   = document.getElementById('prev-pg-btn');
+  var prevLabel = document.getElementById('prev-pg-label');
   var currentNext = null;
+  var currentPrev = null;
 
-  function updateBtn(visibleId) {
+  var prevLabels = {
+    'prologue':      'Inicio',
+    'contents':      'Prólogo',
+    'statement':     'Índice',
+    'autoevaluacion':'Artist Statement',
+    'escrito-1':     'Autoevaluación',
+    'escrito-2':     'Escritos I',
+    'profesores':    'Escritos II',
+    'pares':         'Profesores',
+    'book':          'Pares',
+    'reel':          'Book',
+    'galeria':       'Reel',
+    'agradecimientos':'Galería'
+  };
+
+  function updateBtns(visibleId) {
     var idx = order.indexOf(visibleId);
+
+    // Next button
     if (idx === -1 || idx === order.length - 1) {
-      btn.classList.remove('visible');
+      nextBtn.classList.remove('visible');
       currentNext = null;
     } else {
       currentNext = order[idx + 1];
-      label.textContent = nextLabels[visibleId] || currentNext;
-      btn.classList.add('visible');
+      nextLabel.textContent = nextLabels[visibleId] || currentNext;
+      nextBtn.classList.add('visible');
+    }
+
+    // Prev button
+    if (idx <= 0) {
+      prevBtn.classList.remove('visible');
+      currentPrev = null;
+    } else {
+      currentPrev = order[idx - 1];
+      prevLabel.textContent = prevLabels[visibleId] || currentPrev;
+      prevBtn.classList.add('visible');
     }
   }
 
   // IntersectionObserver — fire when a section covers ≥40% of viewport
   var secObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) updateBtn(entry.target.id);
+      if (entry.isIntersecting) updateBtns(entry.target.id);
     });
   }, { threshold: 0.4 });
 
@@ -2786,12 +2857,21 @@ setInterval(spawnMorpho, 7000);
     if (el) secObserver.observe(el);
   });
 
-  btn.addEventListener('click', function() {
+  nextBtn.addEventListener('click', function() {
     if (!currentNext) return;
     if (typeof triggerPageTurn === 'function') {
       triggerPageTurn('#' + currentNext, 700);
     } else {
       document.getElementById(currentNext).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  prevBtn.addEventListener('click', function() {
+    if (!currentPrev) return;
+    if (typeof triggerPageTurn === 'function') {
+      triggerPageTurn('#' + currentPrev, 700);
+    } else {
+      document.getElementById(currentPrev).scrollIntoView({ behavior: 'smooth' });
     }
   });
 })();
