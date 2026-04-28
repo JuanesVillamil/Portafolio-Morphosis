@@ -35,7 +35,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Cormorant Garamond', 'Times New Roman', serif;
-  background-color: #f6f2f8;  /* soft pearl — base of Sulkowskyi holographic tones */
+  background-color: #DBC4AA;  /* soft pearl — base of Sulkowskyi holographic tones */
   color: var(--ink-deep);
   overflow-x: hidden;
   line-height: 1.7;
@@ -121,7 +121,7 @@ body::after {
 /* ════════════════════════════════════════
    LOADER
    ════════════════════════════════════════ */
-#loader {
+#loader { display: none !important; } #loader-DISABLED {
   position: fixed;
   inset: 0;
   background: linear-gradient(135deg, var(--ink-deep) 0%, var(--morpho-deep) 100%);
@@ -402,7 +402,7 @@ nav ul li a:hover, nav ul li a.active {
 }
 .chapter-marker .chapter-num {
   font-family: 'Cinzel', serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--gold-leaf);
   letter-spacing: 8px;
   text-transform: uppercase;
@@ -421,7 +421,7 @@ nav ul li a:hover, nav ul li a.active {
 .section .section-subtitle {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   color: var(--sepia);
   text-align: center;
   margin-bottom: 0.5rem;
@@ -463,7 +463,7 @@ nav ul li a:hover, nav ul li a.active {
 /* Artist statement specific styling — verse layout */
 #statement {
   background-image:
-    linear-gradient(rgba(246,242,248,0.70), rgba(246,242,248,0.70)),
+    linear-gradient(rgba(255,255,255,0.52), rgba(255,255,255,0.52)),
     url("img/statement-cover.jpg");
   background-size: cover;
   background-position: center center;
@@ -527,15 +527,15 @@ nav ul li a:hover, nav ul li a.active {
 }
 .toc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.2rem;
-  max-width: 1100px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .toc-card {
-  background: var(--parchment);
-  border: 1px solid rgba(184,146,74,0.35);
-  padding: 1.8rem 1.5rem;
+  background: rgba(180,152,112,0.22);
+  border: 1px solid rgba(139,111,71,0.55);
+  padding: 2.2rem 2rem;
   text-decoration: none;
   color: var(--ink-warm);
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -547,23 +547,23 @@ nav ul li a:hover, nav ul li a.active {
 }
 .toc-card .card-num {
   font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
-  color: var(--gold-leaf);
+  font-size: 0.82rem;
+  color: #7a5c28;
   letter-spacing: 4px;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.8rem;
 }
 .toc-card .card-title {
   font-family: 'Italiana', serif;
-  font-size: 1.35rem;
+  font-size: 1.65rem;
   color: var(--ink-deep);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   font-weight: 400;
   line-height: 1.2;
 }
 .toc-card .card-desc {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: var(--sepia);
   line-height: 1.5;
 }
@@ -587,9 +587,9 @@ nav ul li a:hover, nav ul li a.active {
    ════════════════════════════════════════ */
 .evaluators-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 3rem;
+  max-width: 1050px;
   margin: 3rem auto;
 }
 .evaluator-card {
@@ -601,9 +601,9 @@ nav ul li a:hover, nav ul li a.active {
 }
 .evaluator-card:hover { transform: translateY(-6px); }
 .evaluator-photo {
-  width: 180px;
-  height: 240px;
-  margin: 0 auto 1rem;
+  width: 260px;
+  height: 340px;
+  margin: 0 auto 1.4rem;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid rgba(184,146,74,0.4);
@@ -632,14 +632,14 @@ nav ul li a:hover, nav ul li a.active {
 }
 .evaluator-name {
   font-family: 'Italiana', serif;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: var(--ink-deep);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 .evaluator-role {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--sepia);
 }
 .evaluator-empty {
@@ -819,26 +819,6 @@ footer small {
 /* ════════════════════════════════════════
    BACK TO TOP
    ════════════════════════════════════════ */
-#backToTop {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 48px;
-  height: 48px;
-  background: var(--morpho-deep);
-  color: var(--morpho-shimmer);
-  border: 1px solid var(--morpho-bright);
-  font-family: 'Italiana', serif;
-  font-size: 1.2rem;
-  cursor: pointer;
-  z-index: 999;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(10,61,98,0.4);
-}
-#backToTop.visible { opacity: 0.9; transform: translateY(0); }
-#backToTop:hover { background: var(--morpho-blue); opacity: 1; }
 
 /* ════════════════════════════════════════
    REVEAL ANIMATIONS
@@ -940,7 +920,7 @@ footer small {
   .section::before, .section::after { display: none; }
   .hero-content h1 { font-size: 2.5rem; }
   .toc-grid { grid-template-columns: 1fr; }
-  .evaluator-photo { width: 150px; height: 200px; }
+  .evaluator-photo { width: 200px; height: 265px; }
   .section-text { font-size: 1.05rem; }
   .statement-verses { font-size: 1.1rem; }
 }
@@ -1160,9 +1140,9 @@ footer small {
    PROFESSOR INITIALS AVATAR
    ════════════════════════════════════════ */
 .prof-avatar {
-  width: 180px;
-  height: 240px;
-  margin: 0 auto 1rem;
+  width: 260px;
+  height: 340px;
+  margin: 0 auto 1.4rem;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid rgba(184,146,74,0.4);
@@ -1230,6 +1210,48 @@ footer small {
 .evaluator-card:hover .evaluator-photo img {
   transform: scale(1.05);
   filter: sepia(0%) contrast(1.05);
+}
+
+/* ════════ NEXT-PAGE BUTTON (fixed, right-center) ════════ */
+#next-pg-btn {
+  position: fixed;
+  right: 1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.15rem 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.4);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s, opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+}
+#next-pg-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#next-pg-btn:hover {
+  background: rgba(255,255,255,0.26);
+  box-shadow: 0 6px 26px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.55);
+  transform: translateY(calc(-50% - 2px));
+}
+#next-pg-btn .npb-arrow {
+  font-size: 1.05rem;
+  line-height: 1;
 }
 </style>
 </head>
@@ -1549,13 +1571,11 @@ footer small {
 </svg>
 
 <!-- ══════════════ LOADER ══════════════ -->
-<div id="loader">
-  <svg class="loader-morpho" viewBox="0 0 400 280"><use href="#morpho"/></svg>
-  <p>Mórphosis</p>
-</div>
+<div id="loader" style="display:none"></div>
 
 <!-- ══════════════ NAVIGATION ══════════════ -->
 <div id="page-turn-overlay"><div class="page-turn-leaf"></div></div>
+<button id="next-pg-btn" aria-label="Siguiente sección"><span id="next-pg-label">Siguiente</span><span class="npb-arrow">›</span></button>
 
 <nav id="mainNav">
   <ul>
@@ -1621,7 +1641,6 @@ footer small {
 
     <div class="flourish"></div>
     <p style="text-align:center; margin-top:2rem;">
-      <a href="#contents" class="enter-btn" style="border-color:var(--gold-leaf); color:var(--burgundy);">Continuar al índice</a>
     </p>
   </div>
 </section>
@@ -1639,37 +1658,37 @@ footer small {
     <a href="#autoevaluacion" class="toc-card reveal">
       <div class="card-num">Capítulo II · Autoevaluación</div>
       <div class="card-title">Metamorfosis</div>
-      <div class="card-desc">Mirar hacia adentro</div>
+      <div class="card-desc">La autopercepción</div>
     </a>
     <a href="#escrito-1" class="toc-card reveal">
       <div class="card-num">Capítulo III · Escritos Investigativos</div>
       <div class="card-title">La Investigación</div>
-      <div class="card-desc">Investigación &mdash; primera parte</div>
+      
     </a>
     <a href="#profesores" class="toc-card reveal">
       <div class="card-num">Capítulo IV · Evaluación de Profesores</div>
       <div class="card-title">Voces del Vuelo</div>
-      <div class="card-desc">Voces que guían</div>
+      <div class="card-desc">Cuerpos que han guiado</div>
     </a>
     <a href="#pares" class="toc-card reveal">
       <div class="card-num">Capítulo V · Evaluación de Pares</div>
       <div class="card-title">Compañeras de Vuelo</div>
-      <div class="card-desc">Compañeras de vuelo</div>
+      <div class="card-desc">Cuerpos que ha acompañado</div>
     </a>
     <a href="#book" class="toc-card reveal">
       <div class="card-num">Capítulo VI · Book</div>
       <div class="card-title">Hábitat</div>
-      <div class="card-desc">El cuerpo en imagen</div>
+      
     </a>
     <a href="#reel" class="toc-card reveal">
       <div class="card-num">Capítulo VII · Reel</div>
       <div class="card-title">Biodiversidad</div>
-      <div class="card-desc">El cuerpo en movimiento</div>
+      
     </a>
     <a href="#galeria" class="toc-card reveal">
       <div class="card-num">Capítulo VIII · Galería</div>
       <div class="card-title">Ecosistemas</div>
-      <div class="card-desc">Memorias del proceso</div>
+      
     </a>
     <a href="#agradecimientos" class="toc-card reveal">
       <div class="card-num">Capítulo IX</div>
@@ -1681,10 +1700,6 @@ footer small {
 
 <!-- ══════════════ ARTIST STATEMENT ══════════════ -->
 <section id="statement" class="section">
-  <!-- decorative Morpho on the right margin — transparent PNG -->
-  <div class="section-photo-accent right reveal">
-    <img src="img/morpho-aurora.png" alt="Morpho Aurora" style="mix-blend-mode:normal; object-fit:contain;">
-  </div>
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo I</span></div>
     <h2>Artist Statement</h2>
@@ -1695,11 +1710,11 @@ footer small {
       <div class="verse">Soy <strong>Mórphosis</strong>, mariposa Morpho y metamorfosis;</div>
       <div class="verse">Soy mi propia investigación,</div>
       <div class="verse">Investigo lo efímero, las memorias que me acompañan, la transformación que habita mi ser.</div>
-      <div class="verse">Soy la <u>oruga</u> que se arrastra para alcanzar sus sueños; desde un suelo fértil y cambiante.</div>
+      <div class="verse">Soy la <strong>oruga</strong> que se arrastra para alcanzar sus sueños; desde un suelo fértil y cambiante.</div>
       <div class="verse">Soy <strong>bailarina lírica</strong>; fiel perfeccionista de mi técnica, delicadamente pulcra en cada mínimo detalle, espontánea y entregada a mi propio estilo de danza.</div>
       <div class="verse">Soy la <strong>crisálida</strong> que se encierra en sí misma cuando necesita refugio, hecha de una capa tan fuerte pero tan fina que toca su máximo esplendor de vulnerabilidad.</div>
       <div class="verse">Soy <strong>artista de circo</strong>; pierdo el miedo con la acrobacia y me reto con la manipulación de objetos.</div>
-      <div class="verse">Soy la <u>mariposa</u> con las alas más iridiscentes que podrás encontrar.</div>
+      <div class="verse">Soy la <strong>mariposa</strong> con las alas más iridiscentes que podrás encontrar.</div>
       <div class="verse">Soy <strong>aerealista</strong>; mi vida cobra sentido estando a metros del suelo y en compañía de mi lira.</div>
       <div class="verse">Soy <strong>poeta</strong>, plasmo en palabras lo que a veces en movimiento no alcanza.</div>
       <div class="verse">Soy promesas cumplidas y oraciones respondidas de Dios.</div>
@@ -1730,7 +1745,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo III</span></div>
     <h2>Escrito Investigativo I</h2>
-    <p class="section-subtitle">Primera parte de la investigación</p>
+    
     <div class="flourish"></div>
 
     <div class="media-placeholder">
@@ -1745,7 +1760,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo IV</span></div>
     <h2>Escrito Investigativo II</h2>
-    <p class="section-subtitle">Segunda parte de la investigación</p>
+    
     <div class="flourish"></div>
 
     <div class="media-placeholder">
@@ -1767,7 +1782,7 @@ footer small {
       <!-- Jonathan Hernández -->
       <div class="evaluator-card" data-eval="prof-jonathan">
         <div class="evaluator-photo">
-          <img src="img/prof-jonathan.jpg" alt="Jonathan Hernández González">
+          <img src="img/prof-jonathan.jpg" alt="Luis Jonathan Hernández">
         </div>
         <div class="evaluator-name">Jonathan Hernández</div>
         <div class="evaluator-role">Maestro de Circo</div>
@@ -1777,7 +1792,7 @@ footer small {
           <img src="img/prof-humberto.jpg" alt="Humberto Canessa Ulloa">
         </div>
         <div class="evaluator-name">Humberto Canessa</div>
-        <div class="evaluator-role">Danza Contemporánea</div>
+        <div class="evaluator-role">Maestro de Danza Contemporánea</div>
       </div>
     </div>
 
@@ -1786,18 +1801,19 @@ footer small {
       <button class="close-eval" aria-label="Cerrar">✕</button>
       <div class="eval-header">
         <div class="eval-title">Evaluación de Profesor</div>
-        <div class="eval-author">Jonathan Hernández González</div>
-        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Maestro Cátedra</div>
+        <div class="eval-author">Luis Jonathan Hernández</div>
       </div>
       <div class="eval-body">
         <p>Es un honor para mí escribir esta carta de evaluación y reconocimiento para una gran mujer a quien conocí el primer día de mi llegada a la universidad, siendo ella quien me recibió y me dio una bienvenida calurosa cuando yo como maestro nuevo me encontraba muy perdido. Es difícil describir con palabras lo que ha significado para mí acompañar el camino de María Alejandra porque su historia no es solo la de una estudiante de circo, sino la de un alma valiente que decidió volar.</p>
-        <p>Recuerdo su primer encuentro con la lira, en ese momento fue evidente la conexión que ella encontró, podría describir la magia y el brillo que reflejaron sus ojos como un alma que encuentra aquello que estuvo buscando toda su vida y ese sentimiento fue creciendo con cada entrenamiento, cada intento, cada caída y cada logro los cuales han construido los cimientos para la gran artista que es hoy. Ella no solo es una artista de gran nivel técnico, es una persona sensible, generosa y auténtica, con un corazón muy bello que siempre está a disposición ofreciendo su apoyo y conocimiento para el servicio de los demás.</p>
-        <p>Si tuviera que describir su proceso, lo haría a través de la metáfora de una mariposa. Inició como una aprendiz curiosa, en constante transformación, enfrentando retos con paciencia y fortaleza, pero no todo ha sido fácil, también han existido momentos difíciles tanto personales como profesionales; momentos de duda, de esfuerzo profundo, de llanto, de reflexión pero sobre todo, de reconstruirse desde adentro para así poco a poco ir reconociendo su fuerza, su belleza y su capacidad de volar hasta hoy que a punto de graduarse despliega sus alas con libertad y belleza, elevándose con gracia en cada movimiento, recordándonos que el verdadero arte nace de la perseverancia y del coraje de reinventarse.</p>
-        <p>Tengo muy presente el día que me dijo que elegiría el circo como su camino de vida y como profesión, ese día y aunque no lo mostré, de mis ojos salieron lágrimas de orgullo y de felicidad; sé que no fue una decisión fácil y también sé que no es una decisión a la ligera, sino el resultado de escuchar su corazón y tener el coraje de seguirlo. En cada movimiento suyo hay verdad, hay historia, hay alma, y desde ese día ya para mí se convirtió una compañera artista de circo luchando por el mismo sueño que yo llevo en mi vida y el cual me ha dado tanto. Deseo y espero el día que estemos juntos compartiendo la escena.</p>
-        <p>Si algo puedo decir con certeza, es que su vuelo apenas comienza pero, no es cualquier vuelo, esta mariposa tiene fuerza y determinación y aunque hayan vientos fuertes y tenga miedo ella dirá en su mente <em>"si tienes miedo hazlo con miedo, pero hazlo"</em> y seguirá volando cada vez más alto.</p>
-        <p>Hoy aquí más que hacer una evaluación quiero decirte gracias, gracias por tu amistad, gracias por tu generosidad por creer en mí, por permitirme guiarte y ser parte de tu proceso. Gracias por retarme a crear un ensamble de circo, porque si no hubiera sido por ti no habría aceptado y, aunque no creas yo tenía miedo, miedo de fallar, de no cumplir con las expectativas puestas en mí, pero el apoyo que recibí de ti, me permitió seguir fuerte y no enfrentarme a ese reto solo.</p>
-        <p>María Ale donde quiera que vayas, llevas contigo la magia de circo que te recibió y te acogió no solo para darte alegrías, te recibió para darte retos y ponerte en momentos difíciles para que demuestres esa dulzura y esa fuerza que solo tú tienes y estoy seguro que tocarás e inspirarás muchas vidas a través del circo. Cuando estés lejos recuerda que aquí siempre estaré para escucharte y animarte, ya no como un profesor ahora como un amigo y compañero de circo.</p>
-        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;">Con admiración y cariño<br><strong>Jonathan Hernández González</strong><br><span style="font-size:0.75rem; opacity:0.8">Maestro Cátedra</span></p>
+        <p>Recuerdo su primer encuentro con la lira; en ese momento fue evidente la conexión que ella encontró. Podría describir la magia y el brillo que reflejaron sus ojos como un alma que encuentra aquello que estuvo buscando toda su vida, y ese sentimiento fue creciendo con cada entrenamiento, cada intento, cada caída y cada logro, los cuales han construido los cimientos para la gran artista que es hoy. Ella no solo es una artista de gran nivel técnico, es una persona sensible, generosa y auténtica, con un corazón muy bello que siempre está a disposición ofreciendo su apoyo y conocimiento para el servicio de los demás.</p>
+        <p>Si tuviera que describir su proceso, lo haría a través de la metáfora de una mariposa. Inició como una aprendiz curiosa, en constante transformación, enfrentando retos con paciencia y fortaleza, pero no todo ha sido fácil; también han existido momentos difíciles tanto personales como profesionales: momentos de duda, de esfuerzo profundo, de llanto, de reflexión, pero sobre todo, de reconstruirse desde adentro para así poco a poco ir reconociendo su fuerza, su belleza y su capacidad de volar. Hasta hoy, que a punto de graduarse, despliega sus alas con libertad y belleza, elevándose con gracia en cada movimiento, recordándonos que el verdadero arte nace de la perseverancia y del coraje de reinventarse.</p>
+        <p>Tengo muy presente el día que me dijo que elegiría el circo como su camino de vida y como profesión. Ese día, aunque no lo mostré, de mis ojos salieron lágrimas de orgullo y de felicidad; sé que no fue una decisión fácil y también sé que no es una decisión a la ligera, sino el resultado de escuchar su corazón y tener el coraje de seguirlo. En cada movimiento suyo hay verdad, hay historia, hay alma, y desde ese día ya para mí se convirtió en una compañera artista de circo luchando por el mismo sueño que yo llevo en mi vida y el cual me ha dado tanto. Deseo y espero el día que estemos juntos compartiendo la escena.</p>
+        <p>Si algo puedo decir con certeza, es que su vuelo apenas comienza pero no es cualquier vuelo; esta mariposa tiene fuerza y determinación, y aunque hayan vientos fuertes y tenga miedo, ella dirá en su mente: "si tienes miedo, hazlo con miedo, pero hazlo", y seguirá volando cada vez más alto.</p>
+        <p>Hoy aquí, más que hacer una evaluación, quiero decirte gracias. Gracias por tu amistad, gracias por tu generosidad, por creer en mí, por permitirme guiarte y ser parte de tu proceso, pero dejarte contagiar de este bichito curioso y mágico que es el circo. Gracias por retarme a crear un ensamble de circo, porque si no hubiera sido por ti no habría aceptado y, aunque no creas, yo tenía miedo —miedo de fallar, de no cumplir con las expectativas puestas en mí— pero el apoyo que recibí de ti me permitió seguir fuerte y no enfrentarme a ese reto solo.</p>
+        <p>María Ale, donde quiera que vayas, llevas contigo la magia del circo que te recibió y te acogió, no solo para darte alegrías; te recibió para darte retos y ponerte en momentos difíciles para que demuestres esa dulzura y esa fuerza que solo tú tienes. Estoy seguro de que tocarás e inspirarás muchas vidas a través del circo. Cuando estés lejos recuerda que aquí siempre estaré para escucharte y animarte, o así sea solo para darte un abrazo y estar a tu lado en silencio, ya no como un profesor, ahora como un amigo y compañero de circo.</p>
+        <p style="margin-top:1.5rem;"><em>Con admiración y cariño,</em><br>
+        <strong>JONATHAN HERNANDEZ GONZALEZ</strong><br>
+        <span style="font-size:0.9rem;">Maestro Cátedra · Universidad Javeriana</span></p>
       </div>
     </div>
 
@@ -1807,17 +1823,20 @@ footer small {
       <div class="eval-header">
         <div class="eval-title">Evaluación de Profesor</div>
         <div class="eval-author">Humberto Canessa Ulloa</div>
-        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--sepia); margin-top:0.3rem;">Danza Contemporánea</div>
       </div>
       <div class="eval-body">
-        <p>Cuando fui invitado a ser parte de esta Carrera de Escénicas en la Universidad Javeriana de Bogotá en 2018, tuve la oportunidad de encontrarme con una gran diversidad de estudiantes, propia de un programa multinivel y de múltiples énfasis que se distingue por una propuesta académica única dentro del horizonte de la enseñanza de estas disciplinas en Colombia y la región. Intuí entonces que, entre ellos, aparecerían algunas y algunos jóvenes con una visión más integral de lo escénico, cercana a esa necesidad profunda de no solo crear, sino también creer en el acto creativo como una experiencia totalizadora que trascienda ser únicamente ejecutantes para la escena y proyectarse como verdaderos investigadores-creadores.</p>
-        <p>En este contexto, María Alejandra Morales —Maleja— emerge con claridad como una de esas artistas. A lo largo de su proceso formativo ha sabido construir una proyección profesional coherente, definiendo con rigor sus intereses, necesidades expresivas y búsquedas creativas. Su camino no se ha limitado a la adquisición de habilidades técnicas, sino que ha estado atravesado por la construcción de una filosofía de trabajo sólida y sensible. Su proceso da cuenta de una artista en transformación permanente —<em>Mórphosis</em>— como ella misma lo nombra de manera muy poética y sensible: una mezcla de mariposa Morpho y Metamorfosis, comprometida con la excelencia, pero también con una búsqueda honesta, rigurosa y profundamente humana dentro de las artes escénicas.</p>
-        <p>He tenido el gusto de acompañar su proceso formativo a lo largo de varios momentos clave de su carrera. Recién llegando en el primer semestre en la clase de Elementos de la Puesta en Escena I, ella se destacó desde el inicio por su seriedad y compromiso con cada tarea asignada. A pesar de encontrarse en una etapa inicial de formación, mostró una notable capacidad de observación y análisis, así como una disposición constante para el trabajo riguroso.</p>
-        <p>Durante la Técnica básica de Ballet y Danza Moderna que ofrecí en su cuarto semestre, su crecimiento fue evidente. María Alejandra consolidó una técnica limpia y precisa, acompañada de una evidente sensibilidad artística en expansión. Su carácter perfeccionista se tradujo en un trabajo detallado y exigente consigo misma, siempre buscando ir más allá de lo esperado, atendiendo cada retroalimentación con respeto por su proceso. En el Laboratorio de composición coreográfica, comenzó a revelar una voz propia, con intuiciones creativas claras y una capacidad interesante para estructurar material de movimiento con dramaturgias ligadas a sus intereses creativos y una estética personal sólida.</p>
-        <p>En el Ensamble de Danza Contemporánea <em>"Otra cosa es otra cosa"</em>, una pieza inspirada en la obra de María Teresa Hincapié, demostró una mayor madurez escénica. Su presencia en escena se volvió más contundente, y su capacidad de trabajo en equipo fue especialmente valiosa para el desarrollo colectivo. Maleja es una intérprete confiable, comprometida con los procesos grupales, respetuosa de sus compañeros y consciente de la importancia del engranaje colectivo en la creación escénica.</p>
-        <p>Finalmente, en el Ensamble intensivo de Danza y Circo <em>"La Madriguera"</em>, ella alcanzó un nivel de integración muy sólido entre técnica, expresividad y riesgo. Su trabajo como bailarina y artista aérea en la lira evidencia una disciplina rigurosa y una gran conciencia corporal. En este punto, su identidad artística —que ella misma nombra metafóricamente <em>Mórphosis</em>— se manifiesta con fuerza: es una intérprete en constante transformación como una mariposa, frágil, pero a la vez poderosamente bella y entregada.</p>
-        <p>Maleja es una artista perseverante, disciplinada y enormemente comprometida con su oficio. Su exigencia personal, bien encauzada, es una de sus mayores fortalezas. De cara a su futuro como profesional de las artes escénicas, como bailarina y como aerealista, considero que posee todas las herramientas necesarias para desarrollar una trayectoria sólida y significativa. La invito a seguir confiando en su voz propia y a abrazar lo que la hace única.</p>
-        <p style="text-align:center; font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:3px; color:var(--gold-leaf); margin-top:2rem;"><strong>Humberto Canessa Ulloa</strong><br><span style="font-size:0.75rem; opacity:0.8">Danza Contemporánea</span></p>
+        <p>Cuando fui invitado a ser parte de esta Carrera de Escénicas en la Universidad Javeriana de Bogotá en 2018, tuve la oportunidad de encontrarme con una gran diversidad de estudiantes, propia de un programa multinivel y de múltiples énfasis que se distingue por una propuesta académica única dentro del horizonte de la enseñanza de estas disciplinas en Colombia y la región. Intuí entonces que, entre ellos, aparecerían algunas y algunos jóvenes con una visión más integral de lo escénico, cercana a esa necesidad profunda de no solo crear, sino también creer en el acto creativo como una experiencia totalizadora que trascienda ser únicamente ejecutantes para la escena y proyectarse como verdaderos investigadores-creadores. En ese camino, comienzan a hacerse especialmente visibles aquellos estudiantes cuya constancia, disciplina y convicción los llevan a comprender su oficio y su cuerpo desde una dimensión más profunda. Una comprensión que, como lo plantea Max-Neef en <em>El acto creativo</em>, reafirma la credibilidad en lo personal, en lo íntimo y en lo profundamente humano.</p>
+        <p>En este contexto, María Alejandra Morales —Maleja— emerge con claridad como una de esas artistas. A lo largo de su proceso formativo ha sabido construir una proyección profesional coherente, definiendo con rigor sus intereses, necesidades expresivas y búsquedas creativas. Su camino no se ha limitado a la adquisición de habilidades técnicas, sino que ha estado atravesado por la construcción de una filosofía de trabajo sólida y sensible. Desde sus primeras etapas, Maleja ha puesto en juego todo su potencial, manteniéndose constante en sus propósitos y evidenciando una evolución decidida. Su proceso da cuenta de una artista en transformación permanente —Mórphosis— como ella misma lo nombra de manera muy poética y sensible: una mezcla de mariposa Morpho y Metamorfosis, comprometida con la excelencia, pero también con una búsqueda honesta, rigurosa y profundamente humana dentro de las artes escénicas.</p>
+        <p>He tenido el gusto de acompañar su proceso formativo a lo largo de varios momentos clave de su carrera, en asignaturas que han permitido evidenciar su evolución técnica, creativa y humana dentro de la escena. Recién llegando en el primer semestre en la clase de Elementos de la Puesta en Escena I, junto al Mtro. Víctor Quesada, ella se destacó desde el inicio por su seriedad y compromiso con cada tarea asignada. A pesar de encontrarse en una etapa inicial de formación, mostró una notable capacidad de observación y análisis, así como una disposición constante para el trabajo riguroso. Su aproximación al hecho escénico fue respetuosa, llena de curiosidad y disciplinada, sentando bases sólidas para su desarrollo posterior.</p>
+        <p>Durante la Técnica básica de Ballet y Danza Moderna que ofrecí junto al Mtro. Iván Vargas en su cuarto semestre, su crecimiento fue evidente. María Alejandra consolidó una técnica limpia y precisa, acompañada de una evidente sensibilidad artística en expansión. Su carácter perfeccionista, que a veces puede jugar en su contra, en realidad se tradujo en un trabajo detallado y exigente consigo misma, siempre buscando ir más allá de lo esperado, atendiendo cada retroalimentación con respeto por su proceso y con la necesidad inminente de seguir evolucionando. En el Laboratorio de composición coreográfica y en los procesos de investigación-creación, comenzó a revelar una voz propia, con intuiciones creativas claras y una capacidad interesante para estructurar material de movimiento con dramaturgias ligadas a sus intereses creativos y una estética personal sólida; todo esto se evidenció tanto en su proyecto corpográfico como en la video danza y la entrega final coreográfica creada con sus pares.</p>
+        <p>En el Ensamble de Danza Contemporánea <em>"Otra cosa es otra cosa"</em>, una pieza inspirada en la obra de la artista colombiana del performance María Teresa Hincapié, en el que participó en su sexto semestre, demostró una mayor madurez escénica. Su presencia en escena se volvió más contundente, y su capacidad de trabajo en equipo fue especialmente valiosa para el desarrollo colectivo. Maleja es una intérprete confiable, comprometida con los procesos grupales, respetuosa de sus compañeros y consciente de la importancia del engranaje colectivo en la creación escénica.</p>
+        <p>Finalmente, para este octavo y último semestre de su carrera tuve la suerte de poder compartir con María Alejandra en el Ensamble intensivo de Danza y Circo <em>"La Madriguera"</em>, una pieza que diseñamos junto con el Mtro. Leonardo Girón de la técnica de circo. En esta pieza ella alcanzó un nivel de integración muy sólido entre técnica, expresividad y riesgo. Su trabajo como bailarina y artista aérea en la lira evidencia una disciplina rigurosa y una gran conciencia corporal, además de una gran capacidad de proponer en el trabajo en equipo; tiene excelente disposición, es atenta y respetuosa de su trabajo y el de los demás. En este punto, su identidad artística —que ella misma nombra metafóricamente Mórphosis— se manifiesta con fuerza: es una intérprete en constante transformación como una mariposa, frágil, pero a la vez poderosamente bella y entregada, haciendo uso de sus mejores habilidades y cualidades, capaz de habitar el movimiento con profundidad, precisión y sensibilidad.</p>
+        <p>Maleja es una artista perseverante, disciplinada y enormemente comprometida con su oficio. Su exigencia personal, bien encauzada, es una de sus mayores fortalezas, ya que la impulsa a crecer de manera constante. Asimismo, su capacidad para el trabajo en equipo y su ética profesional la convierten en una colaboradora valiosa en cualquier proceso creativo.</p>
+        <p>De cara a su futuro como profesional de las artes escénicas, como bailarina y como aerealista, considero que posee todas las herramientas necesarias para desarrollar una trayectoria sólida y significativa. La invito a seguir confiando en su voz propia, a permitirse también espacios de exploración más intuitivos y a abrazar los procesos con la misma entrega y pasión con que la reconozco hoy, pero también con la apertura hacia lo inesperado que también nutre toda su capacidad creativa.</p>
+        <p>Mórphosis no es solo un nombre, es una declaración amorosa de su potencia transformadora. Estoy seguro de que su camino seguirá desplegándose con la misma belleza, rigor y profundidad que ha demostrado hasta ahora. Te deseo mucho éxito y que el viento de la creatividad llene siempre tus alas de mariposa.</p>
+        <p style="margin-top:1.5rem;"><em>Con aprecio, cariño de siempre y reconocimiento,</em><br>
+        <strong>HUMBERTO CANESSA ULLOA</strong><br>
+        <span style="font-size:0.9rem;">Profesor Cátedra · Carrera de Artes Escénicas<br>Pontificia Universidad Javeriana de Bogotá</span></p>
       </div>
     </div>
 
@@ -1838,14 +1857,12 @@ footer small {
           <img src="img/dana-santos.jpg" alt="Dana Santos">
         </div>
         <div class="evaluator-name">Dana Santos</div>
-        <div class="evaluator-role">Compañera</div>
       </div>
       <div class="evaluator-card" data-eval="par-2">
         <div class="evaluator-photo">
           <img src="img/eval-sofia-card.jpg" alt="Sofía Rivas">
         </div>
         <div class="evaluator-name">Sofía Rivas</div>
-        <div class="evaluator-role">Compañera</div>
       </div>
     </div>
 
@@ -1927,7 +1944,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo VI</span></div>
     <h2>Hábitat<span class="h2-original">· Book ·</span></h2>
-    <p class="section-subtitle">El cuerpo en imagen</p>
+    
     <div class="flourish"></div>
 
     <div class="media-placeholder">
@@ -1942,7 +1959,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo VII</span></div>
     <h2>Biodiversidad<span class="h2-original">· Reel ·</span></h2>
-    <p class="section-subtitle">El cuerpo en movimiento</p>
+    
     <div class="flourish"></div>
 
     <div class="media-placeholder">
@@ -1957,7 +1974,7 @@ footer small {
   <div class="section-inner reveal">
     <div class="chapter-marker"><span class="chapter-num">Capítulo VIII</span></div>
     <h2>Ecosistemas<span class="h2-original">· Galería ·</span></h2>
-    <p class="section-subtitle">Registro de mis ensambles en la Carrera de Artes Escénicas</p>
+    
     <div class="flourish"></div>
 
     <style>
@@ -2032,8 +2049,8 @@ footer small {
       to   { opacity: 1; transform: translateY(0); }
     }
     .gal-det-header {
-      background: #8b3a5a;
-      color: #fdf0f4;
+      background: #E7D0CC;
+      color: #3d2010;
       padding: 1.4rem 3rem 1.2rem 2rem;
       border-radius: 10px 10px 0 0;
     }
@@ -2242,7 +2259,36 @@ footer small {
       line-height: 1;
     }
     .gal-lightbox-close:hover { background: rgba(255,255,255,0.25); }
-    </style>
+    
+/* ════════ PRÓLOGO BACKGROUND ════════ */
+#prologue {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.52), rgba(255,255,255,0.52)),
+    url("img/prologue-bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#prologue .chapter-num {
+  color: var(--parchment);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+}
+#prologue h2 {
+  color: var(--parchment);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+#prologue .section-subtitle {
+  color: rgba(244,234,213,0.9);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+@media(max-width:768px){
+  #prologue { background-image: none; }
+  #prologue .chapter-num,
+  #prologue h2,
+  #prologue .section-subtitle { color: inherit; text-shadow: none; }
+}
+
+</style>
 
     <div class="gal-grid">
 
@@ -2386,8 +2432,7 @@ footer small {
         url: null,
         fl: "img/gallery/madriguera-flyer.jpg",
         syn: "“La Madriguera”, un centro de reciclaje olvidado de la ciudad donde se acumula la basura... y también los sueños. Vive Juani Pi, una niña valiente que, entre montañas de desechos, descubrirá un universo de juego, imaginación y magia.<br><br>Rodeada de personajes tan extraños como entrañables que, a través del circo, el movimiento y la fantasía, le revelarán algo fundamental: que los niños tienen derechos... derecho a jugar, a tener una familia, a un hogar, a ser cuidados y a soñar.<br><br>Un universo donde lo que parecía desechado vuelve a brillar y donde todos recordamos que tenemos derecho a la felicidad.",
-        ph: [],
-        pending: true
+        ph: ["img/gallery/madriguera-p1.jpg","img/gallery/madriguera-p2.jpg","img/gallery/madriguera-p3.jpg"]
       },
       tormenta: {
         t: "Tormenta de Nieve",
@@ -2520,18 +2565,16 @@ footer small {
 </section>
 
 <footer>
-  <svg class="footer-morpho" viewBox="0 0 400 280"><use href="#morpho"/></svg>
   <h3>Mórphosis</h3>
   <p class="footer-role">María Alejandra Morales Cárdenas</p>
   <div class="footer-line"></div>
 </footer>
 
-<button id="backToTop" title="Volver al inicio">↑</button>
 
 <script>
 // ══════ Loader ══════
 window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1400);
+  document.getElementById('loader').style.display = 'none';
 });
 
 // ══════ Page-Turn transition ══════
@@ -2581,8 +2624,6 @@ const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('nav a');
 let lastScroll = 0;
 const nav = document.getElementById('mainNav');
-const backBtn = document.getElementById('backToTop');
-
 window.addEventListener('scroll', () => {
   const st = window.scrollY;
   let current = '';
@@ -2592,16 +2633,11 @@ window.addEventListener('scroll', () => {
     if (a.getAttribute('href') === '#' + current) a.classList.add('active');
   });
 
-  // back-to-top
-  if (st > 600) backBtn.classList.add('visible'); else backBtn.classList.remove('visible');
-
   // hide nav on scroll down
   if (st > lastScroll && st > 400) nav.classList.add('nav-hidden');
   else nav.classList.remove('nav-hidden');
   lastScroll = st;
 });
-
-backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // ══════ Evaluator click → show evaluation ══════
 document.querySelectorAll('.evaluator-card').forEach(card => {
@@ -2703,6 +2739,63 @@ function spawnMorpho() {
 // initial burst + periodic
 setTimeout(() => { for (let i = 0; i < 4; i++) setTimeout(spawnMorpho, i * 1200); }, 2000);
 setInterval(spawnMorpho, 7000);
+
+// ══════ Next-page button (fixed, updates per visible section) ══════
+(function() {
+  const order = ['hero','prologue','contents','statement','autoevaluacion','escrito-1','escrito-2','profesores','pares','book','reel','galeria','agradecimientos'];
+  const nextLabels = {
+    'hero':          'Prólogo',
+    'prologue':      'Índice',
+    'contents':      'Artist Statement',
+    'statement':     'Autoevaluación',
+    'autoevaluacion':'Escritos',
+    'escrito-1':     'Escritos II',
+    'escrito-2':     'Profesores',
+    'profesores':    'Pares',
+    'pares':         'Book',
+    'book':          'Reel',
+    'reel':          'Galería',
+    'galeria':       'Agradecimientos'
+  };
+
+  var btn   = document.getElementById('next-pg-btn');
+  var label = document.getElementById('next-pg-label');
+  var currentNext = null;
+
+  function updateBtn(visibleId) {
+    var idx = order.indexOf(visibleId);
+    if (idx === -1 || idx === order.length - 1) {
+      btn.classList.remove('visible');
+      currentNext = null;
+    } else {
+      currentNext = order[idx + 1];
+      label.textContent = nextLabels[visibleId] || currentNext;
+      btn.classList.add('visible');
+    }
+  }
+
+  // IntersectionObserver — fire when a section covers ≥40% of viewport
+  var secObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) updateBtn(entry.target.id);
+    });
+  }, { threshold: 0.4 });
+
+  order.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) secObserver.observe(el);
+  });
+
+  btn.addEventListener('click', function() {
+    if (!currentNext) return;
+    if (typeof triggerPageTurn === 'function') {
+      triggerPageTurn('#' + currentNext, 700);
+    } else {
+      document.getElementById(currentNext).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
