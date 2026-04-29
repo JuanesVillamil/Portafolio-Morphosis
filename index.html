@@ -2314,27 +2314,27 @@ footer small {
     }
     .gal-lightbox-close:hover { background: rgba(255,255,255,0.25); }
     /* ═══ PHOTO CAROUSEL LIGHTBOX ═══ */
-    /* Modal: simple grid, image+controls centered */
+    /* Modal: fullscreen, accounts for iOS safe areas */
     #pc-modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw; height: 100vh;
+      width: 100%; height: 100%;
       z-index: 11000;
-      background: rgba(6,4,14,0.96);
+      background: rgba(6,4,14,0.97);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
     #pc-modal.open { display: block; animation: pcFadeIn 0.22s ease; }
     @keyframes pcFadeIn { from { opacity:0 } to { opacity:1 } }
 
-    /* Image: absolutely centered in the viewport */
+    /* Image: centered, leaves room for top close btn and bottom bar */
     #pc-img {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 80vw;
-      max-height: 80vh;
+      max-width: 88vw;
+      max-height: calc(100vh - 8rem);
       width: auto; height: auto;
       object-fit: contain;
       border-radius: 4px;
@@ -2342,10 +2342,14 @@ footer small {
       display: block;
       animation: pcImgIn 0.2s cubic-bezier(0.22,1,0.36,1);
       z-index: 1;
+      cursor: zoom-out;
     }
-    @keyframes pcImgIn { from { opacity:0; transform:translate(-50%,-50%) scale(0.96) } to { opacity:1; transform:translate(-50%,-50%) scale(1) } }
+    @keyframes pcImgIn {
+      from { opacity:0; transform:translate(-50%,-50%) scale(0.96) }
+      to   { opacity:1; transform:translate(-50%,-50%) scale(1) }
+    }
 
-    /* Arrows: vertically centered on viewport sides */
+    /* Arrows: vertically centered */
     .pc-arrow {
       position: absolute;
       top: 50%; transform: translateY(-50%);
@@ -2365,15 +2369,16 @@ footer small {
     #pc-next { right: 1.2rem; }
     .pc-arrow[hidden] { display: none !important; }
 
-    /* Close button: top right */
+    /* Close button: top right, respects iOS status bar */
     #pc-close {
       position: absolute;
-      top: 1rem; right: 1.2rem;
+      top: max(1rem, env(safe-area-inset-top, 1rem));
+      right: max(1.2rem, env(safe-area-inset-right, 1.2rem));
       background: rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.2);
       color: #fff;
       font-size: 1.2rem;
-      width: 2.3rem; height: 2.3rem;
+      width: 2.6rem; height: 2.6rem;
       border-radius: 50%;
       cursor: pointer;
       transition: background 0.2s;
@@ -2382,15 +2387,17 @@ footer small {
     }
     #pc-close:hover { background: rgba(255,255,255,0.25); }
 
-    /* Dots + counter: bottom center */
+    /* Dots + counter: bottom center, above iOS home bar */
     #pc-bar {
       position: absolute;
-      bottom: 1.5rem; left: 0; right: 0;
+      bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+      left: 0; right: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
       z-index: 3;
+      padding-bottom: 0.3rem;
     }
     .pc-dot {
       width: 8px; height: 8px;
@@ -2409,8 +2416,8 @@ footer small {
       margin-left: 0.6rem;
     }
     @media (max-width: 768px) {
-      #pc-img { max-width: 92vw; max-height: 75vh; }
-      .pc-arrow { width: 2.2rem; height: 2.2rem; font-size: 1.3rem; }
+      #pc-img { max-width: 94vw; max-height: calc(100vh - 9rem); }
+      .pc-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.3rem; }
     }
     
 /* ════════ PRÓLOGO BACKGROUND ════════ */
