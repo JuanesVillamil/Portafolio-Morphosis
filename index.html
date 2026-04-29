@@ -471,7 +471,11 @@ nav ul li a:hover, nav ul li a.active {
 }
 @media(max-width:768px){
   #statement {
-    background-image: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.62), rgba(255,255,255,0.62)),
+      url("img/statement-cover.jpg");
+    background-size: cover;
+    background-position: center 35%;
   }
 }
 .statement-verses {
@@ -2459,7 +2463,13 @@ footer small {
   text-shadow: 0 1px 6px rgba(0,0,0,0.3);
 }
 @media(max-width:768px){
-  #prologue { background-image: none; }
+  #prologue {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.60)),
+      url("img/prologue-bg.jpg");
+    background-size: cover;
+    background-position: center 30%;
+  }
   #prologue .chapter-num,
   #prologue h2,
   #prologue .section-subtitle { color: inherit; text-shadow: none; }
