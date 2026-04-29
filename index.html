@@ -2328,25 +2328,42 @@ footer small {
     #pc-modal.open { display: block; animation: pcFadeIn 0.22s ease; }
     @keyframes pcFadeIn { from { opacity:0 } to { opacity:1 } }
 
-    /* Image: centered, leaves room for top close btn and bottom bar */
-    #pc-img {
+    /* Scrollable strip — horizontal snap like Instagram */
+    #pc-strip {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 88vw;
-      max-height: calc(100vh - 8rem);
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: auto; /* instant on open, smooth on btn */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    #pc-strip::-webkit-scrollbar { display: none; }
+
+    /* Each slide takes full modal width */
+    .pc-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      scroll-snap-align: center;
+      padding: 4rem 1rem 5rem; /* room for close btn top, bar bottom */
+      box-sizing: border-box;
+    }
+    .pc-slide img {
+      max-width: 100%;
+      max-height: 100%;
       width: auto; height: auto;
       object-fit: contain;
       border-radius: 4px;
       box-shadow: 0 8px 50px rgba(0,0,0,0.65);
       display: block;
-      animation: pcImgIn 0.2s cubic-bezier(0.22,1,0.36,1);
-      z-index: 1;
       cursor: zoom-out;
-    }
-    @keyframes pcImgIn {
-      from { opacity:0; transform:translate(-50%,-50%) scale(0.96) }
-      to   { opacity:1; transform:translate(-50%,-50%) scale(1) }
     }
 
     /* Arrows: vertically centered */
@@ -2416,8 +2433,8 @@ footer small {
       margin-left: 0.6rem;
     }
     @media (max-width: 768px) {
-      #pc-img { max-width: 94vw; max-height: calc(100vh - 9rem); }
-      .pc-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.3rem; }
+      .pc-slide { padding: 4.5rem 0.5rem 5.5rem; }
+      .pc-arrow { width: 2.4rem; height: 2.4rem; font-size: 1.3rem; opacity: 0.6; }
     }
     
 /* ════════ PRÓLOGO BACKGROUND ════════ */
@@ -2705,49 +2722,69 @@ footer small {
       if (e.key === 'Escape') { closeGal(); closeLB(); closePc(); }
     });
 
-    // ═══ PHOTO CAROUSEL ═══
-    var _pcPhotos = [], _pcIdx = 0;
+    // ═══ PHOTO CAROUSEL (horizontal scroll-snap, Instagram-style) ═══
+    var _pcPhotos = [], _pcIdx = 0, _pcScrolled = false;
 
     function openPhotoCarousel(photos, startIdx) {
       if (!photos || !photos.length) return;
       _pcPhotos = photos;
       _pcIdx = startIdx || 0;
-      _pcRender();
+      _pcBuild();
       document.getElementById('pc-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
+      // Jump instantly to the right slide (no animation on open)
+      var strip = document.getElementById('pc-strip');
+      strip.style.scrollBehavior = 'auto';
+      strip.scrollLeft = _pcIdx * strip.clientWidth;
+      _pcUpdateUI();
     }
 
-    function _pcRender() {
-      var img = document.getElementById('pc-img');
-      img.src = _pcPhotos[_pcIdx];
-      img.style.animation = 'none';
-      void img.offsetWidth;
-      img.style.animation = '';
-
-      // dots
-      var dots = document.getElementById('pc-dots');
-      dots.innerHTML = _pcPhotos.map(function(_, i) {
-        return '<button class="pc-dot' + (i === _pcIdx ? ' active' : '') + '" onclick="pcGoTo(' + i + ')"></button>';
+    function _pcBuild() {
+      var strip = document.getElementById('pc-strip');
+      strip.innerHTML = _pcPhotos.map(function(src, i) {
+        return '<div class="pc-slide" data-idx="' + i + '">' +
+               '<img src="' + src + '" alt="Foto ' + (i + 1) + '" loading="lazy">' +
+               '</div>';
       }).join('');
+    }
 
-      // counter
+    function _pcUpdateUI() {
+      document.getElementById('pc-dots').innerHTML = _pcPhotos.map(function(_, i) {
+        return '<button class="pc-dot' + (i === _pcIdx ? ' active' : '') +
+               '" onclick="pcGoTo(' + i + ')"></button>';
+      }).join('');
       document.getElementById('pc-counter').textContent = (_pcIdx + 1) + ' / ' + _pcPhotos.length;
-
-      // arrows
       document.getElementById('pc-prev').hidden = (_pcIdx === 0);
       document.getElementById('pc-next').hidden = (_pcIdx >= _pcPhotos.length - 1);
     }
 
-    function pcPrev() { if (_pcIdx > 0) { _pcIdx--; _pcRender(); } }
-    function pcNext() { if (_pcIdx < _pcPhotos.length - 1) { _pcIdx++; _pcRender(); } }
-    function pcGoTo(i) { _pcIdx = i; _pcRender(); }
+    // Sync UI when user swipes natively
+    document.getElementById('pc-strip').addEventListener('scroll', function() {
+      _pcScrolled = true;
+      var strip = this;
+      var idx = Math.round(strip.scrollLeft / (strip.clientWidth || 1));
+      if (idx !== _pcIdx && idx >= 0 && idx < _pcPhotos.length) {
+        _pcIdx = idx;
+        _pcUpdateUI();
+      }
+    }, { passive: true });
+
+    function _pcScrollTo(i) {
+      var strip = document.getElementById('pc-strip');
+      strip.style.scrollBehavior = 'smooth';
+      strip.scrollLeft = i * strip.clientWidth;
+    }
+
+    function pcPrev() { if (_pcIdx > 0) { _pcIdx--; _pcScrollTo(_pcIdx); _pcUpdateUI(); } }
+    function pcNext() { if (_pcIdx < _pcPhotos.length - 1) { _pcIdx++; _pcScrollTo(_pcIdx); _pcUpdateUI(); } }
+    function pcGoTo(i) { _pcIdx = i; _pcScrollTo(_pcIdx); _pcUpdateUI(); }
 
     function closePc() {
       document.getElementById('pc-modal').classList.remove('open');
       document.body.style.overflow = '';
     }
 
-    // Keyboard arrows for carousel
+    // Keyboard arrows
     document.addEventListener('keydown', function(e) {
       if (!document.getElementById('pc-modal').classList.contains('open')) return;
       if (e.key === 'ArrowLeft')  { pcPrev(); e.preventDefault(); }
@@ -2755,29 +2792,19 @@ footer small {
       if (e.key === 'Escape')     { closePc(); }
     });
 
-    // Click on photo or dark background → close
-    document.getElementById('pc-modal').addEventListener('click', function(e) {
-      if (e.target === this || e.target === document.getElementById('pc-img')) closePc();
+    // Tap on image or dark background → close (but NOT if user just swiped)
+    document.getElementById('pc-strip').addEventListener('touchstart', function() {
+      _pcScrolled = false;
+    }, { passive: true });
+    document.getElementById('pc-strip').addEventListener('click', function(e) {
+      if (_pcScrolled) { _pcScrolled = false; return; }
+      var t = e.target;
+      if (t.classList.contains('pc-slide') || t.tagName === 'IMG') closePc();
     });
-
-    // Touch swipe (and tap-to-close on the image)
-    var _pcSwipeX = 0, _pcSwipeY = 0;
-    document.getElementById('pc-modal').addEventListener('touchstart', function(e) {
-      _pcSwipeX = e.touches[0].clientX;
-      _pcSwipeY = e.touches[0].clientY;
-    }, { passive: true });
-    document.getElementById('pc-modal').addEventListener('touchend', function(e) {
-      var dx = e.changedTouches[0].clientX - _pcSwipeX;
-      var dy = e.changedTouches[0].clientY - _pcSwipeY;
-      // swipe horizontally
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) pcNext(); else pcPrev();
-      // tap on image or background (tiny movement = tap)
-      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
-        var t = e.target;
-        if (t === this || t === document.getElementById('pc-img')) closePc();
-      }
-    }, { passive: true });
+    // Also close if clicking the dark area outside the strip
+    document.getElementById('pc-modal').addEventListener('click', function(e) {
+      if (e.target === this) closePc();
+    });
 
     </script>
 
@@ -3074,8 +3101,8 @@ setInterval(spawnMorpho, 7000);
 <!-- Photo carousel modal — direct child of body to avoid clip bugs -->
 <div id="pc-modal">
   <button id="pc-close" onclick="closePc()">&#x2715;</button>
+  <div id="pc-strip"></div>
   <button class="pc-arrow" id="pc-prev" onclick="pcPrev()">&#x2039;</button>
-  <img id="pc-img" src="" alt="">
   <button class="pc-arrow" id="pc-next" onclick="pcNext()">&#x203a;</button>
   <div id="pc-bar">
     <div id="pc-dots"></div>
