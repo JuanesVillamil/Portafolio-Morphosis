@@ -527,17 +527,21 @@ nav ul li a:hover, nav ul li a.active {
 }
 .toc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
+/* Each card shows its own slice of the hero background */
 .toc-card {
-  background: rgba(180,152,112,0.22);
-  border: 1px solid rgba(139,111,71,0.55);
+  background:
+    radial-gradient(ellipse at center, rgba(244,234,213,0.4) 0%, transparent 70%),
+    linear-gradient(135deg, #1a1410 0%, #003d4f 55%, #005f6e 100%);
+  background-size: 300% 300%;
+  border: 1px solid rgba(163,223,253,0.18);
   padding: 2.2rem 2rem;
   text-decoration: none;
-  color: var(--ink-warm);
+  color: var(--parchment);
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
   display: flex;
@@ -545,26 +549,37 @@ nav ul li a:hover, nav ul li a.active {
   align-items: flex-start;
   overflow: hidden;
 }
+/* 3×3 slice positions */
+.toc-card:nth-child(1) { background-position: 0%   0%;   }
+.toc-card:nth-child(2) { background-position: 50%  0%;   }
+.toc-card:nth-child(3) { background-position: 100% 0%;   }
+.toc-card:nth-child(4) { background-position: 0%   50%;  }
+.toc-card:nth-child(5) { background-position: 50%  50%;  }
+.toc-card:nth-child(6) { background-position: 100% 50%;  }
+.toc-card:nth-child(7) { background-position: 0%   100%; }
+.toc-card:nth-child(8) { background-position: 50%  100%; }
+.toc-card:nth-child(9) { background-position: 100% 100%; }
 .toc-card .card-num {
   font-family: 'Cinzel', serif;
   font-size: 0.82rem;
-  color: #7a5c28;
+  color: rgba(163,223,253,0.9) !important;
   letter-spacing: 4px;
   margin-bottom: 0.8rem;
 }
 .toc-card .card-title {
   font-family: 'Italiana', serif;
   font-size: 1.65rem;
-  color: var(--ink-deep);
+  color: #f4ead5 !important;
   margin-bottom: 0.5rem;
   font-weight: 400;
   line-height: 1.2;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
 .toc-card .card-desc {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 1.15rem;
-  color: var(--sepia);
+  color: rgba(244,234,213,0.8) !important;
   line-height: 1.5;
 }
 .toc-card::after {
@@ -577,8 +592,8 @@ nav ul li a:hover, nav ul li a.active {
 }
 .toc-card:hover {
   transform: translateY(-4px);
-  border-color: var(--morpho-bright);
-  box-shadow: 0 14px 35px rgba(10,61,98,0.12);
+  border-color: rgba(163,223,253,0.5);
+  box-shadow: 0 14px 35px rgba(0,95,110,0.4), inset 0 0 0 1px rgba(163,223,253,0.15);
 }
 .toc-card:hover::after { opacity: 1; }
 
@@ -988,18 +1003,20 @@ footer small {
   background: linear-gradient(180deg, var(--parchment-dark) 0%, var(--parchment) 50%, var(--parchment-dark) 100%);
 }
 .prologue-body {
-  max-width: 680px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
-  border: 1px solid rgba(184,146,74,0.3);
-  background: rgba(255,255,255,0.3);
+  padding: 2.5rem 3rem;
+  border: none;
+  background: none;
   text-align: center;
 }
 .prologue-body p {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.18rem;
+  font-size: 1.55rem;
+  font-weight: 600;
   line-height: 2;
-  color: var(--ink-warm);
+  color: var(--ink-deep);
+  text-shadow: 0 1px 8px rgba(255,255,255,0.7), 0 0 2px rgba(255,255,255,0.5);
 }
 .prologue-example {
   display: block;
@@ -1654,7 +1671,6 @@ footer small {
     <div class="chapter-marker"><span class="chapter-num">Prólogo</span></div>
     <h2>Mórphosis</h2>
     <p class="section-subtitle">Una carta al lector</p>
-    <div class="flourish"></div>
 
     <div class="prologue-body">
       <p class="prologue-letter">
@@ -1680,9 +1696,6 @@ footer small {
       </p>
     </div>
 
-    <div class="flourish"></div>
-    <p style="text-align:center; margin-top:2rem;">
-    </p>
   </div>
 </section>
 
@@ -1938,15 +1951,15 @@ footer small {
         <p>Ahora, en este punto final de la carrera, siento que Aleja está en pleno vuelo. No como algo terminado, sino como una mariposa que apenas empieza a recorrer el mundo con las alas que tanto tiempo le tomó construir. Y hay algo que admiro profundamente: que haya encontrado durante este proceso eso que realmente la apasiona, eso que la llena de vida. Porque no todos tenemos la fortuna de descubrirlo con tanta claridad. Sé que ese camino en el circo, en lo aéreo, y en la Lira que tanto la hace ver liberada, la va a llevar lejos, que le va a permitir viajar, seguir aprendiendo, expandirse y cumplir muchos de los sueños que ha construido desde hace años y todos aquellos que sigue anhelando.</p>
   
       <div class="polaroid-strip">
-        <div class="polaroid" onclick="openLB('img/eval-dana-1.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-dana-1.jpg','img/eval-dana-2.jpg','img/eval-dana-3.jpg'],0)">
           <img src="img/eval-dana-1.jpg" alt="Dana Santos 1" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
-        <div class="polaroid" onclick="openLB('img/eval-dana-2.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-dana-1.jpg','img/eval-dana-2.jpg','img/eval-dana-3.jpg'],1)">
           <img src="img/eval-dana-2.jpg" alt="Dana Santos 2" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
-        <div class="polaroid" onclick="openLB('img/eval-dana-3.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-dana-1.jpg','img/eval-dana-2.jpg','img/eval-dana-3.jpg'],2)">
           <img src="img/eval-dana-3.jpg" alt="Dana Santos 3" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
@@ -1963,15 +1976,15 @@ footer small {
       </div>
       <div class="eval-body"><p>La observación de mariposas enseña sobre la paciencia y la transformación personal. Se dice, que encontrarse con una, simboliza un nuevo inicio o cambios en la vida de la persona que la logra ver. El camino de esta mariposa ha sido extenso, su proceso de metamorfosis ha sido evidente y encontrarme con ella ha sido una de las mayores suertes que la vida me ha podido brindar. Pienso en el tiempo detenido dentro del capullo, en esa transformación que ocurre sin testigos, en la paciencia que exige convertirse en algo distinto sin tener la certeza de cómo será ese nuevo cuerpo. En ti habita esa sabiduría: la de saber esperar, la de sostenerte en lo que todavía no se nombra, en lo que todavía no se muestra.</p><p>Desde primer semestre, he sido testigo de cómo te despliegas poco a poco, como si cada espacio —el salón, la escena, los ensayos, los pasillos, incluso los silencios— fuera una pequeña grieta por donde asoma una nueva versión de ti. No es un cambio abrupto, no es una transformación que irrumpe, es más bien un proceso delicado, pero profundamente constante. Como las alas que se secan al sol antes del primer vuelo, lo tuyo también tiene algo de preparación íntima, de cuidado, de tiempo perfectamente habitado. Y es ahí donde encuentro una de tus mayores fuerzas: en la capacidad de sostener el proceso, de confiar en lo que aún no termina de tomar forma. En un mundo que empuja a mostrarse rápido, a definirse, a ser algo concreto todo el tiempo, tú eliges el tránsito, eliges la transformación continua. Entiendes que hay belleza hasta en el más mínimo detalle.</p><p>Tu presencia, profundamente intencional, intensa, fogosa, sabes llenar el espacio solo con tu llegada y así llegaste a mi vida, así llegaste a mi proceso a enseñarme sobre el detalle, el cariño, la escucha dentro de lo cotidiano. Como las mariposas, no irrumpes: llegas. Y cuando llegas, algo cambia. No de manera estruendosa, sino sutil, como una corriente de aire que apenas se percibe pero que modifica la dirección de todo. Hay una sensibilidad en tu manera de estar, de moverte, de mirar, de escuchar, que transforma lo cotidiano en algo más atento, más vivo, más presente.</p><p>Admiro profundamente cómo habitas el arte. No desde la necesidad de demostrar, sino desde un lugar honesto, casi íntimo, como si cada gesto fuera una extensión natural de lo que eres. Tu forma de vestir, de hablar, de escribir, de pensar, todo está atravesado por una misma coherencia sensible. Haces del detalle un territorio importante, y en ese gesto, recuerdas que el arte también vive en lo pequeño, en lo que muchas veces pasa desapercibido. También he visto tus momentos de quietud, de duda, de recogimiento. Y lejos de pensar que ahí te detienes, siento que es justo en esos lugares donde más profundamente te transformas. Como la mariposa que aún no rompe el capullo, hay algo en ti que trabaja en silencio, que reorganiza, que reconstruye. Hay una fuerza invisible en tu manera de habitar esos espacios más frágiles, una valentía que no siempre se nombra, pero se siente. Pienso también en el vuelo, en ese instante en el que finalmente las alas se abren. Pero incluso ahí, en esa aparente libertad, hay una conciencia del aire, del entorno, de los otros. Las mariposas no vuelan de cualquier manera: hay una inteligencia en su trayecto, una forma de leer el mundo mientras se desplazan. Así te percibo también a ti: atenta, sensible, en diálogo constante con lo que te rodea, permitiendo que el entorno también te transforme.</p><p>Gracias por compartir este proceso, por permitir que quienes te rodeamos podamos acompañarte, aunque sea un poco, en cada una de tus metamorfosis. Gracias por la suavidad que no es debilidad, sino elección; por la escucha que abre espacio; por la manera en que haces sentir a otros que también están en proceso, que también pueden cambiar, que también pueden encontrar su forma. Gracias por tu forma de estar sin imponerte, por tu manera de cuidar, por tu capacidad de sostener sin necesidad de tener todas las respuestas. Hay algo profundamente humano en ti, algo que recuerda que el arte no está separado de la vida, sino que nace de ella, de sus dudas, de sus búsquedas, de sus pequeños y grandes movimientos.</p><p>Ahora, que es momento de emprender vuelo, te deseo cielos amplios. Te deseo vuelos libres, también lugares donde puedas plegar las alas y descansar sin prisa. Te deseo caminos que no siempre estén claros, porque sé que en lo incierto también encuentras sentido. Te deseo que nunca pierdas esa confianza en tu propio ritmo, en esa forma tan tuya de metamorfosearte.</p><p>Y si alguna vez el viento cambia, si alguna vez sientes que no sabes hacia dónde ir, recuerda que incluso las mariposas migran sin tener todo resuelto, guiadas por algo que no siempre se ve, pero que profundamente se siente.</p><p><em>Con inmensa admiración y cariño,<br>Sofia Rivas Ramírez (Rami)</em></p>
       <div class="polaroid-strip">
-        <div class="polaroid" onclick="openLB('img/eval-sofia-1.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-sofia-1.jpg','img/eval-sofia-2.jpg','img/eval-sofia-3.jpg'],0)">
           <img src="img/eval-sofia-1.jpg" alt="Sofía Rivas 1" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
-        <div class="polaroid" onclick="openLB('img/eval-sofia-2.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-sofia-1.jpg','img/eval-sofia-2.jpg','img/eval-sofia-3.jpg'],1)">
           <img src="img/eval-sofia-2.jpg" alt="Sofía Rivas 2" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
-        <div class="polaroid" onclick="openLB('img/eval-sofia-3.jpg')">
+        <div class="polaroid" onclick="openPhotoCarousel(['img/eval-sofia-1.jpg','img/eval-sofia-2.jpg','img/eval-sofia-3.jpg'],2)">
           <img src="img/eval-sofia-3.jpg" alt="Sofía Rivas 3" loading="lazy">
           <div class="polaroid-caption"></div>
         </div>
@@ -2300,6 +2313,105 @@ footer small {
       line-height: 1;
     }
     .gal-lightbox-close:hover { background: rgba(255,255,255,0.25); }
+    /* ═══ PHOTO CAROUSEL LIGHTBOX ═══ */
+    /* Modal: simple grid, image+controls centered */
+    #pc-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      z-index: 11000;
+      background: rgba(6,4,14,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    #pc-modal.open { display: block; animation: pcFadeIn 0.22s ease; }
+    @keyframes pcFadeIn { from { opacity:0 } to { opacity:1 } }
+
+    /* Image: absolutely centered in the viewport */
+    #pc-img {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 80vw;
+      max-height: 80vh;
+      width: auto; height: auto;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 8px 50px rgba(0,0,0,0.65);
+      display: block;
+      animation: pcImgIn 0.2s cubic-bezier(0.22,1,0.36,1);
+      z-index: 1;
+    }
+    @keyframes pcImgIn { from { opacity:0; transform:translate(-50%,-50%) scale(0.96) } to { opacity:1; transform:translate(-50%,-50%) scale(1) } }
+
+    /* Arrows: vertically centered on viewport sides */
+    .pc-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 2.8rem; height: 2.8rem;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 3;
+    }
+    .pc-arrow:hover { background: rgba(255,255,255,0.25); }
+    #pc-prev { left: 1.2rem; }
+    #pc-next { right: 1.2rem; }
+    .pc-arrow[hidden] { display: none !important; }
+
+    /* Close button: top right */
+    #pc-close {
+      position: absolute;
+      top: 1rem; right: 1.2rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      width: 2.3rem; height: 2.3rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 4;
+    }
+    #pc-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* Dots + counter: bottom center */
+    #pc-bar {
+      position: absolute;
+      bottom: 1.5rem; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 3;
+    }
+    .pc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+    }
+    .pc-dot.active { background: #b8924a; transform: scale(1.35); }
+    #pc-counter {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+      margin-left: 0.6rem;
+    }
+    @media (max-width: 768px) {
+      #pc-img { max-width: 92vw; max-height: 75vh; }
+      .pc-arrow { width: 2.2rem; height: 2.2rem; font-size: 1.3rem; }
+    }
     
 /* ════════ PRÓLOGO BACKGROUND ════════ */
 #prologue {
@@ -2402,11 +2514,12 @@ footer small {
     </div>
 
     <div id="gal-details-container"></div>
-
     <div id="galLightbox" class="gal-lightbox" onclick="closeLB()">
-      <img id="galLBImg" src="" alt="" onclick="event.stopPropagation()">
+      <img id="galLBImg" src="" alt="Foto ampliada" onclick="closeLB()" style="cursor:zoom-out">
       <button class="gal-lightbox-close" onclick="closeLB()">&#x2715;</button>
     </div>
+
+
 
     <script>
     var GD = {
@@ -2503,7 +2616,7 @@ footer small {
         frag += '</div>';
         frag += '<div class="gal-det-body' + (hasFlyer ? '' : ' gal-det-body--full') + '">';
         if (hasFlyer) {
-          frag += '<div class="gal-det-flyer"><img src="' + d.fl + '" alt="Flyer" onclick="openLB(this.src,\'flyer\')" loading="lazy"></div>';
+          frag += '<div class="gal-det-flyer"><img src="' + d.fl + '" alt="Flyer" onclick="openPhotoCarousel([GD[\'' + id + '\'].fl],0)" loading="lazy"></div>';
         }
         frag += '<div class="gal-det-info">';
         if (d.trasescena) {
@@ -2532,7 +2645,7 @@ footer small {
         if (d.ph && d.ph.length > 0) {
           frag += '<div class="gal-det-photos' + (d.bonus ? ' gal-det-photos--bonus' : '') + '">';
           for (var i = 0; i < d.ph.length; i++) {
-            frag += '<img src="' + d.ph[i] + '" alt="Foto ' + (i+1) + '" onclick="openLB(this.src,\'photo\')" loading="lazy">';
+            frag += '<img src="' + d.ph[i] + '" alt="Foto ' + (i+1) + '" onclick="openPhotoCarousel(GD[\'' + id + '\'].ph,' + i + ')" loading="lazy">';
           }
           frag += '</div>';
         } else if (d.pending) {
@@ -2582,8 +2695,83 @@ footer small {
     }
     document.addEventListener('DOMContentLoaded', buildGalPanels);
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') { closeGal(); closeLB(); }
+      if (e.key === 'Escape') { closeGal(); closeLB(); closePc(); }
     });
+
+    // ═══ PHOTO CAROUSEL ═══
+    var _pcPhotos = [], _pcIdx = 0;
+
+    function openPhotoCarousel(photos, startIdx) {
+      if (!photos || !photos.length) return;
+      _pcPhotos = photos;
+      _pcIdx = startIdx || 0;
+      _pcRender();
+      document.getElementById('pc-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function _pcRender() {
+      var img = document.getElementById('pc-img');
+      img.src = _pcPhotos[_pcIdx];
+      img.style.animation = 'none';
+      void img.offsetWidth;
+      img.style.animation = '';
+
+      // dots
+      var dots = document.getElementById('pc-dots');
+      dots.innerHTML = _pcPhotos.map(function(_, i) {
+        return '<button class="pc-dot' + (i === _pcIdx ? ' active' : '') + '" onclick="pcGoTo(' + i + ')"></button>';
+      }).join('');
+
+      // counter
+      document.getElementById('pc-counter').textContent = (_pcIdx + 1) + ' / ' + _pcPhotos.length;
+
+      // arrows
+      document.getElementById('pc-prev').hidden = (_pcIdx === 0);
+      document.getElementById('pc-next').hidden = (_pcIdx >= _pcPhotos.length - 1);
+    }
+
+    function pcPrev() { if (_pcIdx > 0) { _pcIdx--; _pcRender(); } }
+    function pcNext() { if (_pcIdx < _pcPhotos.length - 1) { _pcIdx++; _pcRender(); } }
+    function pcGoTo(i) { _pcIdx = i; _pcRender(); }
+
+    function closePc() {
+      document.getElementById('pc-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Keyboard arrows for carousel
+    document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('pc-modal').classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  { pcPrev(); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { pcNext(); e.preventDefault(); }
+      if (e.key === 'Escape')     { closePc(); }
+    });
+
+    // Click on photo or dark background → close
+    document.getElementById('pc-modal').addEventListener('click', function(e) {
+      if (e.target === this || e.target === document.getElementById('pc-img')) closePc();
+    });
+
+    // Touch swipe (and tap-to-close on the image)
+    var _pcSwipeX = 0, _pcSwipeY = 0;
+    document.getElementById('pc-modal').addEventListener('touchstart', function(e) {
+      _pcSwipeX = e.touches[0].clientX;
+      _pcSwipeY = e.touches[0].clientY;
+    }, { passive: true });
+    document.getElementById('pc-modal').addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - _pcSwipeX;
+      var dy = e.changedTouches[0].clientY - _pcSwipeY;
+      // swipe horizontally
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) pcNext(); else pcPrev();
+      // tap on image or background (tiny movement = tap)
+      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+        var t = e.target;
+        if (t === this || t === document.getElementById('pc-img')) closePc();
+      }
+    }, { passive: true });
+
     </script>
 
   </div>
@@ -2785,7 +2973,6 @@ setInterval(spawnMorpho, 7000);
 (function() {
   const order = ['hero','prologue','contents','statement','autoevaluacion','escrito-1','escrito-2','profesores','pares','book','reel','galeria','agradecimientos'];
   const nextLabels = {
-    'hero':          'Prólogo',
     'prologue':      'Índice',
     'contents':      'Artist Statement',
     'statement':     'Autoevaluación',
@@ -2824,8 +3011,8 @@ setInterval(spawnMorpho, 7000);
   function updateBtns(visibleId) {
     var idx = order.indexOf(visibleId);
 
-    // Next button
-    if (idx === -1 || idx === order.length - 1) {
+    // Next button (hidden on hero and last section)
+    if (idx === -1 || idx === order.length - 1 || visibleId === 'hero') {
       nextBtn.classList.remove('visible');
       currentNext = null;
     } else {
@@ -2877,5 +3064,16 @@ setInterval(spawnMorpho, 7000);
 })();
 
 </script>
+<!-- Photo carousel modal — direct child of body to avoid clip bugs -->
+<div id="pc-modal">
+  <button id="pc-close" onclick="closePc()">&#x2715;</button>
+  <button class="pc-arrow" id="pc-prev" onclick="pcPrev()">&#x2039;</button>
+  <img id="pc-img" src="" alt="">
+  <button class="pc-arrow" id="pc-next" onclick="pcNext()">&#x203a;</button>
+  <div id="pc-bar">
+    <div id="pc-dots"></div>
+    <span id="pc-counter"></span>
+  </div>
+</div>
 </body>
 </html>
