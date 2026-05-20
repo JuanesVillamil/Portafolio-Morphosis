@@ -2494,6 +2494,7 @@ footer small {
       background: var(--morpho-deep);
       color: #f4ead5;
       box-shadow: 0 3px 12px rgba(30,20,80,0.25);
+      border: none;
     }
     .gal-trailer-btn:hover {
       background: #2a1a6e;
@@ -2822,6 +2823,7 @@ footer small {
         sem: "2023-30",
         foto: { name: "Daniel Miranda", ig: "@danielmirandafotos" },
         d: "Isaac Barbosa y Juliana Atuesta",
+        yt: "MMJ6Hw5DiA8",
         url: "https://www.instagram.com/reel/CzMapz9Jfe3/?igsh=cDR4Mml5a3Fmc3Fo",
         fl: "img/gallery/condena-flyer.jpg",
         syn: "La Condena plantea una apertura performatética a un reportaje escrito por Santiago Wills, sobre la invaluable labor social y ambiental de Jani Rita Silva en la zona de reserva campesina del bajo Putumayo. Desde el valor expresivo de la performancia, nos permitimos dialogar con el documento, tanto su textualidad como con sus posibilidades interpretativas; dialogamos también desde nuestras existencias, nuestros discursos propios y nuestras aproximaciones al territorio. Convocamos la comprensión desde la potencia de la palabra, pero también del movimiento y de la presencia de nuestras diversas corporalidades. El documento nos permite ver a Jani, y Jani nos permite ser el reflejo que proyecta preguntas y posibilidades de conectarnos con nuestro contexto, de incidir, de denunciar, de cuestionar y de agenciar posibilidades poéticas discursivas que toman lugar como espacio de creación.",
@@ -2934,7 +2936,11 @@ footer small {
         if (d.bonus) {
           frag += '<div style="margin-bottom:0.8rem"><span class="gal-bonus-badge" style="position:static;display:inline-block;">Creaci\u00f3n Bonus</span></div>';
         }
-        if (d.url) {
+        if (d.yt) {
+          frag += '<button onclick="openYT(\'' + d.yt + '\',\'' + d.t.replace(/'/g,"\\'") + '\')" class="gal-trailer-btn">';
+          frag += '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
+          frag += ' Ver Tr\u00e1iler</button> ';
+        } else if (d.url) {
           frag += '<a href="' + d.url + '" target="_blank" rel="noopener" class="gal-trailer-btn">';
           frag += '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>';
           frag += ' Ver Tr\u00e1iler</a> ';
@@ -3007,6 +3013,25 @@ footer small {
     document.addEventListener('DOMContentLoaded', buildGalPanels);
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') { closeGal(); closeLB(); closePc(); }
+    });
+
+    // ═══ YOUTUBE MODAL ═══
+    function openYT(videoId, title) {
+      document.getElementById('yt-title').textContent = title || '';
+      document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      document.getElementById('yt-modal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeYT() {
+      document.getElementById('yt-modal').style.display = 'none';
+      document.getElementById('yt-iframe').src = '';
+      document.body.style.overflow = '';
+    }
+    document.getElementById('yt-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeYT();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.getElementById('yt-modal').style.display === 'block') closeYT();
     });
 
     // ═══ PHOTO CAROUSEL (horizontal scroll-snap, Instagram-style) ═══
@@ -3401,6 +3426,17 @@ setInterval(spawnMorpho, 7000);
 })();
 
 </script>
+<!-- YouTube trailer modal -->
+<div id="yt-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:12000;background:rgba(6,4,14,0.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
+  <button onclick="closeYT()" style="position:absolute;top:max(1rem,env(safe-area-inset-top,1rem));right:max(1.2rem,env(safe-area-inset-right,1.2rem));background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:1.2rem;width:2.6rem;height:2.6rem;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:4;">&#x2715;</button>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,92vw);text-align:center;">
+    <p id="yt-title" style="font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(244,234,213,0.7);margin-bottom:0.8rem;"></p>
+    <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:6px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.6);">
+      <iframe id="yt-iframe" src="" allow="autoplay;encrypted-media" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
+    </div>
+  </div>
+</div>
+
 <!-- Photo carousel modal — direct child of body to avoid clip bugs -->
 <div id="pc-modal">
   <button id="pc-close" onclick="closePc()">&#x2715;</button>
