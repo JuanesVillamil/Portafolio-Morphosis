@@ -880,6 +880,10 @@ footer small {
   object-fit: cover;
   display: block;
 }
+/* Fotos verticales → polaroid más alto */
+#eval-prof-jonathan .polaroid img,
+#eval-prof-humberto .polaroid img { height: 300px; }
+
 .polaroid-caption {
   font-family: 'Cormorant Garamond', serif;
   font-size: 0.85rem;
@@ -1262,6 +1266,7 @@ footer small {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  max-width: 220px;
   padding: 0.6rem 1.15rem 0.6rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.45);
@@ -1293,6 +1298,12 @@ footer small {
   font-size: 1.05rem;
   line-height: 1;
 }
+#next-pg-btn, #prev-pg-btn { white-space: nowrap; }
+#next-pg-label, #prev-pg-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
 #prev-pg-btn {
   position: fixed;
   left: 1.6rem;
@@ -1302,6 +1313,7 @@ footer small {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  max-width: 220px;
   padding: 0.6rem 1rem 0.6rem 1.15rem;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.45);
@@ -2099,6 +2111,13 @@ footer small {
         <p style="margin-top:1.5rem;"><em>Con aprecio, cariño de siempre y reconocimiento,</em><br>
         <strong>HUMBERTO CANESSA ULLOA</strong><br>
         <span style="font-size:0.9rem;">Profesor Cátedra · Carrera de Artes Escénicas<br>Pontificia Universidad Javeriana de Bogotá</span></p>
+
+        <div class="polaroid-strip">
+          <div class="polaroid" onclick="openPhotoCarousel(['img/eval-humberto-1.jpg'],0)">
+            <img src="img/eval-humberto-1.jpg" alt="Humberto Canessa" loading="lazy">
+            <div class="polaroid-caption"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2624,10 +2643,11 @@ footer small {
       max-height: 100%;
       width: auto; height: auto;
       object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 8px 50px rgba(0,0,0,0.65);
+      border-radius: 0;
+      box-shadow: none;
       display: block;
       cursor: zoom-out;
+      clip-path: inset(4px); /* recorta borde blanco del JPG para que no se vea el "marco" contra el fondo oscuro */
     }
 
     /* Arrows: vertically centered */
@@ -2835,6 +2855,7 @@ footer small {
         sem: "2024-10",
         foto: { name: "Martín Quiroga", ig: "@latin_visual" },
         d: "Arnulfo Pardo y Laura Castiblanco",
+        yt: "xXuFmjdQ3m8",
         url: "https://www.instagram.com/reel/C6_KlndOqCp/?igsh=NzBqaXQ2YnNlZmVw",
         fl: "img/gallery/intento-flyer.jpg",
         syn: "Y así se repitieron a través de los años los mismos poemas.<br>El sol, la lluvia, un arcoíris. Refracción. n1&middot;sinθ1=n2&middot;sinθ2<br>Pasaron tantas cosas... 5.175 pesos por una hora de trabajo. 45 minutos esperando el bus.<br>Pero él nunca avanza, sino que el sendero pasa por debajo de él.<br>... y apenas vio el destello porque la casa en la que creció ya no existe.<br>Un funeral. Nosotros y ellxs solo para un día ocupado.<br>Se quemaba la punta de los dedos. Cabeza en llamas.<br>¿Y quién sabe quién es quién? Silencio.<br>Nunca pudo decir otra cosa y se quedó girando...<br>... y al final es solo redondo y redondo y redondo...",
@@ -2858,6 +2879,7 @@ footer small {
         sem: "2025-10",
         foto: { name: "María Camila Díaz", ig: "@maka579" },
         d: "Humberto Canessa",
+        yt: "KdshLMkl1uQ",
         url: "https://www.instagram.com/reel/DKIEWTJA0-G/?igsh=a3luNnY3amM2bHA4",
         fl: "img/gallery/otracosa-flyer.jpg",
         syn: "Soy una mujer...<br>Soy una mujer semilla de cambio.<br>Soy una mujer compuesta de células de deseos, convertidos en un cuerpo soñador.<br>Soy una mujer oprimida en un mundo capitalista sin corazón repleto de dinero.<br>Soy una mujer desfaldada, desmedida, destaconada, despeinada.<br>Soy una mujer que construye su propio cuerpo.<br>Soy una mujer frutal, ácida, verdulera.",
@@ -2869,6 +2891,7 @@ footer small {
         sem: "2025-30",
         foto: { name: "Martín Quiroga", ig: "@latin_visual" },
         d: "Jonathan Hernández",
+        yt: "VMPsgqiPYSY",
         url: "https://www.instagram.com/reel/DQ4HmYWDZut/?igsh=OWNqenU5YnNzZHIz",
         fl: "img/gallery/346-flyer.jpg",
         syn: "346 es un viaje de emociones y de anécdotas. Es el latido de un corazón cargado, que pulsa a través de la memoria y las experiencias que buscan reunirse y ser compartidas. 346 es un suspiro que se eleva, con la esperanza del encuentro.",
@@ -2880,6 +2903,7 @@ footer small {
         sem: "2025-30",
         foto: { name: "Camilo Rincón", ig: "@kmi_rb" },
         d: "Jorge Bernal",
+        yt: "ZcUIG3afkkk",
         url: "https://www.instagram.com/reel/DRKWqXDgGhg/?igsh=ZjFlemZrcTZlbWNw",
         fl: "img/gallery/ecdisis-flyer.jpg",
         syn: "Retoma como referente el proceso natural y vital en el que muchos animales, especialmente invertebrados como los artr\u00f3podos y reptiles, se desprenden de su capa externa antigua para poder crecer.<br><br>Es un acto repetitivo, un ciclo, una transformaci\u00f3n\u2026<br><br>Un dessprendimiento que deja atr\u00e1sss lo viejo para abrir esspacio a lo nuevo, una ssserpenteante memoria de lo que fue\u2026<br><br>Una piel que ssse desssliza, ssssssuelta, sssssssilenciosa, sssssssssin retorno, sssssssin miedo, sssssssshhhhhhhh\u2026<br><br>Shhhh \u2026 celosa\u2026 shhhhh \u2026 cambiante \u2026 shhhhhhhh\u2026<br><br>Columna vertebral que viene de la tierra.<br>Mujer lunar, astuta y sanadora.<br>Oscura, silenciosa y prudente.<br><br>Shhhh \u2026 celosa\u2026 shhhhh \u2026 cambiante \u2026 shhhhhhhh\u2026",
@@ -3338,7 +3362,7 @@ setInterval(spawnMorpho, 7000);
     'prologue':      'Índice',
     'contents':      'Artist Statement',
     'statement':     'Autoevaluación',
-    'autoevaluacion':'Escritos',
+    'autoevaluacion':'Escritos I',
     'escrito-1':     'Escritos II',
     'escrito-2':     'Profesores',
     'profesores':    'Pares',
@@ -3394,12 +3418,13 @@ setInterval(spawnMorpho, 7000);
     }
   }
 
-  // IntersectionObserver — fire when a section covers ≥40% of viewport
+  // IntersectionObserver — detecta cuando la sección cruza la banda central del viewport
+  // rootMargin '-45% 0px -45% 0px' crea una franja del 10% en el centro: funciona con secciones muy largas
   var secObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) updateBtns(entry.target.id);
     });
-  }, { threshold: 0.4 });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
 
   order.forEach(function(id) {
     var el = document.getElementById(id);
